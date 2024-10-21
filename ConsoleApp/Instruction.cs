@@ -1,11 +1,11 @@
 namespace ConsoleApp;
 
-public enum InstructAction {
+public enum ActionAttribute {
     Add,
     Stir,
     Combine
 }
 
 public class Instruction {
-    public InstructAction Action { get; set; }
+    public ActionAttribute Action { get; set; }
 }
