@@ -1,6 +1,6 @@
 namespace ConsoleApp;
 
 public class Warehouse {
-    private string Location { get; set; } = null!;
-    private int MaxCapacity { get; set; }
+    public string Location { get; set; } = null!;
+    public int MaxCapacity { get; set; }
 }

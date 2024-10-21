@@ -1,5 +1,5 @@
 namespace ConsoleApp;
 
 public class Recipe {
-    private int Complexity { get; set; }
+    public int Complexity { get; set; }
 }

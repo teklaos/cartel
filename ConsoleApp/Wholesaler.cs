@@ -1,6 +1,6 @@
 namespace ConsoleApp;
 
 public class Wholesaler : Customer {
-    private int CommissionPercentage { get; set; }
-    private int MonthlyCustomers { get; set; }
+    public int CommissionPercentage { get; set; }
+    public int MonthlyCustomers { get; set; }
 }

@@ -7,8 +7,8 @@ public enum AddLevel {
 }
 
 public class Product {
-    private string Name { get; set; } = null!;
-    private int PricePerPound { get; set; }
-    private double PurityPercentage { get; set; }
-    private AddLevel AddictivenessLevel { get; set; }
+    public string Name { get; set; } = null!;
+    public int PricePerPound { get; set; }
+    public double PurityPercentage { get; set; }
+    public AddLevel AddictivenessLevel { get; set; }
 }

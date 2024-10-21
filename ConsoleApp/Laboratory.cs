@@ -1,6 +1,6 @@
 namespace ConsoleApp;
 
 public class Laboratory {
-    private string Location { get; set; } = null!;
-    private static int MaxPoundsPerCook { get; } = 50;
+    public string Location { get; set; } = null!;
+    public static int MaxPoundsPerCook { get; } = 50;
 }

@@ -7,8 +7,8 @@ public enum PhysicalState {
 }
 
 public class Ingredient {
-    private string Name { get; set; } = null!;
-    private int Price { get; set; }
-    private string ChemicalFormula { get; set; } = null!;
-    private PhysicalState State { get; set; }
+    public string Name { get; set; } = null!;
+    public int Price { get; set; }
+    public string ChemicalFormula { get; set; } = null!;
+    public PhysicalState State { get; set; }
 }

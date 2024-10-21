@@ -7,5 +7,5 @@ public enum InstructAction {
 }
 
 public class Instruction {
-    private InstructAction Action { get; set; }
+    public InstructAction Action { get; set; }
 }
