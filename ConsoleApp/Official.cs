@@ -1,8 +1,10 @@
 namespace ConsoleApp;
 
 public class Official : CartelMember {
-    public override string Name => throw new NotImplementedException();
-    public override int TrustLevel => throw new NotImplementedException();
-    public override IEnumerable<string> RulesToFollow => throw new NotImplementedException();
     public int Rank { get; set; }
+
+    public Official(string name, int trustLevel, IEnumerable<string> rulesToFollow, int rank):
+    base(name, trustLevel, rulesToFollow) {
+        this.Rank = rank;
+    }
 }
