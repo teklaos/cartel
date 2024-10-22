@@ -11,4 +11,11 @@ public class Ingredient {
     public int Price { get; set; }
     public string ChemicalFormula { get; set; } = null!;
     public StateAttribute State { get; set; }
+
+    public Ingredient(string name, int price, string chemicalFormula, StateAttribute state) {
+        this.Name = name;
+        this.Price = price;
+        this.ChemicalFormula = chemicalFormula;
+        this.State = state;
+    }
 }

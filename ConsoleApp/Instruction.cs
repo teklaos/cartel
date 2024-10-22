@@ -8,4 +8,8 @@ public enum ActionAttribute {
 
 public class Instruction {
     public ActionAttribute Action { get; set; }
+
+    public Instruction(ActionAttribute action) {
+        this.Action = action;
+    }
 }

@@ -1,3 +1,5 @@
 namespace ConsoleApp;
 
-public class Customer {}
+public class Customer {
+    public Customer() {}
+}
