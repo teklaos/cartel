@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public abstract class CartelMember {
-    public static IEnumerable<CartelMember> _cartelMembers = new List<CartelMember>();
+    public static IEnumerable<CartelMember> _cartelMembers { get; private set; } = new List<CartelMember>();
     public string Name { get; set; } = null!;
     public int TrustLevel { get; set; }
     public IEnumerable<string> RulesToFollow { get; set; } = null!;

@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public class Equipment {
-    private static IEnumerable<Equipment> _equipment = new List<Equipment>();
+    public static IEnumerable<Equipment> _equipment { get; private set; } = new List<Equipment>();
     public string Type { get; set; } = null!;
     public string Name { get; set; } = null!;
     public string Model { get; set; } = null!;

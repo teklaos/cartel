@@ -1,15 +1,15 @@
 namespace ConsoleApp;
 
-public class Distributor_Customer {
-    private IEnumerable<Distributor_Customer> _distributorCustomers = new List<Distributor_Customer>();
+public class DistributorCustomer {
+    public IEnumerable<DistributorCustomer> _distributorsCustomers { get; private set; } = new List<DistributorCustomer>();
     public DateTime DealStartDate { get; set; }
     public int AmountOfProduct { get; set; }
     public DateTime? DealEndDate { get; set; }
 
-    public Distributor_Customer(DateTime dealStartDate, int amountOfProduct, DateTime? dealEndDate) {
+    public DistributorCustomer(DateTime dealStartDate, int amountOfProduct, DateTime? dealEndDate) {
         this.DealStartDate = dealStartDate;
         this.AmountOfProduct = amountOfProduct;
         this.DealEndDate = dealEndDate;
-        _distributorCustomers = _distributorCustomers.Append(this);
+        _distributorsCustomers = _distributorsCustomers.Append(this);
     }
 }

@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public class Wholesaler : Customer {
-    private IEnumerable<Wholesaler> _wholesalers = new List<Wholesaler>();
+    public IEnumerable<Wholesaler> _wholesalers { get; private set; } = new List<Wholesaler>();
     public int CommissionPercentage { get; set; }
     public int MonthlyCustomers { get; set; }
 

@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public class Chemist : CartelMember {
-    private static IEnumerable<Chemist> _chemists = new List<Chemist>();
+    public static IEnumerable<Chemist> _chemists { get; private set; } = new List<Chemist>();
     public int TimesCooked { get; set; }
 
     public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int timesCooked):

@@ -30,7 +30,7 @@ namespace ConsoleAppUnitTests {
 
         [Test]
         public void TestDistributorConstructor() {
-            string[] rulesToFollow = ["Don't kill anyone (Optional)."];
+            string[] rulesToFollow = ["Do not kill anyone (optional)."];
             Distributor distributor = new Distributor("Danny", 9, rulesToFollow);
 
             Assert.Multiple(() => {
@@ -42,7 +42,7 @@ namespace ConsoleAppUnitTests {
 
         [Test]
         public void TestCitizenConstructor() {
-            string[] rulesToFollow = ["Don't kill anyone (Optional)."];
+            string[] rulesToFollow = ["Do not kill anyone (optional)."];
             Citizen citizen = new Citizen("Danny", 9, rulesToFollow);
 
             Assert.Multiple(() => {
@@ -54,7 +54,7 @@ namespace ConsoleAppUnitTests {
 
         [Test]
         public void TestOfficialConstructor() {
-            string[] rulesToFollow = ["Don't kill anyone (Optional)."];
+            string[] rulesToFollow = ["Do not kill anyone (optional)."];
             Official official = new Official("Danny", 9, rulesToFollow, 1);
 
             Assert.Multiple(() => {
@@ -98,7 +98,7 @@ namespace ConsoleAppUnitTests {
             DateTime dealStartDate = new DateTime(2024, 5, 20);
             DateTime dealEndDate = new DateTime(2024, 5, 21);
 
-            Distributor_Customer distributor_Customer = new Distributor_Customer(dealStartDate, 15, dealEndDate);
+            DistributorCustomer distributor_Customer = new DistributorCustomer(dealStartDate, 15, dealEndDate);
 
             Assert.Multiple(() => {
                 Assert.That(distributor_Customer.DealStartDate, Is.EqualTo(dealStartDate));

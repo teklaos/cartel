@@ -1,12 +1,12 @@
 namespace ConsoleApp;
 
 public class Customer {
-    private static IEnumerable<Customer> _customers = new List<Customer>();
+    public static IEnumerable<Customer> _customers { get; private set; } = new List<Customer>();
     public Customer() {
         _customers = _customers.Append(this);
     }
 
-    public static int GetCustomerCount() {
+    public static int GetCustomersCount() {
         return _customers.Count();
     }
 }

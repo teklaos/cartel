@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public class Dealer : Customer {
-    private static IEnumerable<Dealer> _dealers = new List<Dealer>();
+    public static IEnumerable<Dealer> _dealers { get; private set; } = new List<Dealer>();
     public string Territory { get; set; } = null!;
     public bool CriminalRecord { get; set; }
 

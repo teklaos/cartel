@@ -8,9 +8,9 @@ public class Program {
             Console.WriteLine(prod.Name);
         }
 
-        Chemist chemist = new Chemist("Danny", 1, ["Be a good boy", "Don't steal methamphetamine"], 15);
-        Distributor distributor = new Distributor("Ben", 2, ["Be nice to people", "Don't kill anyone (Optional)"]);
-        Deliverer deliverer = new Deliverer("Frank", 3, ["Be a cute pie"]);
+        Chemist chemist = new Chemist("Danny", 10, ["Be a good boy.", "Do not steal methamphetamine."], 15);
+        Distributor distributor = new Distributor("Ben", 9, ["Be nice to people.", "Do not kill anyone (optional)."]);
+        Deliverer deliverer = new Deliverer("Frank", 8, ["Be a cutie pie."]);
         foreach (CartelMember member in CartelMember._cartelMembers) {
             Console.WriteLine(member.Name);
         }

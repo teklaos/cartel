@@ -7,7 +7,7 @@ public enum StateAttribute {
 }
 
 public class Ingredient {
-    private static IEnumerable<Ingredient> _ingredients = new List<Ingredient>();
+    public static IEnumerable<Ingredient> _ingredients { get; private set; } = new List<Ingredient>();
     public string Name { get; set; } = null!;
     public int Price { get; set; }
     public string ChemicalFormula { get; set; } = null!;

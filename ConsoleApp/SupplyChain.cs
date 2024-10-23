@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public class SupplyChain {
-    private static IEnumerable<SupplyChain> _supplyChains = new List<SupplyChain>();
+    public static IEnumerable<SupplyChain> _supplyChains { get; private set; } = new List<SupplyChain>();
     public string Name { get; set; } = null!;
     public int TransitionTime { get; set; } // In hours
 

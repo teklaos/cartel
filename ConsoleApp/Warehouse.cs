@@ -1,7 +1,7 @@
 namespace ConsoleApp;
 
 public class Warehouse {
-    private static IEnumerable<Warehouse> _warehouses = new List<Warehouse>();
+    public static IEnumerable<Warehouse> _warehouses { get; private set; } = new List<Warehouse>();
     public string Location { get; set; } = null!;
     public int MaxCapacity { get; set; }
 
