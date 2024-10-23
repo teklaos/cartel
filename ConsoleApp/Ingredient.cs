@@ -7,6 +7,7 @@ public enum StateAttribute {
 }
 
 public class Ingredient {
+    private static IEnumerable<Ingredient> _ingredients = new List<Ingredient>();
     public string Name { get; set; } = null!;
     public int Price { get; set; }
     public string ChemicalFormula { get; set; } = null!;
@@ -17,5 +18,6 @@ public class Ingredient {
         this.Price = price;
         this.ChemicalFormula = chemicalFormula;
         this.State = state;
+        _ingredients = _ingredients.Append(this);
     }
 }

@@ -7,7 +7,7 @@ public enum AddLevelAttribute {
 }
 
 public class Product {
-    public static IEnumerable<Product> Products { get; private set; } = []; // Class extent
+    public static IEnumerable<Product> _products = new List<Product>(); 
     public string Name { get; set; } = null!;
     public int PricePerPound { get; set; }
     public double PurityPercentage { get; set; }
@@ -18,6 +18,6 @@ public class Product {
         this.PricePerPound = pricePerPound;
         this.PurityPercentage = purityPercentage;
         this.AddictivenessLevel = addictivenessLevel;
-        Products = Products.Append(this);
+        _products = _products.Append(this);
     }
 }
