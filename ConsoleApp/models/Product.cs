@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public enum AddLevelAttribute {
@@ -6,7 +8,7 @@ public enum AddLevelAttribute {
     Strong
 }
 
-public class Product {
+public class Product : ISerializable {
     public static IEnumerable<Product> _products { get; private set; } = new List<Product>(); 
     public string Name { get; set; } = null!;
     public int PricePerPound { get; set; }
@@ -19,5 +21,17 @@ public class Product {
         this.PurityPercentage = purityPercentage;
         this.AddictivenessLevel = addictivenessLevel;
         _products = _products.Append(this);
+    }
+    
+    public static void Serialize() {
+        string fileName = "Products.json";
+        string jsonString = JsonSerializer.Serialize(_products, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "Products.json";
+        string jsonString = File.ReadAllText(fileName);
+        _products = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? new List<Product>();
     }
 }
