@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Laboratory {
     public static IEnumerable<Laboratory> _laboratories { get; private set; } = new List<Laboratory>();

@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Deliverer : CartelMember {
     public static IEnumerable<Deliverer> _deliverers { get; private set; } = new List<Deliverer>();

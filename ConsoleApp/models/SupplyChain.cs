@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class SupplyChain {
     public static IEnumerable<SupplyChain> _supplyChains { get; private set; } = new List<SupplyChain>();

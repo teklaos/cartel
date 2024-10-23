@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Recipe {
     public static IEnumerable<Recipe> _recipes { get; private set; } = new List<Recipe>();

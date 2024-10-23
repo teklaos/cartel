@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Equipment {
     public static IEnumerable<Equipment> _equipment { get; private set; } = new List<Equipment>();

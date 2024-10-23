@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Warehouse {
     public static IEnumerable<Warehouse> _warehouses { get; private set; } = new List<Warehouse>();

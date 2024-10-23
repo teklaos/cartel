@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Customer {
     public static IEnumerable<Customer> _customers { get; private set; } = new List<Customer>();

@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public abstract class CartelMember {
     public static IEnumerable<CartelMember> _cartelMembers { get; private set; } = new List<CartelMember>();

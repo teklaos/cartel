@@ -1,4 +1,4 @@
-namespace ConsoleApp;
+namespace ConsoleApp.models;
 
 public class Official : CartelMember {
     public static IEnumerable<Official> _officials { get; private set; } = new List<Official>();
