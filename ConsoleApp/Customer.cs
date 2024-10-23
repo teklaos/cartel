@@ -5,4 +5,8 @@ public class Customer {
     public Customer() {
         _customers = _customers.Append(this);
     }
+
+    public static int GetCustomerCount() {
+        return _customers.Count();
+    }
 }
