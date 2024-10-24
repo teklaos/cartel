@@ -6,6 +6,7 @@ public class Customer {
     public static IEnumerable<Customer> _customers { get; private set; } = new List<Customer>();
 
     public Customer() {
+        ArgumentNullException.ThrowIfNull(this);
         _customers = _customers.Append(this);
     }
 

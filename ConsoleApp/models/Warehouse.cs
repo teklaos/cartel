@@ -10,6 +10,8 @@ public class Warehouse {
     public Warehouse(string location, int maxCapacity) {
         this.Location = location;
         this.MaxCapacity = maxCapacity;
+
+        ArgumentNullException.ThrowIfNull(this);
         _warehouses = _warehouses.Append(this);
     }
     

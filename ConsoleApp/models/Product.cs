@@ -20,6 +20,8 @@ public class Product {
         this.PricePerPound = pricePerPound;
         this.PurityPercentage = purityPercentage;
         this.AddictivenessLevel = addictivenessLevel;
+
+        ArgumentNullException.ThrowIfNull(this);
         _products = _products.Append(this);
     }
     

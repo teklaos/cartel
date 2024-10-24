@@ -9,6 +9,8 @@ public class Laboratory {
 
     public Laboratory(string location) {
         this.Location = location;
+
+        ArgumentNullException.ThrowIfNull(this);
         _laboratories = _laboratories.Append(this);
     }
     

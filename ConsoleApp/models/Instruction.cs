@@ -14,6 +14,8 @@ public class Instruction {
 
     public Instruction(ActionAttribute action) {
         this.Action = action;
+
+        ArgumentNullException.ThrowIfNull(this);
         _instructions = _instructions.Append(this);
     }
     

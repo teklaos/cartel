@@ -10,6 +10,8 @@ public class SupplyChain {
     public SupplyChain(string name, int transitionTime) {
         this.Name = name;
         this.TransitionTime = transitionTime;
+
+        ArgumentNullException.ThrowIfNull(this);
         _supplyChains = _supplyChains.Append(this);
     }
     

@@ -12,6 +12,8 @@ public class DistributorCustomer {
         this.DealStartDate = dealStartDate;
         this.AmountOfProduct = amountOfProduct;
         this.DealEndDate = dealEndDate;
+        
+        ArgumentNullException.ThrowIfNull(this);
         _distributorsCustomers = _distributorsCustomers.Append(this);
     }
 

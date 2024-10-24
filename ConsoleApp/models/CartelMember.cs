@@ -12,6 +12,8 @@ public abstract class CartelMember {
         this.Name = name;
         this.TrustLevel = trustLevel;
         this.RulesToFollow = rulesToFollow;
+
+        ArgumentNullException.ThrowIfNull(this);
         _cartelMembers = _cartelMembers.Append(this);
     }
     

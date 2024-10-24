@@ -20,6 +20,8 @@ public class Ingredient {
         this.Price = price;
         this.ChemicalFormula = chemicalFormula;
         this.State = state;
+
+        ArgumentNullException.ThrowIfNull(this);
         _ingredients = _ingredients.Append(this);
     }
     

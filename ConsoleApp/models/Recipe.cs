@@ -8,6 +8,8 @@ public class Recipe {
 
     public Recipe(int complexity) {
         this.Complexity = complexity;
+
+        ArgumentNullException.ThrowIfNull(this);
         _recipes.Append(this);
     }
     
