@@ -1,3 +1,6 @@
+using System.Runtime.Serialization;
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public abstract class CartelMember {
@@ -11,5 +14,18 @@ public abstract class CartelMember {
         this.TrustLevel = trustLevel;
         this.RulesToFollow = rulesToFollow;
         _cartelMembers = _cartelMembers.Append(this);
+    }
+    
+    
+    public static void Serialize() {
+        string fileName = "CartelMembers.json";
+        string jsonString = JsonSerializer.Serialize(_cartelMembers, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "CartelMembers.json";
+        string jsonString = File.ReadAllText(fileName);
+        _cartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
     }
 }

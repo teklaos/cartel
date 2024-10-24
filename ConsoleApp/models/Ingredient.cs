@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public enum StateAttribute {
@@ -19,5 +21,18 @@ public class Ingredient {
         this.ChemicalFormula = chemicalFormula;
         this.State = state;
         _ingredients = _ingredients.Append(this);
+    }
+    
+    
+    public static void Serialize() {
+        string fileName = "Products.json";
+        string jsonString = JsonSerializer.Serialize(_ingredients, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "Products.json";
+        string jsonString = File.ReadAllText(fileName);
+        _ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
     }
 }

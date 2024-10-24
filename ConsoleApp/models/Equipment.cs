@@ -1,6 +1,8 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
-public class Equipment {
+public class Equipment : ISerializable {
     public static IEnumerable<Equipment> _equipment { get; private set; } = new List<Equipment>();
     public string Type { get; set; } = null!;
     public string Name { get; set; } = null!;
@@ -11,5 +13,17 @@ public class Equipment {
         this.Name = name;
         this.Model = model;
         _equipment = _equipment.Append(this);
+    }
+    
+    public static void Serialize() {
+        string fileName = "Equipment.json";
+        string jsonString = JsonSerializer.Serialize(_equipment, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "Equipment.json";
+        string jsonString = File.ReadAllText(fileName);
+        _equipment = JsonSerializer.Deserialize<List<Equipment>>(jsonString) ?? new List<Equipment>();
     }
 }

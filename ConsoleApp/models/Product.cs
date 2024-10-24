@@ -8,7 +8,7 @@ public enum AddLevelAttribute {
     Strong
 }
 
-public class Product : ISerializable {
+public class Product {
     public static IEnumerable<Product> _products { get; private set; } = new List<Product>(); 
     public string Name { get; set; } = null!;
     public int PricePerPound { get; set; }

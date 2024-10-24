@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public class SupplyChain {
@@ -9,5 +11,18 @@ public class SupplyChain {
         this.Name = name;
         this.TransitionTime = transitionTime;
         _supplyChains = _supplyChains.Append(this);
+    }
+    
+    
+    public static void Serialize() {
+        string fileName = "Products.json";
+        string jsonString = JsonSerializer.Serialize(_supplyChains, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "Products.json";
+        string jsonString = File.ReadAllText(fileName);
+        _supplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
     }
 }

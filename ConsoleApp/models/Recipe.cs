@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public class Recipe {
@@ -7,5 +9,17 @@ public class Recipe {
     public Recipe(int complexity) {
         this.Complexity = complexity;
         _recipes.Append(this);
+    }
+    
+    public static void Serialize() {
+        string fileName = "Recipes.json";
+        string jsonString = JsonSerializer.Serialize(_recipes, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "Recipes.json";
+        string jsonString = File.ReadAllText(fileName);
+        _recipes = JsonSerializer.Deserialize<List<Recipe>>(jsonString) ?? new List<Recipe>();
     }
 }

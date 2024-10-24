@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public class Laboratory {
@@ -8,5 +10,17 @@ public class Laboratory {
     public Laboratory(string location) {
         this.Location = location;
         _laboratories = _laboratories.Append(this);
+    }
+    
+    public static void Serialize() {
+        string fileName = "Labs.json";
+        string jsonString = JsonSerializer.Serialize(_laboratories, ISerializable.jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static void Deserialize() {
+        string fileName = "Labs.json";
+        string jsonString = File.ReadAllText(fileName);
+        _laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
     }
 }
