@@ -25,13 +25,13 @@ public class Ingredient {
     
     
     public static void Serialize() {
-        string fileName = "Products.json";
+        string fileName = "Ingredients.json";
         string jsonString = JsonSerializer.Serialize(_ingredients, ISerializable.jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 
     public static void Deserialize() {
-        string fileName = "Products.json";
+        string fileName = "Ingredients.json";
         string jsonString = File.ReadAllText(fileName);
         _ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
     }

@@ -5,7 +5,10 @@ namespace ConsoleApp.models;
 public interface ISerializable {
     public static JsonSerializerOptions jsonOptions { get; private set; } = new JsonSerializerOptions {WriteIndented = true};
 
-    /*public static void TestSerialize<T>(IEnumerable<T> data, string fileName) {
+    public static void Serialize() {}
+    public static void Deserialize() {}
+    /*
+    public static void TestSerialize<T>(IEnumerable<T> data, string fileName) {
         string jsonString = JsonSerializer.Serialize(data, jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
@@ -16,5 +19,6 @@ public interface ISerializable {
             return JsonSerializer.Deserialize<List<T>>(jsonString) ?? new List<T>();
         }
         return new List<T>();
-    }*/
+    }
+    */
 }

@@ -15,13 +15,13 @@ public class Warehouse {
     
     
     public static void Serialize() {
-        string fileName = "Products.json";
+        string fileName = "Warehouses.json";
         string jsonString = JsonSerializer.Serialize(_warehouses, ISerializable.jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 
     public static void Deserialize() {
-        string fileName = "Products.json";
+        string fileName = "Warehouses.json";
         string jsonString = File.ReadAllText(fileName);
         _warehouses = JsonSerializer.Deserialize<List<Warehouse>>(jsonString) ?? new List<Warehouse>();
     }

@@ -18,13 +18,13 @@ public class Instruction {
     }
     
     public static void Serialize() {
-        string fileName = "Products.json";
+        string fileName = "Instructions.json";
         string jsonString = JsonSerializer.Serialize(_instructions, ISerializable.jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 
     public static void Deserialize() {
-        string fileName = "Products.json";
+        string fileName = "Instructions.json";
         string jsonString = File.ReadAllText(fileName);
         _instructions = JsonSerializer.Deserialize<List<Instruction>>(jsonString) ?? new List<Instruction>();
     }

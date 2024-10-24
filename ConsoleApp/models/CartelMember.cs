@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System.Text.Json;
 
 namespace ConsoleApp.models;
@@ -15,7 +14,6 @@ public abstract class CartelMember {
         this.RulesToFollow = rulesToFollow;
         _cartelMembers = _cartelMembers.Append(this);
     }
-    
     
     public static void Serialize() {
         string fileName = "CartelMembers.json";

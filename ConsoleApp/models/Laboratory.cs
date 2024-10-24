@@ -13,13 +13,13 @@ public class Laboratory {
     }
     
     public static void Serialize() {
-        string fileName = "Labs.json";
+        string fileName = "Laboratories.json";
         string jsonString = JsonSerializer.Serialize(_laboratories, ISerializable.jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 
     public static void Deserialize() {
-        string fileName = "Labs.json";
+        string fileName = "Laboratories.json";
         string jsonString = File.ReadAllText(fileName);
         _laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
     }

@@ -15,13 +15,13 @@ public class SupplyChain {
     
     
     public static void Serialize() {
-        string fileName = "Products.json";
+        string fileName = "SupplyChains.json";
         string jsonString = JsonSerializer.Serialize(_supplyChains, ISerializable.jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 
     public static void Deserialize() {
-        string fileName = "Products.json";
+        string fileName = "SupplyChains.json";
         string jsonString = File.ReadAllText(fileName);
         _supplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
     }
