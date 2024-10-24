@@ -12,10 +12,12 @@ public class Recipe {
         ArgumentNullException.ThrowIfNull(this);
         _recipes.Append(this);
     }
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Recipes.json";
-        string jsonString = JsonSerializer.Serialize(_recipes, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_recipes, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

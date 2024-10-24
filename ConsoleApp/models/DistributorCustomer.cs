@@ -17,9 +17,11 @@ public class DistributorCustomer {
         _distributorsCustomers = _distributorsCustomers.Append(this);
     }
 
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+
     public static void Serialize() {
         string fileName = "DistributorsCustomers.json";
-        string jsonString = JsonSerializer.Serialize(_distributorsCustomers, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_distributorsCustomers, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

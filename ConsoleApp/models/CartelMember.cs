@@ -16,10 +16,12 @@ public abstract class CartelMember {
         ArgumentNullException.ThrowIfNull(this);
         _cartelMembers = _cartelMembers.Append(this);
     }
-    
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+
     public static void Serialize() {
         string fileName = "CartelMembers.json";
-        string jsonString = JsonSerializer.Serialize(_cartelMembers, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_cartelMembers, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

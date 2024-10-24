@@ -17,9 +17,11 @@ public class Equipment {
         _equipment = _equipment.Append(this);
     }
     
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+
     public static void Serialize() {
         string fileName = "Equipment.json";
-        string jsonString = JsonSerializer.Serialize(_equipment, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_equipment, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

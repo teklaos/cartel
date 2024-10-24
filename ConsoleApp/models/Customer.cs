@@ -14,9 +14,11 @@ public class Customer {
         return _customers.Count();
     }
     
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    
     public static void Serialize() {
         string fileName = "Customers.json";
-        string jsonString = JsonSerializer.Serialize(_customers, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_customers, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

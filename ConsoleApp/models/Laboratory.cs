@@ -13,10 +13,12 @@ public class Laboratory {
         ArgumentNullException.ThrowIfNull(this);
         _laboratories = _laboratories.Append(this);
     }
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Laboratories.json";
-        string jsonString = JsonSerializer.Serialize(_laboratories, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_laboratories, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

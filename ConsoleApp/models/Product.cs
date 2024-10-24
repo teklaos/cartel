@@ -24,10 +24,12 @@ public class Product {
         ArgumentNullException.ThrowIfNull(this);
         _products = _products.Append(this);
     }
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Products.json";
-        string jsonString = JsonSerializer.Serialize(_products, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_products, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

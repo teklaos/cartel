@@ -18,10 +18,12 @@ public class Instruction {
         ArgumentNullException.ThrowIfNull(this);
         _instructions = _instructions.Append(this);
     }
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Instructions.json";
-        string jsonString = JsonSerializer.Serialize(_instructions, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_instructions, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

@@ -15,10 +15,11 @@ public class Warehouse {
         _warehouses = _warehouses.Append(this);
     }
     
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Warehouses.json";
-        string jsonString = JsonSerializer.Serialize(_warehouses, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_warehouses, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

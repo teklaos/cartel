@@ -14,11 +14,12 @@ public class SupplyChain {
         ArgumentNullException.ThrowIfNull(this);
         _supplyChains = _supplyChains.Append(this);
     }
-    
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "SupplyChains.json";
-        string jsonString = JsonSerializer.Serialize(_supplyChains, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_supplyChains, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 

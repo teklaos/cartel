@@ -25,10 +25,11 @@ public class Ingredient {
         _ingredients = _ingredients.Append(this);
     }
     
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Ingredients.json";
-        string jsonString = JsonSerializer.Serialize(_ingredients, ISerializable.jsonOptions);
+        string jsonString = JsonSerializer.Serialize(_ingredients, _jsonOptions);
         File.WriteAllText(fileName, jsonString);
     }
 
