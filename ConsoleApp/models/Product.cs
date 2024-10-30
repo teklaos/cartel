@@ -29,13 +29,21 @@ public class Product {
     
     public static void Serialize() {
         string fileName = "Products.json";
-        string jsonString = JsonSerializer.Serialize(_products, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_products, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "Products.json";
-        string jsonString = File.ReadAllText(fileName);
-        _products = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? new List<Product>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _products = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? new List<Product>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
