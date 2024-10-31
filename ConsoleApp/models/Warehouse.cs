@@ -4,15 +4,24 @@ namespace ConsoleApp.models;
 
 public class Warehouse {
     public static IEnumerable<Warehouse> _warehouses { get; private set; } = new List<Warehouse>();
-    public string Location { get; set; } = null!;
-    public int MaxCapacity { get; set; }
+    public string Location { get; private set; }
+    public int MaxCapacity { get; private set; }
 
     public Warehouse(string location, int maxCapacity) {
-        this.Location = location;
-        this.MaxCapacity = maxCapacity;
+        Location = location;
+        MaxCapacity = maxCapacity;
+        AddWarehouse();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _warehouses = _warehouses.Append(this);
+    private void AddWarehouse() {
+        try {
+            ArgumentException.ThrowIfNullOrWhiteSpace(Location, "Location");
+            ArgumentOutOfRangeException.ThrowIfNegative(MaxCapacity, "Maximum capacity");
+            ArgumentNullException.ThrowIfNull(this);
+            _warehouses = _warehouses.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

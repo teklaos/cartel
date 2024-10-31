@@ -10,13 +10,21 @@ public enum ActionAttribute {
 
 public class Instruction {
     public static IEnumerable<Instruction> _instructions { get; private set; } = new List<Instruction>();
-    public ActionAttribute Action { get; set; }
+    public ActionAttribute Action { get; private set; }
 
     public Instruction(ActionAttribute action) {
-        this.Action = action;
+        Action = action;
+        AddInstruction();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _instructions = _instructions.Append(this);
+    private void AddInstruction() {
+        try {
+            ArgumentNullException.ThrowIfNull(Action, "Action");
+            ArgumentNullException.ThrowIfNull(this);
+            _instructions = _instructions.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

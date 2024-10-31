@@ -10,19 +10,30 @@ public enum AddLevelAttribute {
 
 public class Product {
     public static IEnumerable<Product> _products { get; private set; } = new List<Product>(); 
-    public string Name { get; set; } = null!;
-    public int PricePerPound { get; set; }
-    public double PurityPercentage { get; set; }
-    public AddLevelAttribute AddictivenessLevel { get; set; }
+    public string Name { get; private set; }
+    public int PricePerPound { get; private set; }
+    public double PurityPercentage { get; private set; }
+    public AddLevelAttribute AddictivenessLevel { get; private set; }
 
     public Product(string name, int pricePerPound, double purityPercentage, AddLevelAttribute addictivenessLevel) {
-        this.Name = name;
-        this.PricePerPound = pricePerPound;
-        this.PurityPercentage = purityPercentage;
-        this.AddictivenessLevel = addictivenessLevel;
+        Name = name;
+        PricePerPound = pricePerPound;
+        PurityPercentage = purityPercentage;
+        AddictivenessLevel = addictivenessLevel;
+        AddProduct();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _products = _products.Append(this);
+    private void AddProduct() {
+        try {
+            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
+            ArgumentOutOfRangeException.ThrowIfNegative(PricePerPound, "Price per pound");
+            ArgumentOutOfRangeException.ThrowIfNegative(PurityPercentage, "Purity percentage");
+            ArgumentNullException.ThrowIfNull(AddictivenessLevel, "Addictiveness level");
+            ArgumentNullException.ThrowIfNull(this);
+            _products = _products.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

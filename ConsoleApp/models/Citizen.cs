@@ -5,6 +5,15 @@ public class Citizen : CartelMember {
     
     public Citizen(string name, int trustLevel, IEnumerable<string> rulesToFollow):
     base(name, trustLevel, rulesToFollow) {
-        _citizens = _citizens.Append(this);
+        AddCitizen();
+    }
+
+    private void AddCitizen() {
+        try {
+            ArgumentNullException.ThrowIfNull(this);
+            _citizens = _citizens.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

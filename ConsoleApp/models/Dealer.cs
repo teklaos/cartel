@@ -2,13 +2,24 @@ namespace ConsoleApp.models;
 
 public class Dealer : Customer {
     public static IEnumerable<Dealer> _dealers { get; private set; } = new List<Dealer>();
-    public string Territory { get; set; } = null!;
-    public bool CriminalRecord { get; set; }
+    public string Territory { get; private set; }
+    public bool CriminalRecord { get; private set; }
 
     public Dealer(string territory, bool criminalRecord):
     base() {
-        this.Territory = territory;
-        this.CriminalRecord = criminalRecord;
-        _dealers = _dealers.Append(this);
+        Territory = territory;
+        CriminalRecord = criminalRecord;
+        AddDealer();
+    }
+
+    private void AddDealer() {
+        try {
+            ArgumentException.ThrowIfNullOrWhiteSpace(Territory, "Territory");
+            ArgumentNullException.ThrowIfNull(CriminalRecord, "Criminal record");
+            ArgumentNullException.ThrowIfNull(this);
+            _dealers = _dealers.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

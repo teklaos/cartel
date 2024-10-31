@@ -5,6 +5,15 @@ public class Distributor : CartelMember {
     
     public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow):
     base(name, trustLevel, rulesToFollow) {
-        _distributors = _distributors.Append(this);
+        AddDistributor();
+    }
+
+    private void AddDistributor() {
+        try {
+            ArgumentNullException.ThrowIfNull(this);
+            _distributors = _distributors.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

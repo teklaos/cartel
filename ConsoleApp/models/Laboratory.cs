@@ -4,14 +4,22 @@ namespace ConsoleApp.models;
 
 public class Laboratory {
     public static IEnumerable<Laboratory> _laboratories { get; private set; } = new List<Laboratory>();
-    public string Location { get; set; } = null!;
+    public string Location { get; private set; }
     public static int MaxPoundsPerCook { get; } = 50;
 
     public Laboratory(string location) {
-        this.Location = location;
+        Location = location;
+        AddLaboratory();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _laboratories = _laboratories.Append(this);
+    private void AddLaboratory() {
+        try {
+            ArgumentException.ThrowIfNullOrWhiteSpace(Location, "Location");
+            ArgumentNullException.ThrowIfNull(this);
+            _laboratories = _laboratories.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

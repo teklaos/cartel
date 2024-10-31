@@ -6,12 +6,16 @@ public class Customer {
     public static IEnumerable<Customer> _customers { get; private set; } = new List<Customer>();
 
     public Customer() {
-        ArgumentNullException.ThrowIfNull(this);
-        _customers = _customers.Append(this);
+        AddCustomer();
     }
 
-    public static int GetCustomersCount() {
-        return _customers.Count();
+    private void AddCustomer() {
+        try {
+            ArgumentNullException.ThrowIfNull(this);
+            _customers = _customers.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

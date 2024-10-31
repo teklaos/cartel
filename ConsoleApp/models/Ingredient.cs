@@ -10,19 +10,30 @@ public enum StateAttribute {
 
 public class Ingredient {
     public static IEnumerable<Ingredient> _ingredients { get; private set; } = new List<Ingredient>();
-    public string Name { get; set; } = null!;
-    public int Price { get; set; }
-    public string ChemicalFormula { get; set; } = null!;
-    public StateAttribute State { get; set; }
+    public string Name { get; private set; }
+    public int Price { get; private set; }
+    public string ChemicalFormula { get; private set; }
+    public StateAttribute State { get; private set; }
 
     public Ingredient(string name, int price, string chemicalFormula, StateAttribute state) {
-        this.Name = name;
-        this.Price = price;
-        this.ChemicalFormula = chemicalFormula;
-        this.State = state;
+        Name = name;
+        Price = price;
+        ChemicalFormula = chemicalFormula;
+        State = state;
+        AddIngredient();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _ingredients = _ingredients.Append(this);
+    private void AddIngredient() {
+        try {
+            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
+            ArgumentOutOfRangeException.ThrowIfNegative(Price, "Price");
+            ArgumentException.ThrowIfNullOrWhiteSpace(ChemicalFormula, "Chemical formula");
+            ArgumentNullException.ThrowIfNull(State, "State");
+            ArgumentNullException.ThrowIfNull(this);
+            _ingredients = _ingredients.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

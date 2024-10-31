@@ -4,13 +4,21 @@ namespace ConsoleApp.models;
 
 public class Recipe {
     public static IEnumerable<Recipe> _recipes { get; private set; } = new List<Recipe>();
-    public int Complexity { get; set; }
+    public int Complexity { get; private set; }
 
     public Recipe(int complexity) {
-        this.Complexity = complexity;
+        Complexity = complexity;
+        AddRecipe();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _recipes.Append(this);
+    private void AddRecipe() {
+        try {
+            ArgumentOutOfRangeException.ThrowIfNegative(Complexity, "Complexity");
+            ArgumentNullException.ThrowIfNull(this);
+            _recipes.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

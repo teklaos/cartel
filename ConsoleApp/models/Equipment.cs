@@ -4,17 +4,27 @@ namespace ConsoleApp.models;
 
 public class Equipment {
     public static IEnumerable<Equipment> _equipment { get; private set; } = new List<Equipment>();
-    public string Type { get; set; } = null!;
-    public string Name { get; set; } = null!;
-    public string Model { get; set; } = null!;
+    public string Type { get; private set; }
+    public string Name { get; private set; }
+    public string Model { get; private set; }
 
     public Equipment(string type, string name, string model) {
-        this.Type = type;
-        this.Name = name;
-        this.Model = model;
+        Type = type;
+        Name = name;
+        Model = model;
+        AddEquipment();
+    }
 
-        ArgumentNullException.ThrowIfNull(this);
-        _equipment = _equipment.Append(this);
+    private void AddEquipment() {
+        try {
+            ArgumentException.ThrowIfNullOrWhiteSpace(Type, "Type");
+            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
+            ArgumentException.ThrowIfNullOrWhiteSpace(Model, "Model");
+            ArgumentNullException.ThrowIfNull(this);
+            _equipment = _equipment.Append(this);
+        } catch (Exception ex) {
+            throw new ArgumentException(ex.Message);
+        }
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

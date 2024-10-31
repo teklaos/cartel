@@ -5,6 +5,15 @@ public class Deliverer : CartelMember {
     
     public Deliverer(string name, int trustLevel, IEnumerable<string> rulesToFollow):
     base(name, trustLevel, rulesToFollow) {
-        _deliverers = _deliverers.Append(this);
+        AddDeliverer();
+    }
+
+    private void AddDeliverer() {
+        try {
+            ArgumentNullException.ThrowIfNull(this);
+            _deliverers = _deliverers.Append(this);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
