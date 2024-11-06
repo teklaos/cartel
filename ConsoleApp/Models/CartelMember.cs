@@ -10,10 +10,27 @@ public abstract class CartelMember {
     public IEnumerable<string> RulesToFollow { get; private set; }
 
     protected CartelMember(string name, int trustLevel, IEnumerable<string> rulesToFollow) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace");
+
+        if (trustLevel < 0)
+            throw new ArgumentException("Trust level cannot be negative");
+
+        if (rulesToFollow == null)
+            throw new ArgumentException( "Rules to follow cannot be null");
+
+        foreach (string rule in rulesToFollow) {
+            if (string.IsNullOrWhiteSpace(rule))
+                throw new ArgumentException("Each rule must be a non-empty string", nameof(rule));
+        }
+            
+        CartelMembers = CartelMembers.Append(this);
+        
         Name = name;
         TrustLevel = trustLevel;
         RulesToFollow = rulesToFollow;
-        AddCartelMember();
+        
+        CartelMembers = CartelMembers.Append(this);
     }
     
     private static readonly JsonSerializerOptions _jsonOptions = new()
