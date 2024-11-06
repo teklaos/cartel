@@ -9,23 +9,15 @@ public class DistributorCustomer {
     public DateTime? DealEndDate { get; private set; }
 
     public DistributorCustomer(DateTime dealStartDate, int amountOfProduct, DateTime? dealEndDate) {
+        
+        if (amountOfProduct < 0)
+            throw new ArgumentException("Amount of product cannot be < 0");
+        
         DealStartDate = dealStartDate;
         AmountOfProduct = amountOfProduct;
         DealEndDate = dealEndDate;
-        AddDistributorCustomer();
     }
-
-    private void AddDistributorCustomer() {
-        try {
-            ArgumentNullException.ThrowIfNull(DealStartDate, "Deal start date");
-            ArgumentOutOfRangeException.ThrowIfNegative(AmountOfProduct, "Amount of product");
-            ArgumentNullException.ThrowIfNull(DealEndDate, "Deal end date");
-            ArgumentNullException.ThrowIfNull(this);
-            _distributorsCustomers = _distributorsCustomers.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
+    
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 
     public static void Serialize() {

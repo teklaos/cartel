@@ -8,21 +8,18 @@ public class SupplyChain {
     public int TransitionTime { get; private set; }
 
     public SupplyChain(string name, int transitionTime) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.", nameof(Name));
+
+        if (transitionTime < 0)
+            throw new ArgumentOutOfRangeException(nameof(TransitionTime), "Transition time cannot be negative.");
+        
         Name = name;
         TransitionTime = transitionTime;
-        AddSupplyChain();
+        
+        _supplyChains = _supplyChains.Append(this);
     }
-
-    private void AddSupplyChain() {
-        try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
-            ArgumentOutOfRangeException.ThrowIfNegative(TransitionTime, "Transition time");
-            ArgumentNullException.ThrowIfNull(this);
-            _supplyChains = _supplyChains.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
+    
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     

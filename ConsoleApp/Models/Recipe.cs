@@ -7,19 +7,12 @@ public class Recipe {
     public int Complexity { get; private set; }
 
     public Recipe(int complexity) {
+        if (complexity < 0)
+            throw new ArgumentOutOfRangeException(nameof(Complexity), "Complexity cannot be negative.");
         Complexity = complexity;
-        AddRecipe();
+        _recipes = _recipes.Append(this);
     }
-
-    private void AddRecipe() {
-        try {
-            ArgumentOutOfRangeException.ThrowIfNegative(Complexity, "Complexity");
-            ArgumentNullException.ThrowIfNull(this);
-            _recipes.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
+    
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     

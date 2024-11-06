@@ -16,24 +16,25 @@ public class Product {
     public AddLevelAttribute AddictivenessLevel { get; private set; }
 
     public Product(string name, int pricePerPound, double purityPercentage, AddLevelAttribute addictivenessLevel) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.", nameof(Name));
+
+        if (pricePerPound < 0)
+            throw new ArgumentOutOfRangeException(nameof(PricePerPound), "Price per pound cannot be negative.");
+
+        if (purityPercentage < 0)
+            throw new ArgumentOutOfRangeException(nameof(PurityPercentage), "Purity percentage cannot be negative.");
+
+        if (addictivenessLevel == null)
+            throw new ArgumentNullException(nameof(AddictivenessLevel), "Addictiveness level cannot be null.");
+        
         Name = name;
         PricePerPound = pricePerPound;
         PurityPercentage = purityPercentage;
         AddictivenessLevel = addictivenessLevel;
-        AddProduct();
-    }
+        
+        _products = _products.Append(this);
 
-    private void AddProduct() {
-        try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
-            ArgumentOutOfRangeException.ThrowIfNegative(PricePerPound, "Price per pound");
-            ArgumentOutOfRangeException.ThrowIfNegative(PurityPercentage, "Purity percentage");
-            ArgumentNullException.ThrowIfNull(AddictivenessLevel, "Addictiveness level");
-            ArgumentNullException.ThrowIfNull(this);
-            _products = _products.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

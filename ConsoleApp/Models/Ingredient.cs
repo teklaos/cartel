@@ -16,20 +16,41 @@ public class Ingredient {
     public StateAttribute State { get; private set; }
 
     public Ingredient(string name, int price, string chemicalFormula, StateAttribute state) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace");
+
+        if (price < 0)
+            throw new ArgumentException("Price cannot be negative");
+
+        if (string.IsNullOrWhiteSpace(chemicalFormula))
+            throw new ArgumentException("Chemical formula cannot be null or whitespace");
+
+        if (state == null)
+            throw new ArgumentNullException(nameof(State), "State cannot be null.");
+            
+        
         Name = name;
         Price = price;
         ChemicalFormula = chemicalFormula;
         State = state;
-        AddIngredient();
+        _ingredients = _ingredients.Append(this);
+
     }
 
     private void AddIngredient() {
         try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
-            ArgumentOutOfRangeException.ThrowIfNegative(Price, "Price");
-            ArgumentException.ThrowIfNullOrWhiteSpace(ChemicalFormula, "Chemical formula");
-            ArgumentNullException.ThrowIfNull(State, "State");
-            ArgumentNullException.ThrowIfNull(this);
+            if (string.IsNullOrWhiteSpace(Name))
+                throw new ArgumentException("Name cannot be null or whitespace");
+
+            if (Price < 0)
+                throw new ArgumentException("Price cannot be negative");
+
+            if (string.IsNullOrWhiteSpace(ChemicalFormula))
+                throw new ArgumentException("Chemical formula cannot be null or whitespace");
+
+            if (State == null)
+                throw new ArgumentNullException(nameof(State), "State cannot be null.");
+            
             _ingredients = _ingredients.Append(this);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

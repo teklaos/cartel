@@ -7,23 +7,19 @@ public class Wholesaler : Customer {
     public double CommissionPercentage { get; private set; }
     public int MonthlyCustomers { get; private set; }
 
-    public Wholesaler(double commissionPercentage, int monthlyCustomers):
-    base() {
+    public Wholesaler(double commissionPercentage, int monthlyCustomers) : base() {
+        if (commissionPercentage < 0)
+            throw new ArgumentOutOfRangeException(nameof(CommissionPercentage), "Commission percentage cannot be negative.");
+
+        if (monthlyCustomers < 0)
+            throw new ArgumentOutOfRangeException(nameof(MonthlyCustomers), "Monthly customers cannot be negative.");
+
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
-        AddWholesaler();
+        
+        _wholesalers = _wholesalers.Append(this);
     }
-
-    private void AddWholesaler() {
-        try {
-            ArgumentOutOfRangeException.ThrowIfNegative(CommissionPercentage, "Commission percentage");
-            ArgumentOutOfRangeException.ThrowIfNegative(MonthlyCustomers, "Monthly customers");
-            ArgumentNullException.ThrowIfNull(this);
-            _wholesalers = _wholesalers.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
+    
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 

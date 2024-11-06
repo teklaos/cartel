@@ -7,28 +7,24 @@ public class Dealer : Customer {
     public string Territory { get; private set; }
     public IEnumerable<string>? CriminalRecord { get; private set; }
 
-    public Dealer(string territory, IEnumerable<string> criminalRecord):
-    base() {
+    public Dealer(string territory, IEnumerable<string> criminalRecord) :
+        base()
+    {
+        if (string.IsNullOrWhiteSpace(territory))
+            throw new ArgumentException("Territory cannot be empty");
         Territory = territory;
         CriminalRecord = criminalRecord;
-        AddDealer();
+
+        foreach (string record in CriminalRecord)
+        {
+            if (string.IsNullOrWhiteSpace(record))
+                throw new ArgumentException("Record cannot be empty");
+        }
+
+        _dealers = _dealers.Append(this);
     }
 
-    private void AddDealer() {
-        try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Territory, "Territory");
-            if (CriminalRecord != null) {
-                foreach (string record in CriminalRecord) {
-                    ArgumentException.ThrowIfNullOrWhiteSpace(record, "Record");
-                }
-            }
-            ArgumentNullException.ThrowIfNull(this);
-            _dealers = _dealers.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
-    
+
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static new void Serialize() {
