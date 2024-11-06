@@ -31,37 +31,41 @@ public class TestConstructors {
     [Test]
     public void TestDistributorConstructor() {
         string[] rulesToFollow = ["Do not kill anyone (optional)."];
-        Distributor distributor = new Distributor("Danny", 9, rulesToFollow);
+        Distributor distributor = new Distributor("Danny", 9, rulesToFollow, 100);
 
         Assert.Multiple(() => {
             Assert.That(distributor.Name, Is.EqualTo("Danny"));
             Assert.That(distributor.TrustLevel, Is.EqualTo(9));
             Assert.That(distributor.RulesToFollow, Is.EqualTo(rulesToFollow));
+            Assert.That(distributor.DealsMade, Is.EqualTo(100));
         });
     }
 
     [Test]
     public void TestCitizenConstructor() {
         string[] rulesToFollow = ["Do not kill anyone (optional)."];
-        Citizen citizen = new Citizen("Danny", 9, rulesToFollow);
+        Citizen citizen = new Citizen("Danny", 9, rulesToFollow, "Cashier", 3);
 
         Assert.Multiple(() => {
             Assert.That(citizen.Name, Is.EqualTo("Danny"));
             Assert.That(citizen.TrustLevel, Is.EqualTo(9));
             Assert.That(citizen.RulesToFollow, Is.EqualTo(rulesToFollow));
+            Assert.That(citizen.Occupation, Is.EqualTo("Cashier"));
+            Assert.That(citizen.SecurityLevel, Is.EqualTo(3));
         });
     }
 
     [Test]
     public void TestOfficialConstructor() {
         string[] rulesToFollow = ["Do not kill anyone (optional)."];
-        Official official = new Official("Danny", 9, rulesToFollow, 1);
+        Official official = new Official("Danny", 9, rulesToFollow, "Vice President", "Ministry of Foreign Affairs");
 
         Assert.Multiple(() => {
             Assert.That(official.Name, Is.EqualTo("Danny"));
             Assert.That(official.TrustLevel, Is.EqualTo(9));
             Assert.That(official.RulesToFollow, Is.EqualTo(rulesToFollow));
-            Assert.That(official.Rank, Is.EqualTo(1));
+            Assert.That(official.Position, Is.EqualTo("Vice President"));
+            Assert.That(official.Department, Is.EqualTo("Ministry of Foreign Affairs"));
         });
     }
 
@@ -74,11 +78,12 @@ public class TestConstructors {
     
     [Test]
     public void TestDealerConstructor() {
-        Dealer dealer = new Dealer("Madelyn", false);
+        string[] criminalRecord = ["Possession of Controlled Substance (Cocaine)"];
+        Dealer dealer = new Dealer("Madelyn", criminalRecord);
 
         Assert.Multiple(() => {
             Assert.That(dealer.Territory, Is.EqualTo("Madelyn"));
-            Assert.That(dealer.CriminalRecord, Is.EqualTo(false));
+            Assert.That(dealer.CriminalRecord, Is.EqualTo(criminalRecord));
         });
     }
 
