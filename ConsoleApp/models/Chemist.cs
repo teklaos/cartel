@@ -14,8 +14,8 @@ public class Chemist : CartelMember {
 
     private void AddChemist() {
         try {
-            ArgumentOutOfRangeException.ThrowIfNegative(PoundsCooked, "Pounds cooked");
-            ArgumentNullException.ThrowIfNull(this);
+            if (PoundsCooked < 0)
+                throw new ArgumentException("PoundsCooked cannot be < 0");
             _chemists = _chemists.Append(this);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

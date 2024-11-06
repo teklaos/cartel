@@ -16,10 +16,14 @@ public class Citizen : CartelMember {
 
     private void AddCitizen() {
         try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Occupation, "Occupation");
-            ArgumentOutOfRangeException.ThrowIfNegative(SecurityLevel, "Security level");
-            ArgumentNullException.ThrowIfNull(this);
+            if (string.IsNullOrWhiteSpace(Occupation))
+                throw new ArgumentException("Occupation cannot be null");
+
+            if (SecurityLevel < 0)
+                throw new ArgumentException("Security level cannot be < 0.");
+            
             _citizens = _citizens.Append(this);
+
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
