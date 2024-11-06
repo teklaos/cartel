@@ -7,7 +7,7 @@ public class Dealer : Customer {
     public string Territory { get; private set; }
     public IEnumerable<string>? CriminalRecord { get; private set; }
 
-    public Dealer(string territory, IEnumerable<string> criminalRecord) :
+    public Dealer(string territory, IEnumerable<string> criminalRecord) : 
         base()
     {
         if (string.IsNullOrWhiteSpace(territory))

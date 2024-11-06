@@ -11,6 +11,8 @@ public class Laboratory {
         if (string.IsNullOrWhiteSpace(location))
             throw new ArgumentException("Location cannot be null or whitespace.", nameof(Location));
         Location = location;
+
+        _laboratories = _laboratories.Append(this);
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

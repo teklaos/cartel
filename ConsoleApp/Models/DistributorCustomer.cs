@@ -16,6 +16,8 @@ public class DistributorCustomer {
         DealStartDate = dealStartDate;
         AmountOfProduct = amountOfProduct;
         DealEndDate = dealEndDate;
+
+        _distributorsCustomers = _distributorsCustomers.Append(this);
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

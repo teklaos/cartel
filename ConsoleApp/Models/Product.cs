@@ -34,7 +34,6 @@ public class Product {
         AddictivenessLevel = addictivenessLevel;
         
         _products = _products.Append(this);
-
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

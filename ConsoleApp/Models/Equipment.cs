@@ -15,9 +15,12 @@ public class Equipment {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace");
 
-        if (string.IsNullOrWhiteSpace(Model))
+        if (string.IsNullOrWhiteSpace(model))
             throw new ArgumentException("Model cannot be null or whitespace");
-            
+        Type = type;
+        Name = name;
+        Model = model;
+        
         _equipment = _equipment.Append(this);
     }
 

@@ -10,6 +10,7 @@ public class Recipe {
         if (complexity < 0)
             throw new ArgumentOutOfRangeException(nameof(Complexity), "Complexity cannot be negative.");
         Complexity = complexity;
+        
         _recipes = _recipes.Append(this);
     }
     
