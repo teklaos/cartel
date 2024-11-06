@@ -31,13 +31,21 @@ public class Instruction {
     
     public static void Serialize() {
         string fileName = "Instructions.json";
-        string jsonString = JsonSerializer.Serialize(_instructions, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_instructions, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "Instructions.json";
-        string jsonString = File.ReadAllText(fileName);
-        _instructions = JsonSerializer.Deserialize<List<Instruction>>(jsonString) ?? new List<Instruction>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _instructions = JsonSerializer.Deserialize<List<Instruction>>(jsonString) ?? new List<Instruction>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

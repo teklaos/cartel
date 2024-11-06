@@ -26,13 +26,21 @@ public class Chemist : CartelMember {
 
     public static new void Serialize() {
         string fileName = "Chemists.json";
+        try {
             string jsonString = JsonSerializer.Serialize(_chemists, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static new void Deserialize() {
         string fileName = "Chemists.json";
-        string jsonString = File.ReadAllText(fileName);
-        _chemists = JsonSerializer.Deserialize<List<Chemist>>(jsonString) ?? new List<Chemist>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _chemists = JsonSerializer.Deserialize<List<Chemist>>(jsonString) ?? new List<Chemist>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

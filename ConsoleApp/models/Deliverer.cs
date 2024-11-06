@@ -23,13 +23,21 @@ public class Deliverer : CartelMember {
 
     public static new void Serialize() {
         string fileName = "Deliverers.json";
+        try {
             string jsonString = JsonSerializer.Serialize(_deliverers, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static new void Deserialize() {
         string fileName = "Deliverers.json";
-        string jsonString = File.ReadAllText(fileName);
-        _deliverers = JsonSerializer.Deserialize<List<Deliverer>>(jsonString) ?? new List<Deliverer>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _deliverers = JsonSerializer.Deserialize<List<Deliverer>>(jsonString) ?? new List<Deliverer>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

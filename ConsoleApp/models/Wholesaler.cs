@@ -29,13 +29,21 @@ public class Wholesaler : Customer {
 
     public static new void Serialize() {
         string fileName = "Wholesalers.json";
-        string jsonString = JsonSerializer.Serialize(_wholesalers, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_wholesalers, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static new void Deserialize() {
         string fileName = "Wholesalers.json";
-        string jsonString = File.ReadAllText(fileName);
-        _wholesalers = JsonSerializer.Deserialize<List<Wholesaler>>(jsonString) ?? new List<Wholesaler>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _wholesalers = JsonSerializer.Deserialize<List<Wholesaler>>(jsonString) ?? new List<Wholesaler>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

@@ -30,13 +30,21 @@ public class DistributorCustomer {
 
     public static void Serialize() {
         string fileName = "DistributorsCustomers.json";
-        string jsonString = JsonSerializer.Serialize(_distributorsCustomers, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_distributorsCustomers, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "DistributorsCustomers.json";
-        string jsonString = File.ReadAllText(fileName);
-        _distributorsCustomers = JsonSerializer.Deserialize<List<DistributorCustomer>>(jsonString) ?? new List<DistributorCustomer>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _distributorsCustomers = JsonSerializer.Deserialize<List<DistributorCustomer>>(jsonString) ?? new List<DistributorCustomer>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

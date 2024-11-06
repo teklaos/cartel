@@ -28,13 +28,21 @@ public class SupplyChain {
     
     public static void Serialize() {
         string fileName = "SupplyChains.json";
-        string jsonString = JsonSerializer.Serialize(_supplyChains, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_supplyChains, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "SupplyChains.json";
-        string jsonString = File.ReadAllText(fileName);
-        _supplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _supplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

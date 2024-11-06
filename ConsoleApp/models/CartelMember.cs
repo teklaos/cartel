@@ -34,13 +34,21 @@ public abstract class CartelMember {
 
     public static void Serialize() {
         string fileName = "CartelMembers.json";
+        try {
             string jsonString = JsonSerializer.Serialize(_cartelMembers, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "CartelMembers.json";
-        string jsonString = File.ReadAllText(fileName);
-        _cartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _cartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

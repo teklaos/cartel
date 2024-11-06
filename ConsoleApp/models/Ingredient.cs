@@ -40,13 +40,21 @@ public class Ingredient {
     
     public static void Serialize() {
         string fileName = "Ingredients.json";
-        string jsonString = JsonSerializer.Serialize(_ingredients, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_ingredients, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "Ingredients.json";
-        string jsonString = File.ReadAllText(fileName);
-        _ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

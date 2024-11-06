@@ -26,13 +26,21 @@ public class Laboratory {
     
     public static void Serialize() {
         string fileName = "Laboratories.json";
-        string jsonString = JsonSerializer.Serialize(_laboratories, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_laboratories, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "Laboratories.json";
-        string jsonString = File.ReadAllText(fileName);
-        _laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

@@ -31,13 +31,21 @@ public class Equipment {
 
     public static void Serialize() {
         string fileName = "Equipment.json";
-        string jsonString = JsonSerializer.Serialize(_equipment, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_equipment, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "Equipment.json";
-        string jsonString = File.ReadAllText(fileName);
-        _equipment = JsonSerializer.Deserialize<List<Equipment>>(jsonString) ?? new List<Equipment>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _equipment = JsonSerializer.Deserialize<List<Equipment>>(jsonString) ?? new List<Equipment>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

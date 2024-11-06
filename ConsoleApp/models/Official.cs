@@ -29,13 +29,21 @@ public class Official : CartelMember {
 
     public static new void Serialize() {
         string fileName = "Officials.json";
+        try {
             string jsonString = JsonSerializer.Serialize(_officials, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static new void Deserialize() {
         string fileName = "Officials.json";
-        string jsonString = File.ReadAllText(fileName);
-        _officials = JsonSerializer.Deserialize<List<Official>>(jsonString) ?? new List<Official>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _officials = JsonSerializer.Deserialize<List<Official>>(jsonString) ?? new List<Official>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }   

@@ -25,13 +25,21 @@ public class Recipe {
     
     public static void Serialize() {
         string fileName = "Recipes.json";
-        string jsonString = JsonSerializer.Serialize(_recipes, _jsonOptions);
-        File.WriteAllText(fileName, jsonString);
+        try {
+            string jsonString = JsonSerializer.Serialize(_recipes, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static void Deserialize() {
         string fileName = "Recipes.json";
-        string jsonString = File.ReadAllText(fileName);
-        _recipes = JsonSerializer.Deserialize<List<Recipe>>(jsonString) ?? new List<Recipe>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _recipes = JsonSerializer.Deserialize<List<Recipe>>(jsonString) ?? new List<Recipe>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }

@@ -29,13 +29,21 @@ public class Citizen : CartelMember {
 
     public static new void Serialize() {
         string fileName = "Citizens.json";
+        try {
             string jsonString = JsonSerializer.Serialize(_citizens, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     public static new void Deserialize() {
         string fileName = "Citizens.json";
-        string jsonString = File.ReadAllText(fileName);
-        _citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString) ?? new List<Citizen>();
+        try {
+            string jsonString = File.ReadAllText(fileName);
+            _citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString) ?? new List<Citizen>();
+        } catch (Exception ex) {
+            Console.WriteLine(ex.Message);
+        }
     }
 }
