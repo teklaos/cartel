@@ -3,39 +3,52 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public abstract class CartelMember {
-    public static IEnumerable<CartelMember> _cartelMembers { get; private set; } = new List<CartelMember>();
+    public static IEnumerable<CartelMember> CartelMembers { get; private set; } = new List<CartelMember>();
     public string Name { get; private set; }
     public int TrustLevel { get; private set; }
     public IEnumerable<string> RulesToFollow { get; private set; }
 
-    public CartelMember(string name, int trustLevel, IEnumerable<string> rulesToFollow) {
+    protected CartelMember(string name, int trustLevel, IEnumerable<string> rulesToFollow) {
         Name = name;
         TrustLevel = trustLevel;
         RulesToFollow = rulesToFollow;
         AddCartelMember();
     }
-
+    
+    private static readonly JsonSerializerOptions _jsonOptions = new()
+    {
+        WriteIndented = true
+    };
+    
     private void AddCartelMember() {
         try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Name, "Name");
-            ArgumentOutOfRangeException.ThrowIfNegative(TrustLevel, "Trust level");
-            ArgumentNullException.ThrowIfNull(RulesToFollow, "Rules to follow");
+            if (string.IsNullOrWhiteSpace(Name))
+                throw new ArgumentException("Name cannot be null or whitespace");
+
+            if (TrustLevel < 0)
+                throw new ArgumentException("Trust level cannot be negative");
+
+            if (RulesToFollow == null)
+                throw new ArgumentException( "Rules to follow cannot be null");
+
             foreach (string rule in RulesToFollow) {
-                ArgumentException.ThrowIfNullOrWhiteSpace(rule, "Rule");
+                if (string.IsNullOrWhiteSpace(rule))
+                    throw new ArgumentException("Each rule must be a non-empty string", nameof(rule));
             }
-            ArgumentNullException.ThrowIfNull(this);
-            _cartelMembers = _cartelMembers.Append(this);
+            
+            CartelMembers = CartelMembers.Append(this);
+
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
     }
 
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    
 
     public static void Serialize() {
         string fileName = "CartelMembers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_cartelMembers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(CartelMembers, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -46,7 +59,7 @@ public abstract class CartelMember {
         string fileName = "CartelMembers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _cartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
+            CartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
