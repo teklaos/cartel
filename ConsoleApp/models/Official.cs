@@ -2,17 +2,20 @@ namespace ConsoleApp.models;
 
 public class Official : CartelMember {
     public static IEnumerable<Official> _officials { get; private set; } = new List<Official>();
-    public int Rank { get; private set; }
+    public string Position { get; private set; }
+    public string Department { get; private set; }
 
-    public Official(string name, int trustLevel, IEnumerable<string> rulesToFollow, int rank):
+    public Official(string name, int trustLevel, IEnumerable<string> rulesToFollow, string position, string department):
     base(name, trustLevel, rulesToFollow) {
-        Rank = rank;
+        Position = position;
+        Department = department;
         AddOfficial();
     }
 
     private void AddOfficial() {
         try {
-            ArgumentOutOfRangeException.ThrowIfNegative(Rank, "Rank");
+            ArgumentException.ThrowIfNullOrWhiteSpace(Position, "Position");
+            ArgumentException.ThrowIfNullOrWhiteSpace(Department, "Department");
             ArgumentNullException.ThrowIfNull(this);
             _officials = _officials.Append(this);
         } catch (Exception ex) {

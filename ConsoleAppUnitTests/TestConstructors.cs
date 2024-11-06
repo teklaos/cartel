@@ -12,7 +12,7 @@ public class TestConstructors {
             Assert.That(chemist.Name, Is.EqualTo("Gale"));
             Assert.That(chemist.TrustLevel, Is.EqualTo(10));
             Assert.That(chemist.RulesToFollow, Is.EqualTo(rulesToFollow));
-            Assert.That(chemist.TimesCooked, Is.EqualTo(72));
+            Assert.That(chemist.PoundsCooked, Is.EqualTo(72));
         });
     }
 
