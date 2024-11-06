@@ -33,6 +33,7 @@ public class Ingredient {
         Price = price;
         ChemicalFormula = chemicalFormula;
         State = state;
+        
         _ingredients = _ingredients.Append(this);
 
     }

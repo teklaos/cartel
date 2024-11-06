@@ -10,6 +10,7 @@ public class Chemist : CartelMember {
     base(name, trustLevel, rulesToFollow) {
         if (poundsCooked < 0)
             throw new ArgumentException("PoundsCooked cannot be < 0");
+        
         PoundsCooked = poundsCooked;
         _chemists = _chemists.Append(this);
     }

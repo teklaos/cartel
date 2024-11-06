@@ -18,6 +18,8 @@ public class Official : CartelMember {
 
         Position = position;
         Department = department;
+
+        _officials = _officials.Append(this);
     }
     
 

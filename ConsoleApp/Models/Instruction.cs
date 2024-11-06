@@ -16,6 +16,7 @@ public class Instruction {
         if (action == null)
             throw new ArgumentNullException(nameof(Action), "Action cannot be null");
         Action = action;
+        
         _instructions = _instructions.Append(this);
     }
 
