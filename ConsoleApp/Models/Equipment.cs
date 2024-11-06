@@ -10,22 +10,17 @@ public class Equipment {
 
     public Equipment(string type, string name, string model) {
         if (string.IsNullOrWhiteSpace(type))
-            throw new ArgumentException("Type cannot be null or whitespace");
-
+            throw new ArgumentException("Type cannot be null or whitespace.");
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace");
-
+            throw new ArgumentException("Name cannot be null or whitespace.");
         if (string.IsNullOrWhiteSpace(model))
-            throw new ArgumentException("Model cannot be null or whitespace");
+            throw new ArgumentException("Model cannot be null or whitespace.");
+
         Type = type;
         Name = name;
         Model = model;
-        
         _equipment = _equipment.Append(this);
     }
-
-    
-    
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 
     public static void Serialize() {

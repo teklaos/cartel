@@ -7,22 +7,18 @@ public class Official : CartelMember {
     public string Position { get; private set; }
     public string Department { get; private set; }
 
-    public Official(string name, int trustLevel, IEnumerable<string> rulesToFollow, string position, string department): 
-        base(name, trustLevel, rulesToFollow) 
-    {
+    public Official(string name, int trustLevel, IEnumerable<string> rulesToFollow, string position, string department) : 
+    base(name, trustLevel, rulesToFollow) {
         if (string.IsNullOrWhiteSpace(position))
-            throw new ArgumentException("Position cannot be null or whitespace.", nameof(Position));
-
+            throw new ArgumentException("Position cannot be null or whitespace.");
         if (string.IsNullOrWhiteSpace(department))
-            throw new ArgumentException("Department cannot be null or whitespace.", nameof(Department));
+            throw new ArgumentException("Department cannot be null or whitespace.");
 
         Position = position;
         Department = department;
-
         _officials = _officials.Append(this);
     }
     
-
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 
     public static new void Serialize() {

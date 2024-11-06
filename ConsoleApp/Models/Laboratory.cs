@@ -9,9 +9,9 @@ public class Laboratory {
 
     public Laboratory(string location) {
         if (string.IsNullOrWhiteSpace(location))
-            throw new ArgumentException("Location cannot be null or whitespace.", nameof(Location));
-        Location = location;
+            throw new ArgumentException("Location cannot be null or whitespace.");
 
+        Location = location;
         _laboratories = _laboratories.Append(this);
     }
     

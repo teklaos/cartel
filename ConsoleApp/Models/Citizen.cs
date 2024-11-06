@@ -10,10 +10,9 @@ public class Citizen : CartelMember {
     public Citizen(string name, int trustLevel, IEnumerable<string> rulesToFollow, string occupation, int securityLevel):
     base(name, trustLevel, rulesToFollow) {
         if (string.IsNullOrWhiteSpace(occupation))
-            throw new ArgumentException("Occupation cannot be null");
-
+            throw new ArgumentException("Occupation cannot be null or whitespace.");
         if (securityLevel < 0)
-            throw new ArgumentException("Security level cannot be < 0.");
+            throw new ArgumentException("Security level cannot be negative.");
         
         Occupation = occupation;
         SecurityLevel = securityLevel;

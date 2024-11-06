@@ -8,22 +8,20 @@ public class Dealer : Customer {
     public IEnumerable<string>? CriminalRecord { get; private set; }
 
     public Dealer(string territory, IEnumerable<string> criminalRecord) : 
-        base()
-    {
+    base() {
         if (string.IsNullOrWhiteSpace(territory))
-            throw new ArgumentException("Territory cannot be empty");
-        Territory = territory;
-        CriminalRecord = criminalRecord;
+            throw new ArgumentException("Territory cannot be null or whitespace.");
 
-        foreach (string record in CriminalRecord)
-        {
-            if (string.IsNullOrWhiteSpace(record))
-                throw new ArgumentException("Record cannot be empty");
+        foreach (string record in criminalRecord) {
+            if (string.IsNullOrWhiteSpace(record)) {
+                throw new ArgumentException("Each record cannot be null or whitespace.");
+            }
         }
 
+        Territory = territory;
+        CriminalRecord = criminalRecord;
         _dealers = _dealers.Append(this);
     }
-
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     

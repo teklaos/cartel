@@ -17,45 +17,17 @@ public class Ingredient {
 
     public Ingredient(string name, int price, string chemicalFormula, StateAttribute state) {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace");
-
+            throw new ArgumentException("Name cannot be null or whitespace.");
         if (price < 0)
-            throw new ArgumentException("Price cannot be negative");
-
+            throw new ArgumentException("Price cannot be negative.");
         if (string.IsNullOrWhiteSpace(chemicalFormula))
-            throw new ArgumentException("Chemical formula cannot be null or whitespace");
-
-        if (state == null)
-            throw new ArgumentNullException(nameof(State), "State cannot be null.");
-            
+            throw new ArgumentException("Chemical formula cannot be null or whitespace.");
         
         Name = name;
         Price = price;
         ChemicalFormula = chemicalFormula;
         State = state;
-        
         _ingredients = _ingredients.Append(this);
-
-    }
-
-    private void AddIngredient() {
-        try {
-            if (string.IsNullOrWhiteSpace(Name))
-                throw new ArgumentException("Name cannot be null or whitespace");
-
-            if (Price < 0)
-                throw new ArgumentException("Price cannot be negative");
-
-            if (string.IsNullOrWhiteSpace(ChemicalFormula))
-                throw new ArgumentException("Chemical formula cannot be null or whitespace");
-
-            if (State == null)
-                throw new ArgumentNullException(nameof(State), "State cannot be null.");
-            
-            _ingredients = _ingredients.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

@@ -13,13 +13,9 @@ public class Instruction {
     public ActionAttribute Action { get; private set; }
 
     public Instruction(ActionAttribute action) {
-        if (action == null)
-            throw new ArgumentNullException(nameof(Action), "Action cannot be null");
         Action = action;
-        
         _instructions = _instructions.Append(this);
     }
-
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     

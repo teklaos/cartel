@@ -7,11 +7,7 @@ public class Customer {
 
     public Customer() => _customers = _customers.Append(this);
     
-    
-    private readonly static JsonSerializerOptions _jsonOptions = new()
-    {
-        WriteIndented = true
-    };
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {
         string fileName = "Customers.json";

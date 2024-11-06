@@ -9,14 +9,12 @@ public class DistributorCustomer {
     public DateTime? DealEndDate { get; private set; }
 
     public DistributorCustomer(DateTime dealStartDate, int amountOfProduct, DateTime? dealEndDate) {
-        
         if (amountOfProduct < 0)
-            throw new ArgumentException("Amount of product cannot be < 0");
+            throw new ArgumentException("Amount of product cannot be negative.");
         
         DealStartDate = dealStartDate;
         AmountOfProduct = amountOfProduct;
         DealEndDate = dealEndDate;
-
         _distributorsCustomers = _distributorsCustomers.Append(this);
     }
     

@@ -9,12 +9,11 @@ public class Chemist : CartelMember {
     public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int poundsCooked):
     base(name, trustLevel, rulesToFollow) {
         if (poundsCooked < 0)
-            throw new ArgumentException("PoundsCooked cannot be < 0");
+            throw new ArgumentException("Cooked pounds cannot be negative.");
         
         PoundsCooked = poundsCooked;
         _chemists = _chemists.Append(this);
     }
-    
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 

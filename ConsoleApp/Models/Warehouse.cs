@@ -9,26 +9,13 @@ public class Warehouse {
 
     public Warehouse(string location, int maxCapacity) {
         if (string.IsNullOrWhiteSpace(location))
-            throw new ArgumentException("Location cannot be null or whitespace.", nameof(Location));
-
+            throw new ArgumentException("Location cannot be null or whitespace.");
         if (maxCapacity < 0)
-            throw new ArgumentOutOfRangeException(nameof(MaxCapacity), "Maximum capacity cannot be negative.");
+            throw new ArgumentOutOfRangeException("Maximum capacity cannot be negative.");
 
         Location = location;
         MaxCapacity = maxCapacity;
-        
         _warehouses = _warehouses.Append(this);
-    }
-
-    private void AddWarehouse() {
-        try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Location, "Location");
-            ArgumentOutOfRangeException.ThrowIfNegative(MaxCapacity, "Maximum capacity");
-            ArgumentNullException.ThrowIfNull(this);
-            _warehouses = _warehouses.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
     }
     
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};

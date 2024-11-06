@@ -17,22 +17,16 @@ public class Product {
 
     public Product(string name, int pricePerPound, double purityPercentage, AddLevelAttribute addictivenessLevel) {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace.", nameof(Name));
-
+            throw new ArgumentException("Name cannot be null or whitespace.");
         if (pricePerPound < 0)
-            throw new ArgumentOutOfRangeException(nameof(PricePerPound), "Price per pound cannot be negative.");
-
+            throw new ArgumentOutOfRangeException("Price per pound cannot be negative.");
         if (purityPercentage < 0)
-            throw new ArgumentOutOfRangeException(nameof(PurityPercentage), "Purity percentage cannot be negative.");
-
-        if (addictivenessLevel == null)
-            throw new ArgumentNullException(nameof(AddictivenessLevel), "Addictiveness level cannot be null.");
+            throw new ArgumentOutOfRangeException("Purity percentage cannot be negative.");
         
         Name = name;
         PricePerPound = pricePerPound;
         PurityPercentage = purityPercentage;
         AddictivenessLevel = addictivenessLevel;
-        
         _products = _products.Append(this);
     }
 

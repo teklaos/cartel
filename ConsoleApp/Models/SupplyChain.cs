@@ -9,10 +9,9 @@ public class SupplyChain {
 
     public SupplyChain(string name, int transitionTime) {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace.", nameof(Name));
-
+            throw new ArgumentException("Name cannot be null or whitespace.");
         if (transitionTime < 0)
-            throw new ArgumentOutOfRangeException(nameof(TransitionTime), "Transition time cannot be negative.");
+            throw new ArgumentOutOfRangeException("Transition time cannot be negative.");
         
         Name = name;
         TransitionTime = transitionTime;

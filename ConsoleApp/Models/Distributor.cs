@@ -6,22 +6,13 @@ public class Distributor : CartelMember {
     public static IEnumerable<Distributor> _distributors { get; private set; } = new List<Distributor>();
     public int DealsMade { get; private set; }
     
-    public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade):
+    public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade) :
     base(name, trustLevel, rulesToFollow) {
         if (dealsMade < 0)
-            throw new ArgumentOutOfRangeException(nameof(DealsMade), "DealsMade cannot be < 0");
+            throw new ArgumentOutOfRangeException("Made deals cannot be negative.");
+
         DealsMade = dealsMade;
         _distributors = _distributors.Append(this);
-    }
-
-    private void AddDistributor() {
-        try {
-            if (DealsMade < 0)
-                throw new ArgumentOutOfRangeException(nameof(DealsMade), "DealsMade cannot be < 0");
-            _distributors = _distributors.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
     }
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
