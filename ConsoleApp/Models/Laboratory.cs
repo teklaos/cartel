@@ -8,20 +8,11 @@ public class Laboratory {
     public static int MaxPoundsPerCook { get; } = 50;
 
     public Laboratory(string location) {
+        if (string.IsNullOrWhiteSpace(location))
+            throw new ArgumentException("Location cannot be null or whitespace.", nameof(Location));
         Location = location;
-        AddLaboratory();
     }
-
-    private void AddLaboratory() {
-        try {
-            ArgumentException.ThrowIfNullOrWhiteSpace(Location, "Location");
-            ArgumentNullException.ThrowIfNull(this);
-            _laboratories = _laboratories.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
+    
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
     
     public static void Serialize() {

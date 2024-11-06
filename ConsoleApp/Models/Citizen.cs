@@ -9,26 +9,17 @@ public class Citizen : CartelMember {
     
     public Citizen(string name, int trustLevel, IEnumerable<string> rulesToFollow, string occupation, int securityLevel):
     base(name, trustLevel, rulesToFollow) {
+        if (string.IsNullOrWhiteSpace(occupation))
+            throw new ArgumentException("Occupation cannot be null");
+
+        if (securityLevel < 0)
+            throw new ArgumentException("Security level cannot be < 0.");
+        
         Occupation = occupation;
         SecurityLevel = securityLevel;
-        AddCitizen();
+        _citizens = _citizens.Append(this);
     }
-
-    private void AddCitizen() {
-        try {
-            if (string.IsNullOrWhiteSpace(Occupation))
-                throw new ArgumentException("Occupation cannot be null");
-
-            if (SecurityLevel < 0)
-                throw new ArgumentException("Security level cannot be < 0.");
-            
-            _citizens = _citizens.Append(this);
-
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
-
+    
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 
     public static new void Serialize() {

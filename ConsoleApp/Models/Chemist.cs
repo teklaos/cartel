@@ -8,19 +8,12 @@ public class Chemist : CartelMember {
 
     public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int poundsCooked):
     base(name, trustLevel, rulesToFollow) {
+        if (poundsCooked < 0)
+            throw new ArgumentException("PoundsCooked cannot be < 0");
         PoundsCooked = poundsCooked;
-        AddChemist();
+        _chemists = _chemists.Append(this);
     }
-
-    private void AddChemist() {
-        try {
-            if (PoundsCooked < 0)
-                throw new ArgumentException("PoundsCooked cannot be < 0");
-            _chemists = _chemists.Append(this);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
-        }
-    }
+    
 
     private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
 

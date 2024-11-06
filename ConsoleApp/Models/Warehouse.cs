@@ -8,9 +8,16 @@ public class Warehouse {
     public int MaxCapacity { get; private set; }
 
     public Warehouse(string location, int maxCapacity) {
+        if (string.IsNullOrWhiteSpace(location))
+            throw new ArgumentException("Location cannot be null or whitespace.", nameof(Location));
+
+        if (maxCapacity < 0)
+            throw new ArgumentOutOfRangeException(nameof(MaxCapacity), "Maximum capacity cannot be negative.");
+
         Location = location;
         MaxCapacity = maxCapacity;
-        AddWarehouse();
+        
+        _warehouses = _warehouses.Append(this);
     }
 
     private void AddWarehouse() {

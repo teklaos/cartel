@@ -8,14 +8,16 @@ public class Distributor : CartelMember {
     
     public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade):
     base(name, trustLevel, rulesToFollow) {
+        if (dealsMade < 0)
+            throw new ArgumentOutOfRangeException(nameof(DealsMade), "DealsMade cannot be < 0");
         DealsMade = dealsMade;
-        AddDistributor();
+        _distributors = _distributors.Append(this);
     }
 
     private void AddDistributor() {
         try {
-            ArgumentOutOfRangeException.ThrowIfNegative(DealsMade, "Deals made");
-            ArgumentNullException.ThrowIfNull(this);
+            if (DealsMade < 0)
+                throw new ArgumentOutOfRangeException(nameof(DealsMade), "DealsMade cannot be < 0");
             _distributors = _distributors.Append(this);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
