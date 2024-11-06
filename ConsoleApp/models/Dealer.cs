@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public class Dealer : Customer {
@@ -23,5 +25,19 @@ public class Dealer : Customer {
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
+    }
+    
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    
+    public static new void Serialize() {
+        string fileName = "Dealers.json";
+        string jsonString = JsonSerializer.Serialize(_dealers, _jsonOptions);
+        File.WriteAllText(fileName, jsonString);
+    }
+
+    public static new void Deserialize() {
+        string fileName = "Dealers.json";
+        string jsonString = File.ReadAllText(fileName);
+        _dealers = JsonSerializer.Deserialize<List<Dealer>>(jsonString) ?? new List<Dealer>();
     }
 }

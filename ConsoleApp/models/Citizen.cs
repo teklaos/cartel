@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public class Citizen : CartelMember {
@@ -21,5 +23,19 @@ public class Citizen : CartelMember {
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
+    }
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+
+    public static new void Serialize() {
+        string fileName = "Citizens.json";
+            string jsonString = JsonSerializer.Serialize(_citizens, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+    }
+
+    public static new void Deserialize() {
+        string fileName = "Citizens.json";
+        string jsonString = File.ReadAllText(fileName);
+        _citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString) ?? new List<Citizen>();
     }
 }

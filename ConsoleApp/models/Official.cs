@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace ConsoleApp.models;
 
 public class Official : CartelMember {
@@ -22,4 +24,18 @@ public class Official : CartelMember {
             Console.WriteLine(ex.Message);
         }
     }
-}
+
+    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+
+    public static new void Serialize() {
+        string fileName = "Officials.json";
+            string jsonString = JsonSerializer.Serialize(_officials, _jsonOptions);
+            File.WriteAllText(fileName, jsonString);
+    }
+
+    public static new void Deserialize() {
+        string fileName = "Officials.json";
+        string jsonString = File.ReadAllText(fileName);
+        _officials = JsonSerializer.Deserialize<List<Official>>(jsonString) ?? new List<Official>();
+    }
+}   
