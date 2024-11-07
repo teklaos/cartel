@@ -55,7 +55,7 @@ public class TestConstructorsInvalidInput {
     }
     
     [Test]
-    public void ConstructorInvalidPoundsCookedValue() {
+    public void ConstructorInvalidPoundsCooked() {
         string name = "Krazy-8";
         int trustLevel = 2;
         var rules = new List<string> {"Do not die.", "Do not kill Walter White with a glass shard."};

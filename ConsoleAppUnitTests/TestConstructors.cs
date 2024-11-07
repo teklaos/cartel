@@ -78,7 +78,7 @@ public class TestConstructors {
     
     [Test]
     public void TestDealerConstructor() {
-        string[] criminalRecord = ["Possession of Controlled Substance (Cocaine)"];
+        string[] criminalRecord = ["Possession of Controlled Substance (Cocaine)."];
         Dealer dealer = new Dealer("Madelyn", criminalRecord);
 
         Assert.Multiple(() => {
