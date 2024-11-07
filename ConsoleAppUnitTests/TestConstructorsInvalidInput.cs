@@ -66,7 +66,7 @@ public class TestConstructorsInvalidInput {
     }
     
     [TearDown]
-    public void Dispose() {
+    public void TearDown() {
         var directory = Directory.GetCurrentDirectory();
         var files = Directory.GetFiles(directory, "*.json");
         var whitelistedFilenames = new List<string>() {
