@@ -189,4 +189,20 @@ public class TestConstructors {
             Assert.That(supplyChain.TransitionTime, Is.EqualTo(6));
         });
     }
+    
+    [TearDown]
+    public void Dispose() {
+        var directory = Directory.GetCurrentDirectory();
+        var files = Directory.GetFiles(directory, "*.json");
+        var whitelistedFilenames = new List<string>() {
+            "CartelMembers.json", "Chemists.json", "Citizens.json", "Dealers.json", "Deliverers.json", "Distributors.json",
+            "DistributorsCustomers.json", "Equipment.json", "Ingredients.json", "Instructions.json", "Laboratories.json",
+            "Officials.json", "Products.json", "Recipes.json", "SupplyChains.json", "Warehouses.json", "Wholesalers.json"
+        };
+        foreach (var file in files) {
+            if (whitelistedFilenames.Contains(Path.GetFileName(file))) {
+                File.Delete(file);
+            }
+        }
+    }
 }
