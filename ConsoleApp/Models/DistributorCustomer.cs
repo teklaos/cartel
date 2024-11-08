@@ -5,15 +5,15 @@ namespace ConsoleApp.models;
 public class DistributorCustomer {
     public static IEnumerable<DistributorCustomer> _distributorsCustomers { get; private set; } = new List<DistributorCustomer>();
     public DateTime DealStartDate { get; private set; }
-    public int AmountOfProduct { get; private set; }
+    public int PoundsOfProduct { get; private set; }
     public DateTime? DealEndDate { get; private set; }
 
-    public DistributorCustomer(DateTime dealStartDate, int amountOfProduct, DateTime? dealEndDate) {
-        if (amountOfProduct < 0)
+    public DistributorCustomer(DateTime dealStartDate, int poundsOfProduct, DateTime? dealEndDate) {
+        if (poundsOfProduct < 0)
             throw new ArgumentException("Amount of product cannot be negative.");
         
         DealStartDate = dealStartDate;
-        AmountOfProduct = amountOfProduct;
+        PoundsOfProduct = poundsOfProduct;
         DealEndDate = dealEndDate;
         _distributorsCustomers = _distributorsCustomers.Append(this);
     }

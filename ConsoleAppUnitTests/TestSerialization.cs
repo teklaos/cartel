@@ -314,7 +314,7 @@ public class TestSerialization {
         Assert.That(deserializedDistributorCustomer, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedDistributorCustomer.DealStartDate, Is.EqualTo(new DateTime(2020, 4, 19)));
-            Assert.That(deserializedDistributorCustomer.AmountOfProduct, Is.EqualTo(10));
+            Assert.That(deserializedDistributorCustomer.PoundsOfProduct, Is.EqualTo(10));
             Assert.That(deserializedDistributorCustomer.DealEndDate, Is.EqualTo(new DateTime(2020, 4, 20)));
         });
     }
@@ -329,7 +329,7 @@ public class TestSerialization {
         Assert.That(deserializedDistributorCustomer, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedDistributorCustomer.DealStartDate, Is.EqualTo(originalDistributorCustomer.DealStartDate));
-            Assert.That(deserializedDistributorCustomer.AmountOfProduct, Is.EqualTo(originalDistributorCustomer.AmountOfProduct));
+            Assert.That(deserializedDistributorCustomer.PoundsOfProduct, Is.EqualTo(originalDistributorCustomer.PoundsOfProduct));
             Assert.That(deserializedDistributorCustomer.DealEndDate, Is.EqualTo(originalDistributorCustomer.DealEndDate));
         });
     }

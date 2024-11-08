@@ -106,7 +106,7 @@ public class TestConstructors {
 
         Assert.Multiple(() => {
             Assert.That(distributorCustomer.DealStartDate, Is.EqualTo(dealStartDate));
-            Assert.That(distributorCustomer.AmountOfProduct, Is.EqualTo(15));
+            Assert.That(distributorCustomer.PoundsOfProduct, Is.EqualTo(15));
             Assert.That(distributorCustomer.DealEndDate, Is.EqualTo(dealEndDate));
         });
     }
