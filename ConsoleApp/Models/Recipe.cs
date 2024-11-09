@@ -4,13 +4,12 @@ namespace ConsoleApp.models;
 
 public class Recipe {
     public static IEnumerable<Recipe> _recipes { get; private set; } = new List<Recipe>();
-    public int Complexity { get; private set; }
+    private static readonly int AmountOfInstructions = 55;
+    public int Complexity {
+        get => AmountOfInstructions/10;
+    }
 
-    public Recipe(int complexity) {
-        if (complexity < 0)
-            throw new ArgumentOutOfRangeException("Complexity cannot be negative.");
-
-        Complexity = complexity;
+    public Recipe() {
         _recipes = _recipes.Append(this);
     }
     

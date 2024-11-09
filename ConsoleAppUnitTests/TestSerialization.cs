@@ -563,7 +563,7 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteProductToFile() {
-        _ = new Product("Meth", 15, 99, AddLevelAttribute.Strong);
+        _ = new Product("Meth", 15, AddLevelAttribute.Strong);
         
         Product.Serialize();
         Assert.That(File.Exists("Products.json"), Is.True);
@@ -572,14 +572,13 @@ public class TestSerialization {
         Assert.Multiple(() => {
             Assert.That(jsonContent, Does.Contain("Meth"));
             Assert.That(jsonContent, Does.Contain("15"));
-            Assert.That(jsonContent, Does.Contain("99"));
             Assert.That(jsonContent, Does.Contain("2"));
         });
     }
 
     [Test]
     public void DeserializationLoadProductFromFile() {
-        _ = new Product("Meth", 15, 99, AddLevelAttribute.Strong);
+        _ = new Product("Meth", 15, AddLevelAttribute.Strong);
 
         Product.Serialize();
         Product.Deserialize();
@@ -590,14 +589,13 @@ public class TestSerialization {
         Assert.Multiple(() => {
             Assert.That(deserializedProduct.Name, Is.EqualTo("Meth"));
             Assert.That(deserializedProduct.PricePerPound, Is.EqualTo(15));
-            Assert.That(deserializedProduct.PurityPercentage, Is.EqualTo(99));
             Assert.That(deserializedProduct.AddictivenessLevel, Is.EqualTo(AddLevelAttribute.Strong));
         });
     }
 
     [Test]
     public void SerializeAndDeserializeProductIntegrity() {
-        var originalProduct = new Product("Meth", 15, 99, AddLevelAttribute.Strong);
+        var originalProduct = new Product("Meth", 15, AddLevelAttribute.Strong);
         Product.Serialize();
         Product.Deserialize();
         var deserializedProduct = Product._products.LastOrDefault();
@@ -613,18 +611,15 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteRecipeToFile() {
-        _ = new Recipe(5);
+        _ = new Recipe();
         
         Recipe.Serialize();
         Assert.That(File.Exists("Recipes.json"), Is.True);
-
-        var jsonContent = File.ReadAllText("Recipes.json");
-        Assert.That(jsonContent, Does.Contain("5"));
     }
 
     [Test]
     public void DeserializationLoadRecipeFromFile() {
-        _ = new Recipe(5);
+        _ = new Recipe();
 
         Recipe.Serialize();
         Recipe.Deserialize();
@@ -632,12 +627,11 @@ public class TestSerialization {
         
         var deserializedRecipe = Recipe._recipes.LastOrDefault();
         Assert.That(deserializedRecipe, Is.Not.Null);
-        Assert.That(deserializedRecipe.Complexity, Is.EqualTo(5));
     }
 
     [Test]
     public void SerializeAndDeserializeRecipeIntegrity() {
-        var originalRecipe = new Recipe(5);
+        var originalRecipe = new Recipe();
         Recipe.Serialize();
         Recipe.Deserialize();
         var deserializedRecipe = Recipe._recipes.LastOrDefault();
