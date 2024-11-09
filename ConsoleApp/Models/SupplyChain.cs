@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class SupplyChain {
-    public static IEnumerable<SupplyChain> _supplyChains { get; private set; } = new List<SupplyChain>();
+    public static IEnumerable<SupplyChain> SupplyChains { get; private set; } = new List<SupplyChain>();
     public string Name { get; private set; }
     public int TransitionTime { get; private set; }
 
@@ -16,16 +16,15 @@ public class SupplyChain {
         Name = name;
         TransitionTime = transitionTime;
         
-        _supplyChains = _supplyChains.Append(this);
+        SupplyChains = SupplyChains.Append(this);
     }
-    
 
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     
     public static void Serialize() {
         string fileName = "SupplyChains.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_supplyChains, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(SupplyChains, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -36,7 +35,7 @@ public class SupplyChain {
         string fileName = "SupplyChains.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _supplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
+            SupplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

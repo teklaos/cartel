@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public abstract class CartelMember {
-    public static IEnumerable<CartelMember> _cartelMembers { get; private set; } = new List<CartelMember>();
+    public static IEnumerable<CartelMember> CartelMembers { get; private set; } = new List<CartelMember>();
     public string Name { get; private set; }
     public int TrustLevel { get; private set; }
     public IEnumerable<string> RulesToFollow { get; private set; }
@@ -25,15 +25,15 @@ public abstract class CartelMember {
         Name = name;
         TrustLevel = trustLevel;
         RulesToFollow = rulesToFollow;
-        _cartelMembers = _cartelMembers.Append(this);
+        CartelMembers = CartelMembers.Append(this);
     }
     
-    private static readonly JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     
     public static void Serialize() {
         string fileName = "CartelMembers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_cartelMembers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(CartelMembers, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -44,7 +44,7 @@ public abstract class CartelMember {
         string fileName = "CartelMembers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _cartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
+            CartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

@@ -18,7 +18,7 @@ public class TestConstructorsInvalidInput {
             Assert.That(chemist.RulesToFollow, Is.EqualTo(rules));
             Assert.That(chemist.PoundsCooked, Is.EqualTo(poundsCooked));
         });
-        Assert.That(Chemist._chemists.ToList(), Does.Contain(chemist));
+        Assert.That(Chemist.Chemists.ToList(), Does.Contain(chemist));
     }
 
     [Test]

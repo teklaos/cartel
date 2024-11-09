@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Wholesaler : Customer {
-    public static IEnumerable<Wholesaler> _wholesalers { get; private set; } = new List<Wholesaler>();
+    public static IEnumerable<Wholesaler> Wholesalers { get; private set; } = new List<Wholesaler>();
     public double CommissionPercentage { get; private set; }
     public int MonthlyCustomers { get; private set; }
 
@@ -15,15 +15,15 @@ public class Wholesaler : Customer {
 
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
-        _wholesalers = _wholesalers.Append(this);
+        Wholesalers = Wholesalers.Append(this);
     }
 
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static new void Serialize() {
         string fileName = "Wholesalers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_wholesalers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Wholesalers, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -34,7 +34,7 @@ public class Wholesaler : Customer {
         string fileName = "Wholesalers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _wholesalers = JsonSerializer.Deserialize<List<Wholesaler>>(jsonString) ?? new List<Wholesaler>();
+            Wholesalers = JsonSerializer.Deserialize<List<Wholesaler>>(jsonString) ?? new List<Wholesaler>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

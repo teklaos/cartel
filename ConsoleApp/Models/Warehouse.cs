@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Warehouse {
-    public static IEnumerable<Warehouse> _warehouses { get; private set; } = new List<Warehouse>();
+    public static IEnumerable<Warehouse> Warehouses { get; private set; } = new List<Warehouse>();
     public string Location { get; private set; }
     public int MaxCapacity { get; private set; }
 
@@ -15,15 +15,15 @@ public class Warehouse {
 
         Location = location;
         MaxCapacity = maxCapacity;
-        _warehouses = _warehouses.Append(this);
+        Warehouses = Warehouses.Append(this);
     }
     
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     
     public static void Serialize() {
         string fileName = "Warehouses.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_warehouses, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Warehouses, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -34,7 +34,7 @@ public class Warehouse {
         string fileName = "Warehouses.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _warehouses = JsonSerializer.Deserialize<List<Warehouse>>(jsonString) ?? new List<Warehouse>();
+            Warehouses = JsonSerializer.Deserialize<List<Warehouse>>(jsonString) ?? new List<Warehouse>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Laboratory {
-    public static IEnumerable<Laboratory> _laboratories { get; private set; } = new List<Laboratory>();
+    public static IEnumerable<Laboratory> Laboratories { get; private set; } = new List<Laboratory>();
     public string Location { get; private set; }
     public static int MaxPoundsPerCook { get; } = 50;
 
@@ -12,15 +12,15 @@ public class Laboratory {
             throw new ArgumentException("Location cannot be null or whitespace.");
 
         Location = location;
-        _laboratories = _laboratories.Append(this);
+        Laboratories = Laboratories.Append(this);
     }
     
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     
     public static void Serialize() {
         string fileName = "Laboratories.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_laboratories, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Laboratories, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -31,7 +31,7 @@ public class Laboratory {
         string fileName = "Laboratories.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
+            Laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

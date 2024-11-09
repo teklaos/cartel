@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Official : CartelMember {
-    public static IEnumerable<Official> _officials { get; private set; } = new List<Official>();
+    public static IEnumerable<Official> Officials { get; private set; } = new List<Official>();
     public string Position { get; private set; }
     public string Department { get; private set; }
 
@@ -16,15 +16,15 @@ public class Official : CartelMember {
 
         Position = position;
         Department = department;
-        _officials = _officials.Append(this);
+        Officials = Officials.Append(this);
     }
     
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static new void Serialize() {
         string fileName = "Officials.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_officials, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Officials, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -35,7 +35,7 @@ public class Official : CartelMember {
         string fileName = "Officials.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _officials = JsonSerializer.Deserialize<List<Official>>(jsonString) ?? new List<Official>();
+            Officials = JsonSerializer.Deserialize<List<Official>>(jsonString) ?? new List<Official>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class DistributorCustomer {
-    public static IEnumerable<DistributorCustomer> _distributorsCustomers { get; private set; } = new List<DistributorCustomer>();
+    public static IEnumerable<DistributorCustomer> DistributorsCustomers { get; private set; } = new List<DistributorCustomer>();
     public DateTime DealStartDate { get; private set; }
     public int PoundsOfProduct { get; private set; }
     public DateTime? DealEndDate { get; private set; }
@@ -15,15 +15,15 @@ public class DistributorCustomer {
         DealStartDate = dealStartDate;
         PoundsOfProduct = poundsOfProduct;
         DealEndDate = dealEndDate;
-        _distributorsCustomers = _distributorsCustomers.Append(this);
+        DistributorsCustomers = DistributorsCustomers.Append(this);
     }
     
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static void Serialize() {
         string fileName = "DistributorsCustomers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_distributorsCustomers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(DistributorsCustomers, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -34,7 +34,7 @@ public class DistributorCustomer {
         string fileName = "DistributorsCustomers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _distributorsCustomers = JsonSerializer.Deserialize<List<DistributorCustomer>>(jsonString) ?? new List<DistributorCustomer>();
+            DistributorsCustomers = JsonSerializer.Deserialize<List<DistributorCustomer>>(jsonString) ?? new List<DistributorCustomer>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

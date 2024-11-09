@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Citizen : CartelMember {
-    public static IEnumerable<Citizen> _citizens { get; private set; } = new List<Citizen>();
+    public static IEnumerable<Citizen> Citizens { get; private set; } = new List<Citizen>();
     public string Occupation { get; private set; }
     public int SecurityLevel { get; private set; }
     
@@ -16,15 +16,15 @@ public class Citizen : CartelMember {
         
         Occupation = occupation;
         SecurityLevel = securityLevel;
-        _citizens = _citizens.Append(this);
+        Citizens = Citizens.Append(this);
     }
     
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static new void Serialize() {
         string fileName = "Citizens.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_citizens, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Citizens, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -35,7 +35,7 @@ public class Citizen : CartelMember {
         string fileName = "Citizens.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString) ?? new List<Citizen>();
+            Citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString) ?? new List<Citizen>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

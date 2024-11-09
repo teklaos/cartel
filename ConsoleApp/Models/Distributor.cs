@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Distributor : CartelMember {
-    public static IEnumerable<Distributor> _distributors { get; private set; } = new List<Distributor>();
+    public static IEnumerable<Distributor> Distributors { get; private set; } = new List<Distributor>();
     public int DealsMade { get; private set; }
     
     public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade) :
@@ -12,15 +12,15 @@ public class Distributor : CartelMember {
             throw new ArgumentOutOfRangeException("Made deals cannot be negative.");
 
         DealsMade = dealsMade;
-        _distributors = _distributors.Append(this);
+        Distributors = Distributors.Append(this);
     }
 
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static new void Serialize() {
         string fileName = "Distributors.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_distributors, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Distributors, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -31,7 +31,7 @@ public class Distributor : CartelMember {
         string fileName = "Distributors.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _distributors = JsonSerializer.Deserialize<List<Distributor>>(jsonString) ?? new List<Distributor>();
+            Distributors = JsonSerializer.Deserialize<List<Distributor>>(jsonString) ?? new List<Distributor>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

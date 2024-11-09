@@ -9,7 +9,7 @@ public enum StateAttribute {
 }
 
 public class Ingredient {
-    public static IEnumerable<Ingredient> _ingredients { get; private set; } = new List<Ingredient>();
+    public static IEnumerable<Ingredient> Ingredients { get; private set; } = new List<Ingredient>();
     public string Name { get; private set; }
     public int Price { get; private set; }
     public string ChemicalFormula { get; private set; }
@@ -27,15 +27,15 @@ public class Ingredient {
         Price = price;
         ChemicalFormula = chemicalFormula;
         State = state;
-        _ingredients = _ingredients.Append(this);
+        Ingredients = Ingredients.Append(this);
     }
     
-    private readonly static JsonSerializerOptions _jsonOptions = new() {WriteIndented = true};
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     
     public static void Serialize() {
         string fileName = "Ingredients.json";
         try {
-            string jsonString = JsonSerializer.Serialize(_ingredients, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Ingredients, _jsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -46,7 +46,7 @@ public class Ingredient {
         string fileName = "Ingredients.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            _ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
+            Ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
