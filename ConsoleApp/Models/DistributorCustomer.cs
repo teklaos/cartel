@@ -10,36 +10,21 @@ public class DistributorCustomer {
     public DistributorCustomer(DateTime dealStartDate, int poundsOfProduct, DateTime? dealEndDate) {
         if (poundsOfProduct < 0)
             throw new ArgumentException("Amount of product cannot be negative.");
-
-        ValidateDealStartDate(dealStartDate);
-        ValidateDealEndDate(dealStartDate, dealEndDate);
+        if (dealStartDate < new DateTime(1890, 1, 1))
+            throw new ArgumentException("Deal start date cannot be earlier than year 1890.");
+        if (dealStartDate > DateTime.Now)
+            throw new ArgumentException("Deal start date cannot be in the future.");
+        if (dealEndDate.HasValue) {
+            if (dealEndDate.Value < dealStartDate)
+                throw new ArgumentException("Deal end date cannot be earlier than the start date.");
+            if (dealEndDate.Value > DateTime.Now)
+                throw new ArgumentException("Deal end date cannot be in the future.");
+        }
         
         DealStartDate = dealStartDate;
         PoundsOfProduct = poundsOfProduct;
         DealEndDate = dealEndDate;
         DistributorsCustomers = DistributorsCustomers.Append(this);
-    }
-
-    private static void ValidateDealStartDate(DateTime startDate) {
-        if (startDate < new DateTime(2000, 1, 1)) {
-            throw new ArgumentException("Invalid DateTime, start of the deal cannot be earlier than year 2000.");
-        }
-        
-        if (startDate > DateTime.Now) {
-            throw new ArgumentException("Deal start date cannot be in the future.");
-        }
-    }
-
-    private static void ValidateDealEndDate(DateTime startDate, DateTime? endDate) {
-        if (endDate.HasValue) {
-            if (endDate.Value < startDate) {
-                throw new ArgumentException("Deal end date cannot be earlier than the start date.");
-            }
-
-            if (endDate.Value > DateTime.Now) {
-                throw new ArgumentException("Deal end date cannot be in the future.");
-            }
-        }
     }
     
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
