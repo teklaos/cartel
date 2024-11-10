@@ -12,12 +12,11 @@ public class Dealer : Customer {
         if (string.IsNullOrWhiteSpace(territory))
             throw new ArgumentException("Territory cannot be null or whitespace.");
 
-        if (criminalRecord == null)  
-            throw new ArgumentException("Criminal record cannot be null.");
-
-        foreach (string record in criminalRecord) {
-            if (string.IsNullOrWhiteSpace(record)) {
-                throw new ArgumentException("Each record cannot be null or whitespace.");
+        if (criminalRecord != null) {
+            foreach (string record in criminalRecord) {
+                if (string.IsNullOrWhiteSpace(record)) {
+                    throw new ArgumentException("Each record cannot be null or whitespace.");
+                }
             }
         }
 

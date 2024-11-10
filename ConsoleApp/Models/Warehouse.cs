@@ -11,7 +11,7 @@ public class Warehouse {
         if (string.IsNullOrWhiteSpace(location))
             throw new ArgumentException("Location cannot be null or whitespace.");
         if (maxCapacity < 0)
-            throw new ArgumentOutOfRangeException("Maximum capacity cannot be negative.");
+            throw new ArgumentException("Maximum capacity cannot be negative.");
 
         Location = location;
         MaxCapacity = maxCapacity;

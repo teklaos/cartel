@@ -9,9 +9,9 @@ public class Wholesaler : Customer {
 
     public Wholesaler(double commissionPercentage, int monthlyCustomers) : base() {
         if (commissionPercentage < 0)
-            throw new ArgumentOutOfRangeException("Commission percentage cannot be negative.");
+            throw new ArgumentException("Commission percentage cannot be negative.");
         if (monthlyCustomers < 0)
-            throw new ArgumentOutOfRangeException("Monthly customers cannot be negative.");
+            throw new ArgumentException("Amount of monthly customers cannot be negative.");
 
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;

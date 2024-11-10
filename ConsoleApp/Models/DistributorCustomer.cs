@@ -9,7 +9,7 @@ public class DistributorCustomer {
 
     public DistributorCustomer(DateTime dealStartDate, int poundsOfProduct, DateTime? dealEndDate) {
         if (poundsOfProduct < 0)
-            throw new ArgumentException("Amount of product cannot be negative.");
+            throw new ArgumentException("Pounds of product cannot be negative.");
         if (dealStartDate < new DateTime(1890, 1, 1))
             throw new ArgumentException("Deal start date cannot be earlier than year 1890.");
         if (dealStartDate > DateTime.Now)

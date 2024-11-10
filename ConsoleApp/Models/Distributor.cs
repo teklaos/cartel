@@ -9,7 +9,7 @@ public class Distributor : CartelMember {
     public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade) :
     base(name, trustLevel, rulesToFollow) {
         if (dealsMade < 0)
-            throw new ArgumentOutOfRangeException("Made deals cannot be negative.");
+            throw new ArgumentException("Made deals cannot be negative.");
 
         DealsMade = dealsMade;
         Distributors = Distributors.Append(this);

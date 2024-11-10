@@ -32,7 +32,7 @@ public class Product {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
         if (pricePerPound < 0)
-            throw new ArgumentOutOfRangeException("Price per pound cannot be negative.");
+            throw new ArgumentException("Price per pound cannot be negative.");
         
         Name = name;
         PricePerPound = pricePerPound;

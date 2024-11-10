@@ -408,7 +408,7 @@ public class TestSerialization {
         Assert.That(deserializedIngredient, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedIngredient.Name, Is.EqualTo("Crystal"));
-            Assert.That(deserializedIngredient.Price, Is.EqualTo(200));
+            Assert.That(deserializedIngredient.PricePerPound, Is.EqualTo(200));
             Assert.That(deserializedIngredient.ChemicalFormula, Is.EqualTo("C₁₀H₁₅N"));
             Assert.That(deserializedIngredient.State, Is.EqualTo(StateAttribute.Solid));
         });
@@ -424,7 +424,7 @@ public class TestSerialization {
         Assert.That(deserializedIngredient, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedIngredient.Name, Is.EqualTo(originalIngredient.Name));
-            Assert.That(deserializedIngredient.Price, Is.EqualTo(originalIngredient.Price));
+            Assert.That(deserializedIngredient.PricePerPound, Is.EqualTo(originalIngredient.PricePerPound));
             Assert.That(deserializedIngredient.ChemicalFormula, Is.EqualTo(originalIngredient.ChemicalFormula));
             Assert.That(deserializedIngredient.State, Is.EqualTo(originalIngredient.State));
         });
