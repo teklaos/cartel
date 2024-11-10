@@ -22,7 +22,7 @@ public class Ingredient {
             throw new ArgumentException("Price cannot be negative.");
         if (string.IsNullOrWhiteSpace(chemicalFormula))
             throw new ArgumentException("Chemical formula cannot be null or whitespace.");
-        
+
         Name = name;
         Price = price;
         ChemicalFormula = chemicalFormula;
