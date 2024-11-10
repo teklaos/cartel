@@ -299,4 +299,17 @@ public class TestConstructorsInvalidInput {
         });
         Assert.That(DistributorCustomer.DistributorsCustomers.ToList(), Does.Contain(distributorCustomer));
     }
+
+    [Test]
+    public void DistributorCustomerConstructorInvalidDealStartDate() {
+        DateTime dealStartDate = new DateTime(1800, 5, 20);
+        DateTime dealEndDate = new DateTime(2024, 5, 21);      
+        
+        int PoundsOfProduct = 10;
+    
+        var distributorCustomer = new DistributorCustomer(dealStartDate, PoundsOfProduct, dealEndDate);
+    
+        Assert.Throws<ArgumentException>(() => new DistributorCustomer(dealStartDate, PoundsOfProduct, dealEndDate),
+            "Expected ArgumentException for invalid dealStartDate.");
+    }
 }
