@@ -18,7 +18,7 @@ public class TestConstructorsInvalidInput {
             Assert.That(chemist.RulesToFollow, Is.EqualTo(rules));
             Assert.That(chemist.PoundsCooked, Is.EqualTo(poundsCooked));
         });
-        Assert.That(Chemist._chemists.ToList(), Does.Contain(chemist));
+        Assert.That(Chemist.Chemists.ToList(), Does.Contain(chemist));
     }
 
     [Test]
@@ -83,7 +83,7 @@ public class TestConstructorsInvalidInput {
             Assert.That(citizen.Occupation, Is.EqualTo(occupation));
             Assert.That(citizen.SecurityLevel, Is.EqualTo(securityLevel));
         });
-        Assert.That(Citizen._citizens.ToList(), Does.Contain(citizen));
+        Assert.That(Citizen.Citizens.ToList(), Does.Contain(citizen));
     }
 
     [Test]
@@ -155,7 +155,7 @@ public class TestConstructorsInvalidInput {
             Assert.That(dealer.Territory, Is.EqualTo(territory));
             Assert.That(dealer.CriminalRecord, Is.EqualTo(criminalRecord));
         });
-        Assert.That(Dealer._dealers.ToList(), Does.Contain(dealer));
+        Assert.That(Dealer.Dealers.ToList(), Does.Contain(dealer));
     }
 
     [Test]
@@ -189,7 +189,7 @@ public class TestConstructorsInvalidInput {
             Assert.That(deliverer.TrustLevel, Is.EqualTo(trustLevel));
             Assert.That(deliverer.RulesToFollow, Is.EqualTo(rules));
         });
-        Assert.That(Deliverer._deliverers.ToList(), Does.Contain(deliverer));
+        Assert.That(Deliverer.Deliverers.ToList(), Does.Contain(deliverer));
     }
 
     [Test]
@@ -237,7 +237,7 @@ public class TestConstructorsInvalidInput {
             Assert.That(distributor.RulesToFollow, Is.EqualTo(rules));
             Assert.That(distributor.DealsMade, Is.EqualTo(dealsMade));            
         });
-        Assert.That(Distributor._distributors.ToList(), Does.Contain(distributor));
+        Assert.That(Distributor.Distributors.ToList(), Does.Contain(distributor));
     }
 
     [Test]
@@ -288,15 +288,15 @@ public class TestConstructorsInvalidInput {
         DateTime dealStartDate = new DateTime(2024, 5, 20);
         DateTime dealEndDate = new DateTime(2024, 5, 21);      
         
-        int amountOfProduct = 10;
+        int PoundsOfProduct = 10;
         
-        var distributorCustomer = new DistributorCustomer(dealStartDate, amountOfProduct, dealEndDate);
+        var distributorCustomer = new DistributorCustomer(dealStartDate, PoundsOfProduct, dealEndDate);
 
         Assert.Multiple(() => {
             Assert.That(distributorCustomer.DealStartDate, Is.EqualTo(dealStartDate));
-            Assert.That(distributorCustomer.AmountOfProduct, Is.EqualTo(amountOfProduct));
+            Assert.That(distributorCustomer.PoundsOfProduct, Is.EqualTo(PoundsOfProduct));
             Assert.That(distributorCustomer.DealEndDate, Is.EqualTo(dealEndDate));
         });
-        Assert.That(DistributorCustomer._distributorsCustomers.ToList(), Does.Contain(distributorCustomer));
+        Assert.That(DistributorCustomer.DistributorsCustomers.ToList(), Does.Contain(distributorCustomer));
     }
 }
