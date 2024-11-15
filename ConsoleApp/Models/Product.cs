@@ -9,7 +9,11 @@ public enum AddLevelAttribute {
 }
 
 public class Product {
-    public static IEnumerable<Product> Products { get; private set; } = new List<Product>(); 
+    private static IEnumerable<Product> _products = new List<Product>();
+    public static IEnumerable<Product> Products {
+        get => new List<Product>(_products);
+        private set => _products = value;
+    }
     public string Name { get; private set; }
     public int PricePerPound { get; private set; }
     private readonly int _poundsCooked = 2000;

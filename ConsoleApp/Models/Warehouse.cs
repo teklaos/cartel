@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Warehouse {
-    public static IEnumerable<Warehouse> Warehouses { get; private set; } = new List<Warehouse>();
+    private static IEnumerable<Warehouse> _warehouses = new List<Warehouse>();
+    public static IEnumerable<Warehouse> Warehouses {
+        get => new List<Warehouse>(_warehouses);
+        private set => _warehouses = value;
+    }
     public string Location { get; private set; }
     public int MaxCapacity { get; private set; }
 

@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class DistributorCustomer {
-    public static IEnumerable<DistributorCustomer> DistributorsCustomers { get; private set; } = new List<DistributorCustomer>();
+    private static IEnumerable<DistributorCustomer> _distributorsCustomers = new List<DistributorCustomer>();
+    public static IEnumerable<DistributorCustomer> DistributorsCustomers {
+        get => new List<DistributorCustomer>(_distributorsCustomers);
+        private set => _distributorsCustomers = value;
+    }
     public DateTime DealStartDate { get; private set; }
     public int PoundsOfProduct { get; private set; }
     public DateTime? DealEndDate { get; private set; }

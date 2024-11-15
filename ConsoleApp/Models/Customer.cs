@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Customer {
-    public static IEnumerable<Customer> Customers { get; private set; } = new List<Customer>();
+    private static IEnumerable<Customer> _customers = new List<Customer>();
+    public static IEnumerable<Customer> Customers {
+        get => new List<Customer>(_customers);
+        private set => _customers = value;
+    }
 
     public Customer() => Customers = Customers.Append(this);
     

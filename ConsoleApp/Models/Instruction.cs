@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Instruction {
-    public static IEnumerable<Instruction> Instructions { get; private set; } = new List<Instruction>();
+    private static IEnumerable<Instruction> _instructions = new List<Instruction>();
+    public static IEnumerable<Instruction> Instructions {
+        get => new List<Instruction>(_instructions);
+        private set => _instructions = value;
+    }
     public string Action { get; private set; }
 
     public Instruction(string action) {

@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Chemist : CartelMember {
-    public static IEnumerable<Chemist> Chemists { get; private set; } = new List<Chemist>();
+    private static IEnumerable<Chemist> _chemists = new List<Chemist>();
+    public static IEnumerable<Chemist> Chemists {
+        get => new List<Chemist>(_chemists);
+        private set => _chemists = value;
+    }
     public int PoundsCooked { get; private set; }
 
     public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int poundsCooked):

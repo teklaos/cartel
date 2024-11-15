@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class SupplyChain {
-    public static IEnumerable<SupplyChain> SupplyChains { get; private set; } = new List<SupplyChain>();
+    private static IEnumerable<SupplyChain> _supplyChains = new List<SupplyChain>();
+    public static IEnumerable<SupplyChain> SupplyChains {
+        get => new List<SupplyChain>(_supplyChains);
+        private set => _supplyChains = value;
+    }
     public string Name { get; private set; }
     public int TransitionTime { get; private set; }
 

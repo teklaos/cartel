@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Laboratory {
-    public static IEnumerable<Laboratory> Laboratories { get; private set; } = new List<Laboratory>();
+    private static IEnumerable<Laboratory> _laboratories = new List<Laboratory>();
+    public static IEnumerable<Laboratory> Laboratories {
+        get => new List<Laboratory>(_laboratories);
+        private set => _laboratories = value;
+    }
     public string Location { get; private set; }
     public static int MaxPoundsPerCook { get; } = 50;
 
