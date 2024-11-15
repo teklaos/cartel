@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using ConsoleApp.models;
 
 namespace ConsoleAppUnitTests;
@@ -38,7 +37,7 @@ public class TestSerialization {
         Chemist.Deserialize();
         Assert.That(Chemist.Chemists, Is.Not.Null);
         
-        var deserializedChemist = Chemist.Chemists.LastOrDefault();
+        var deserializedChemist = Chemist.Chemists.Last();
         Assert.That(deserializedChemist, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedChemist.Name, Is.EqualTo("Gus Fring"));
@@ -53,7 +52,7 @@ public class TestSerialization {
         var originalChemist = new Chemist("Saul Goodman", 6, new List<string> {"Don’t go to jail.", "Always lawyer up.", "Better call Saul."}, 0);
         Chemist.Serialize();
         Chemist.Deserialize();
-        var deserializedChemist = Chemist.Chemists.LastOrDefault();
+        var deserializedChemist = Chemist.Chemists.Last();
 
         Assert.That(deserializedChemist, Is.Not.Null);
         Assert.Multiple(() => {
@@ -99,7 +98,7 @@ public class TestSerialization {
         Citizen.Deserialize();
         Assert.That(Citizen.Citizens, Is.Not.Null);
         
-        var deserializedCitizen = Citizen.Citizens.LastOrDefault();
+        var deserializedCitizen = Citizen.Citizens.Last();
         Assert.That(deserializedCitizen, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedCitizen.Name, Is.EqualTo("Gus Fring"));
@@ -115,7 +114,7 @@ public class TestSerialization {
         var originalCitizen = new Citizen("Saul Goodman", 6, new List<string> {"Don’t go to jail.", "Always lawyer up.", "Better call Saul."}, "Lawyer", 8);
         Citizen.Serialize();
         Citizen.Deserialize();
-        var deserializedCitizen = Citizen.Citizens.LastOrDefault();
+        var deserializedCitizen = Citizen.Citizens.Last();
 
         Assert.That(deserializedCitizen, Is.Not.Null);
         Assert.Multiple(() => {
@@ -149,7 +148,7 @@ public class TestSerialization {
         Dealer.Deserialize();
         Assert.That(Dealer.Dealers, Is.Not.Null);
         
-        var deserializedDealer = Dealer.Dealers.LastOrDefault();
+        var deserializedDealer = Dealer.Dealers.Last();
         Assert.That(deserializedDealer, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedDealer.Territory, Is.EqualTo("North Valley"));
@@ -163,7 +162,7 @@ public class TestSerialization {
 
         Dealer.Serialize();
         Dealer.Deserialize();
-        var deserializedDealer = Dealer.Dealers.LastOrDefault();
+        var deserializedDealer = Dealer.Dealers.Last();
 
         Assert.That(deserializedDealer, Is.Not.Null);
         Assert.That(deserializedDealer.Territory, Is.EqualTo(originalDealer.Territory));
@@ -203,7 +202,7 @@ public class TestSerialization {
         Deliverer.Deserialize();
         Assert.That(Deliverer.Deliverers, Is.Not.Null);
         
-        var deserializedDeliverer = Deliverer.Deliverers.LastOrDefault();
+        var deserializedDeliverer = Deliverer.Deliverers.Last();
         Assert.That(deserializedDeliverer, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedDeliverer.Name, Is.EqualTo("Gus Fring"));
@@ -217,7 +216,7 @@ public class TestSerialization {
         var originalDeliverer = new Deliverer("Saul Goodman", 6, new List<string> {"Don’t go to jail.", "Always lawyer up.", "Better call Saul."});
         Deliverer.Serialize();
         Deliverer.Deserialize();
-        var deserializedDeliverer = Deliverer.Deliverers.LastOrDefault();
+        var deserializedDeliverer = Deliverer.Deliverers.Last();
 
         Assert.That(deserializedDeliverer, Is.Not.Null);
         Assert.Multiple(() => {
@@ -261,7 +260,7 @@ public class TestSerialization {
         Distributor.Deserialize();
         Assert.That(Distributor.Distributors, Is.Not.Null);
         
-        var deserializedDistributor = Distributor.Distributors.LastOrDefault();
+        var deserializedDistributor = Distributor.Distributors.Last();
         Assert.That(deserializedDistributor, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedDistributor.Name, Is.EqualTo("Gus Fring"));
@@ -276,7 +275,7 @@ public class TestSerialization {
         var originalDistributor = new Distributor("Saul Goodman", 6, new List<string> {"Don’t go to jail.", "Always lawyer up.", "Better call Saul."}, 0);
         Distributor.Serialize();
         Distributor.Deserialize();
-        var deserializedDistributor = Distributor.Distributors.LastOrDefault();
+        var deserializedDistributor = Distributor.Distributors.Last();
 
         Assert.That(deserializedDistributor, Is.Not.Null);
         Assert.Multiple(() => {
@@ -310,7 +309,7 @@ public class TestSerialization {
         DistributorCustomer.Deserialize();
         Assert.That(DistributorCustomer.DistributorsCustomers, Is.Not.Null);
         
-        var deserializedDistributorCustomer = DistributorCustomer.DistributorsCustomers.LastOrDefault();
+        var deserializedDistributorCustomer = DistributorCustomer.DistributorsCustomers.Last();
         Assert.That(deserializedDistributorCustomer, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedDistributorCustomer.DealStartDate, Is.EqualTo(new DateTime(2020, 4, 19)));
@@ -324,7 +323,7 @@ public class TestSerialization {
         var originalDistributorCustomer = new DistributorCustomer(new DateTime(2005, 03, 07), 150, new DateTime(2005, 03, 08));
         DistributorCustomer.Serialize();
         DistributorCustomer.Deserialize();
-        var deserializedDistributorCustomer = DistributorCustomer.DistributorsCustomers.LastOrDefault();
+        var deserializedDistributorCustomer = DistributorCustomer.DistributorsCustomers.Last();
 
         Assert.That(deserializedDistributorCustomer, Is.Not.Null);
         Assert.Multiple(() => {
@@ -357,7 +356,7 @@ public class TestSerialization {
         Equipment.Deserialize();
         Assert.That(Equipment.EquipmentList, Is.Not.Null);
         
-        var deserializedEquipment = Equipment.EquipmentList.LastOrDefault();
+        var deserializedEquipment = Equipment.EquipmentList.Last();
         Assert.That(deserializedEquipment, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedEquipment.Type, Is.EqualTo("Bottle"));
@@ -371,7 +370,7 @@ public class TestSerialization {
         var originalEquipment = new Equipment("Bottle", "Boiling Flask", "CA-3");
         Equipment.Serialize();
         Equipment.Deserialize();
-        var deserializedEquipment = Equipment.EquipmentList.LastOrDefault();
+        var deserializedEquipment = Equipment.EquipmentList.Last();
 
         Assert.That(deserializedEquipment, Is.Not.Null);
         Assert.Multiple(() => {
@@ -404,7 +403,7 @@ public class TestSerialization {
         Ingredient.Deserialize();
         Assert.That(Ingredient.Ingredients, Is.Not.Null);
         
-        var deserializedIngredient = Ingredient.Ingredients.LastOrDefault();
+        var deserializedIngredient = Ingredient.Ingredients.Last();
         Assert.That(deserializedIngredient, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedIngredient.Name, Is.EqualTo("Crystal"));
@@ -419,7 +418,7 @@ public class TestSerialization {
         var originalIngredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
         Ingredient.Serialize();
         Ingredient.Deserialize();
-        var deserializedIngredient = Ingredient.Ingredients.LastOrDefault();
+        var deserializedIngredient = Ingredient.Ingredients.Last();
 
         Assert.That(deserializedIngredient, Is.Not.Null);
         Assert.Multiple(() => {
@@ -432,7 +431,7 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteInstructionToFile() {
-        _ = new Instruction(ActionAttribute.Stir);
+        _ = new Instruction("Stir");
         
         Instruction.Serialize();
         Assert.That(File.Exists("Instructions.json"), Is.True);
@@ -443,23 +442,23 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadInstructionFromFile() {
-        _ = new Instruction(ActionAttribute.Stir);
+        _ = new Instruction("Stir");
 
         Instruction.Serialize();
         Instruction.Deserialize();
         Assert.That(Instruction.Instructions, Is.Not.Null);
         
-        var deserializedInstruction = Instruction.Instructions.LastOrDefault();
+        var deserializedInstruction = Instruction.Instructions.Last();
         Assert.That(deserializedInstruction, Is.Not.Null);
-        Assert.That(deserializedInstruction.Action, Is.EqualTo(ActionAttribute.Stir));
+        Assert.That(deserializedInstruction.Action, Is.EqualTo("Stir"));
     }
 
     [Test]
     public void SerializeAndDeserializeInstructionIntegrity() {
-        var originalInstruction = new Instruction(ActionAttribute.Stir);
+        var originalInstruction = new Instruction("Stir");
         Instruction.Serialize();
         Instruction.Deserialize();
-        var deserializedInstruction = Instruction.Instructions.LastOrDefault();
+        var deserializedInstruction = Instruction.Instructions.Last();
 
         Assert.That(deserializedInstruction, Is.Not.Null);
         Assert.That(deserializedInstruction.Action, Is.EqualTo(originalInstruction.Action));
@@ -484,7 +483,7 @@ public class TestSerialization {
         Laboratory.Deserialize();
         Assert.That(Laboratory.Laboratories, Is.Not.Null);
         
-        var deserializedLaboratory = Laboratory.Laboratories.LastOrDefault();
+        var deserializedLaboratory = Laboratory.Laboratories.Last();
         Assert.That(deserializedLaboratory, Is.Not.Null);
         Assert.That(deserializedLaboratory.Location, Is.EqualTo("Madelyn"));
     }
@@ -494,7 +493,7 @@ public class TestSerialization {
         var originalLaboratory = new Laboratory("Madelyn");
         Laboratory.Serialize();
         Laboratory.Deserialize();
-        var deserializedLaboratory = Laboratory.Laboratories.LastOrDefault();
+        var deserializedLaboratory = Laboratory.Laboratories.Last();
 
         Assert.That(deserializedLaboratory, Is.Not.Null);
         Assert.That(deserializedLaboratory.Location, Is.EqualTo(originalLaboratory.Location));
@@ -533,7 +532,7 @@ public class TestSerialization {
         Official.Deserialize();
         Assert.That(Official.Officials, Is.Not.Null);
         
-        var deserializedOfficial = Official.Officials.LastOrDefault();
+        var deserializedOfficial = Official.Officials.Last();
         Assert.That(deserializedOfficial, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedOfficial.Name, Is.EqualTo("Gus Fring"));
@@ -549,7 +548,7 @@ public class TestSerialization {
         var originalOfficial = new Official("Saul Goodman", 6, new List<string> {"Don’t go to jail.", "Always lawyer up.", "Better call Saul."}, "Lawyer", "Criminal Law");
         Official.Serialize();
         Official.Deserialize();
-        var deserializedOfficial = Official.Officials.LastOrDefault();
+        var deserializedOfficial = Official.Officials.Last();
 
         Assert.That(deserializedOfficial, Is.Not.Null);
         Assert.Multiple(() => {
@@ -584,7 +583,7 @@ public class TestSerialization {
         Product.Deserialize();
         Assert.That(Product.Products, Is.Not.Null);
         
-        var deserializedProduct = Product.Products.LastOrDefault();
+        var deserializedProduct = Product.Products.Last();
         Assert.That(deserializedProduct, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedProduct.Name, Is.EqualTo("Meth"));
@@ -598,7 +597,7 @@ public class TestSerialization {
         var originalProduct = new Product("Meth", 15, AddLevelAttribute.Strong);
         Product.Serialize();
         Product.Deserialize();
-        var deserializedProduct = Product.Products.LastOrDefault();
+        var deserializedProduct = Product.Products.Last();
 
         Assert.That(deserializedProduct, Is.Not.Null);
         Assert.Multiple(() => {
@@ -625,7 +624,7 @@ public class TestSerialization {
         Recipe.Deserialize();
         Assert.That(Recipe.Recipes, Is.Not.Null);
         
-        var deserializedRecipe = Recipe.Recipes.LastOrDefault();
+        var deserializedRecipe = Recipe.Recipes.Last();
         Assert.That(deserializedRecipe, Is.Not.Null);
     }
 
@@ -634,7 +633,7 @@ public class TestSerialization {
         var originalRecipe = new Recipe();
         Recipe.Serialize();
         Recipe.Deserialize();
-        var deserializedRecipe = Recipe.Recipes.LastOrDefault();
+        var deserializedRecipe = Recipe.Recipes.Last();
 
         Assert.That(deserializedRecipe, Is.Not.Null);
         Assert.That(deserializedRecipe.Complexity, Is.EqualTo(originalRecipe.Complexity));
@@ -662,7 +661,7 @@ public class TestSerialization {
         SupplyChain.Deserialize();
         Assert.That(SupplyChain.SupplyChains, Is.Not.Null);
         
-        var deserializedSupplyChain = SupplyChain.SupplyChains.LastOrDefault();
+        var deserializedSupplyChain = SupplyChain.SupplyChains.Last();
         Assert.That(deserializedSupplyChain, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedSupplyChain.Name, Is.EqualTo("DPD"));
@@ -675,7 +674,7 @@ public class TestSerialization {
         var originalSupplyChain = new SupplyChain("DPD", 48);
         SupplyChain.Serialize();
         SupplyChain.Deserialize();
-        var deserializedSupplyChain = SupplyChain.SupplyChains.LastOrDefault();
+        var deserializedSupplyChain = SupplyChain.SupplyChains.Last();
 
         Assert.That(deserializedSupplyChain, Is.Not.Null);
         Assert.Multiple(() => {
@@ -706,7 +705,7 @@ public class TestSerialization {
         Warehouse.Deserialize();
         Assert.That(Warehouse.Warehouses, Is.Not.Null);
         
-        var deserializedWarehouse = Warehouse.Warehouses.LastOrDefault();
+        var deserializedWarehouse = Warehouse.Warehouses.Last();
         Assert.That(deserializedWarehouse, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedWarehouse.Location, Is.EqualTo("Madelyn"));
@@ -719,7 +718,7 @@ public class TestSerialization {
         var originalWarehouse = new Warehouse("Madelyn", 500);
         Warehouse.Serialize();
         Warehouse.Deserialize();
-        var deserializedWarehouse = Warehouse.Warehouses.LastOrDefault();
+        var deserializedWarehouse = Warehouse.Warehouses.Last();
 
         Assert.That(deserializedWarehouse, Is.Not.Null);
         Assert.Multiple(() => {
@@ -750,7 +749,7 @@ public class TestSerialization {
         Wholesaler.Deserialize();
         Assert.That(Wholesaler.Wholesalers, Is.Not.Null);
         
-        var deserializedWholesaler = Wholesaler.Wholesalers.LastOrDefault();
+        var deserializedWholesaler = Wholesaler.Wholesalers.Last();
         Assert.That(deserializedWholesaler, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedWholesaler.CommissionPercentage, Is.EqualTo(15.47));
@@ -764,7 +763,7 @@ public class TestSerialization {
 
         Wholesaler.Serialize();
         Wholesaler.Deserialize();
-        var deserializedWholesaler = Wholesaler.Wholesalers.LastOrDefault();
+        var deserializedWholesaler = Wholesaler.Wholesalers.Last();
 
         Assert.That(deserializedWholesaler, Is.Not.Null);
         Assert.That(deserializedWholesaler.CommissionPercentage, Is.EqualTo(originalWholesaler.CommissionPercentage));

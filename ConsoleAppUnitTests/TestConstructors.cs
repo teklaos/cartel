@@ -113,10 +113,9 @@ public class TestConstructors {
 
     [Test]
     public void TestInstructionConstructor() {
-        ActionAttribute actionAttribute = ActionAttribute.Stir;
-        Instruction instruction = new Instruction(actionAttribute);
+        Instruction instruction = new Instruction("Stir");
 
-        Assert.That(instruction.Action, Is.EqualTo(actionAttribute));
+        Assert.That(instruction.Action, Is.EqualTo("Stir"));
     }
 
     [Test]

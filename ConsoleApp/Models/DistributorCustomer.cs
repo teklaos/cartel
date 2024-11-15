@@ -1,6 +1,7 @@
 using System.Text.Json;
 
 namespace ConsoleApp.models;
+
 public class DistributorCustomer {
     public static IEnumerable<DistributorCustomer> DistributorsCustomers { get; private set; } = new List<DistributorCustomer>();
     public DateTime DealStartDate { get; private set; }

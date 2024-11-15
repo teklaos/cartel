@@ -2,17 +2,11 @@ using System.Text.Json;
 
 namespace ConsoleApp.models;
 
-public enum ActionAttribute {
-    Add,
-    Stir,
-    Combine
-}
-
 public class Instruction {
     public static IEnumerable<Instruction> Instructions { get; private set; } = new List<Instruction>();
-    public ActionAttribute Action { get; private set; }
+    public string Action { get; private set; }
 
-    public Instruction(ActionAttribute action) {
+    public Instruction(string action) {
         Action = action;
         Instructions = Instructions.Append(this);
     }
