@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Wholesaler : Customer {
-    public static IEnumerable<Wholesaler> Wholesalers { get; private set; } = new List<Wholesaler>();
+    private static IEnumerable<Wholesaler> _wholesalers = new List<Wholesaler>();
+    public static IEnumerable<Wholesaler> Wholesalers {
+        get => new List<Wholesaler>(_wholesalers);
+        private set => _wholesalers = value;
+    }
     public double CommissionPercentage { get; private set; }
     public int MonthlyCustomers { get; private set; }
 

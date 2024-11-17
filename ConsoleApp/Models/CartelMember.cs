@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public abstract class CartelMember {
-    public static IEnumerable<CartelMember> CartelMembers { get; private set; } = new List<CartelMember>();
+    private static IEnumerable<CartelMember> _cartelMembers = new List<CartelMember>();
+    public static IEnumerable<CartelMember> CartelMembers {
+        get => new List<CartelMember>(_cartelMembers);
+        private set => _cartelMembers = value;
+    }
     public string Name { get; private set; }
     public int TrustLevel { get; private set; }
     public IEnumerable<string> RulesToFollow { get; private set; }

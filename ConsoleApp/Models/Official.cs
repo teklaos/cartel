@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Official : CartelMember {
-    public static IEnumerable<Official> Officials { get; private set; } = new List<Official>();
+    private static IEnumerable<Official> _officials = new List<Official>();
+    public static IEnumerable<Official> Officials {
+        get => new List<Official>(_officials);
+        private set => _officials = value;
+    }
     public string Position { get; private set; }
     public string Department { get; private set; }
 

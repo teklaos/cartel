@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Recipe {
-    public static IEnumerable<Recipe> Recipes { get; private set; } = new List<Recipe>();
+    private static IEnumerable<Recipe> _recipes = new List<Recipe>();
+    public static IEnumerable<Recipe> Recipes {
+        get => new List<Recipe>(_recipes);
+        private set => _recipes = value;
+    }
     private readonly int _amountOfInstructions = 55;
     public int Complexity { get => _amountOfInstructions/10; }
 

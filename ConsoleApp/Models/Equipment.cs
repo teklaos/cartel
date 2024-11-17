@@ -3,7 +3,11 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Equipment {
-    public static IEnumerable<Equipment> EquipmentList { get; private set; } = new List<Equipment>();
+    private static IEnumerable<Equipment> _equipmentList = new List<Equipment>();
+    public static IEnumerable<Equipment> EquipmentList {
+        get => new List<Equipment>(_equipmentList);
+        private set => _equipmentList = value;
+    }
     public string Type { get; private set; }
     public string Name { get; private set; }
     public string Model { get; private set; }
