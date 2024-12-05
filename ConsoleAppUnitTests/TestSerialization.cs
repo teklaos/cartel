@@ -437,7 +437,7 @@ public class TestSerialization {
         Assert.That(File.Exists("Instructions.json"), Is.True);
 
         var jsonContent = File.ReadAllText("Instructions.json");
-        Assert.That(jsonContent, Does.Contain("1"));
+        Assert.That(jsonContent, Does.Contain("Stir"));
     }
 
     [Test]

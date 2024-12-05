@@ -8,11 +8,18 @@ public enum AddLevelAttribute {
     Strong
 }
 
-public class Product {
+public class Product
+{
     private static IEnumerable<Product> _products = new List<Product>();
+    private static IList<Warehouse> _connectedWarehouses = new List<Warehouse>();
+
     public static IEnumerable<Product> Products {
         get => new List<Product>(_products);
         private set => _products = value;
+    }
+    public static IList<Warehouse> ConnectedWarehouses {
+        get => new List<Warehouse>(_connectedWarehouses);
+        private set => _connectedWarehouses = value;
     }
     public string Name { get; private set; }
     public int PricePerPound { get; private set; }
@@ -45,6 +52,28 @@ public class Product {
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
+    
+    public void AddProductStoredIn(Warehouse warehouse)
+    {
+        _connectedWarehouses.Add(warehouse);
+        Warehouse.AddProductToWarehouseInternally(this);
+    }
+    
+    public void RemoveProductStoredIn(Warehouse warehouse)
+    {
+        _connectedWarehouses.Remove(warehouse);
+        Warehouse.RemoveProductFromWarehouseInternally(this);
+    }
+
+    
+    public static void AttachWarehouseInternally(Warehouse warehouse) => _connectedWarehouses.Add(warehouse);
+
+    public static void RemoveWarehouseInternally(Warehouse warehouse)
+    
+    {
+        if (!_connectedWarehouses.Remove(warehouse))
+            throw new Exception("Warehouse not found.");
+    }
     
     public static void Serialize() {
         string fileName = "Products.json";
