@@ -10,11 +10,11 @@ public class Chemist : CartelMember {
     }
     public int PoundsCooked { get; private set; }
 
-    public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int poundsCooked):
+    public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int poundsCooked) :
     base(name, trustLevel, rulesToFollow) {
         if (poundsCooked < 0)
             throw new ArgumentException("Cooked pounds cannot be negative.");
-        
+
         PoundsCooked = poundsCooked;
         Chemists = Chemists.Append(this);
     }

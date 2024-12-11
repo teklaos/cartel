@@ -18,9 +18,9 @@ public class Laboratory {
         Location = location;
         Laboratories = Laboratories.Append(this);
     }
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "Laboratories.json";
         try {

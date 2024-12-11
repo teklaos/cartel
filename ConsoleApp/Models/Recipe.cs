@@ -9,12 +9,12 @@ public class Recipe {
         private set => _recipes = value;
     }
     private readonly int _amountOfInstructions = 55;
-    public int Complexity { get => _amountOfInstructions/10; }
+    public int Complexity { get => _amountOfInstructions / 10; }
 
     public Recipe() => Recipes = Recipes.Append(this);
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "Recipes.json";
         try {

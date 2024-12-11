@@ -25,13 +25,13 @@ public class DistributorCustomer {
             if (dealEndDate.Value > DateTime.Now)
                 throw new ArgumentException("Deal end date cannot be in the future.");
         }
-        
+
         DealStartDate = dealStartDate;
         PoundsOfProduct = poundsOfProduct;
         DealEndDate = dealEndDate;
         DistributorsCustomers = DistributorsCustomers.Append(this);
     }
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static void Serialize() {

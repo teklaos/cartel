@@ -8,11 +8,9 @@ public enum AddLevelAttribute {
     Strong
 }
 
-public class Product
-{
+public class Product {
     private static IEnumerable<Product> _products = new List<Product>();
     private static IList<Warehouse> _connectedWarehouses = new List<Warehouse>();
-
     public static IEnumerable<Product> Products {
         get => new List<Product>(_products);
         private set => _products = value;
@@ -44,37 +42,32 @@ public class Product
             throw new ArgumentException("Name cannot be null or whitespace.");
         if (pricePerPound < 0)
             throw new ArgumentException("Price per pound cannot be negative.");
-        
+
         Name = name;
         PricePerPound = pricePerPound;
         AddictivenessLevel = addictivenessLevel;
         Products = Products.Append(this);
     }
 
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
-    public void AddProductStoredIn(Warehouse warehouse)
-    {
+    public void AddProductStoredIn(Warehouse warehouse) {
         _connectedWarehouses.Add(warehouse);
         Warehouse.AddProductToWarehouseInternally(this);
     }
-    
-    public void RemoveProductStoredIn(Warehouse warehouse)
-    {
+
+    public void RemoveProductStoredIn(Warehouse warehouse) {
         _connectedWarehouses.Remove(warehouse);
         Warehouse.RemoveProductFromWarehouseInternally(this);
     }
 
-    
     public static void AttachWarehouseInternally(Warehouse warehouse) => _connectedWarehouses.Add(warehouse);
 
-    public static void RemoveWarehouseInternally(Warehouse warehouse)
-    
-    {
+    public static void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_connectedWarehouses.Remove(warehouse))
             throw new Exception("Warehouse not found.");
     }
-    
+
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
+
     public static void Serialize() {
         string fileName = "Products.json";
         try {
