@@ -11,7 +11,7 @@ public class Dealer : Customer {
     public string Territory { get; private set; }
     public IEnumerable<string>? CriminalRecord { get; private set; }
 
-    public Dealer(string territory, IEnumerable<string> criminalRecord) : 
+    public Dealer(string territory, IEnumerable<string> criminalRecord) :
     base() {
         if (string.IsNullOrWhiteSpace(territory))
             throw new ArgumentException("Territory cannot be null or whitespace.");
@@ -30,7 +30,7 @@ public class Dealer : Customer {
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static new void Serialize() {
         string fileName = "Dealers.json";
         try {

@@ -16,7 +16,7 @@ public class Instruction {
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "Instructions.json";
         try {

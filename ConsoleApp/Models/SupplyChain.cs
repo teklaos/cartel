@@ -16,15 +16,15 @@ public class SupplyChain {
             throw new ArgumentException("Name cannot be null or whitespace.");
         if (transitionTime < 0)
             throw new ArgumentException("Transition time cannot be negative.");
-        
+
         Name = name;
         TransitionTime = transitionTime;
-        
+
         SupplyChains = SupplyChains.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "SupplyChains.json";
         try {

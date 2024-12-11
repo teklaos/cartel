@@ -9,7 +9,7 @@ public class Distributor : CartelMember {
         private set => _distributors = value;
     }
     public int DealsMade { get; private set; }
-    
+
     public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade) :
     base(name, trustLevel, rulesToFollow) {
         if (dealsMade < 0)

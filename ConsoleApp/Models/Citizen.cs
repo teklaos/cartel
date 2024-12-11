@@ -10,19 +10,19 @@ public class Citizen : CartelMember {
     }
     public string Occupation { get; private set; }
     public int SecurityLevel { get; private set; }
-    
-    public Citizen(string name, int trustLevel, IEnumerable<string> rulesToFollow, string occupation, int securityLevel):
+
+    public Citizen(string name, int trustLevel, IEnumerable<string> rulesToFollow, string occupation, int securityLevel) :
     base(name, trustLevel, rulesToFollow) {
         if (string.IsNullOrWhiteSpace(occupation))
             throw new ArgumentException("Occupation cannot be null or whitespace.");
         if (securityLevel < 0)
             throw new ArgumentException("Security level cannot be negative.");
-        
+
         Occupation = occupation;
         SecurityLevel = securityLevel;
         Citizens = Citizens.Append(this);
     }
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static new void Serialize() {

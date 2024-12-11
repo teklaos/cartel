@@ -397,5 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# settings.json
-settings.json
+# .editorconfig
+.editorconfig

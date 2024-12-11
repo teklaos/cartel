@@ -10,9 +10,9 @@ public class Customer {
     }
 
     public Customer() => Customers = Customers.Append(this);
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "Customers.json";
         try {

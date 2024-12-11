@@ -33,9 +33,9 @@ public class Ingredient {
         State = state;
         Ingredients = Ingredients.Append(this);
     }
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "Ingredients.json";
         try {

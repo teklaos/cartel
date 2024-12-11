@@ -8,8 +8,8 @@ public class Deliverer : CartelMember {
         get => new List<Deliverer>(_deliverers);
         private set => _deliverers = value;
     }
-    
-    public Deliverer(string name, int trustLevel, IEnumerable<string> rulesToFollow) : 
+
+    public Deliverer(string name, int trustLevel, IEnumerable<string> rulesToFollow) :
     base(name, trustLevel, rulesToFollow) => Deliverers = Deliverers.Append(this);
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

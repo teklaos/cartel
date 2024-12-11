@@ -31,9 +31,9 @@ public abstract class CartelMember {
         RulesToFollow = rulesToFollow;
         CartelMembers = CartelMembers.Append(this);
     }
-    
+
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
+
     public static void Serialize() {
         string fileName = "CartelMembers.json";
         try {
