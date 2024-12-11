@@ -3,13 +3,13 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Customer {
-    private static IEnumerable<Customer> _customers = new List<Customer>();
-    public static IEnumerable<Customer> Customers {
+    private static IList<Customer> _customers = new List<Customer>();
+    public static IList<Customer> Customers {
         get => new List<Customer>(_customers);
         private set => _customers = value;
     }
 
-    public Customer() => Customers = Customers.Append(this);
+    public Customer() => _customers.Add(this);
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 

@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Laboratory {
-    private static IEnumerable<Laboratory> _laboratories = new List<Laboratory>();
-    public static IEnumerable<Laboratory> Laboratories {
+    private static IList<Laboratory> _laboratories = new List<Laboratory>();
+    public static IList<Laboratory> Laboratories {
         get => new List<Laboratory>(_laboratories);
         private set => _laboratories = value;
     }
@@ -16,7 +16,7 @@ public class Laboratory {
             throw new ArgumentException("Location cannot be null or whitespace.");
 
         Location = location;
-        Laboratories = Laboratories.Append(this);
+        _laboratories.Add(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

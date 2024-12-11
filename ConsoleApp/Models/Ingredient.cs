@@ -9,8 +9,8 @@ public enum StateAttribute {
 }
 
 public class Ingredient {
-    private static IEnumerable<Ingredient> _ingredients = new List<Ingredient>();
-    public static IEnumerable<Ingredient> Ingredients {
+    private static IList<Ingredient> _ingredients = new List<Ingredient>();
+    public static IList<Ingredient> Ingredients {
         get => new List<Ingredient>(_ingredients);
         private set => _ingredients = value;
     }
@@ -31,7 +31,7 @@ public class Ingredient {
         PricePerPound = pricePerPound;
         ChemicalFormula = chemicalFormula;
         State = state;
-        Ingredients = Ingredients.Append(this);
+        _ingredients.Add(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

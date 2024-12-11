@@ -3,15 +3,15 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Recipe {
-    private static IEnumerable<Recipe> _recipes = new List<Recipe>();
-    public static IEnumerable<Recipe> Recipes {
+    private static IList<Recipe> _recipes = new List<Recipe>();
+    public static IList<Recipe> Recipes {
         get => new List<Recipe>(_recipes);
         private set => _recipes = value;
     }
     private readonly int _amountOfInstructions = 55;
     public int Complexity { get => _amountOfInstructions / 10; }
 
-    public Recipe() => Recipes = Recipes.Append(this);
+    public Recipe() => _recipes.Add(this);
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 

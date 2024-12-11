@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Instruction {
-    private static IEnumerable<Instruction> _instructions = new List<Instruction>();
-    public static IEnumerable<Instruction> Instructions {
+    private static IList<Instruction> _instructions = new List<Instruction>();
+    public static IList<Instruction> Instructions {
         get => new List<Instruction>(_instructions);
         private set => _instructions = value;
     }
@@ -12,7 +12,7 @@ public class Instruction {
 
     public Instruction(string action) {
         Action = action;
-        Instructions = Instructions.Append(this);
+        _instructions.Add(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

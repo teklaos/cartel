@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class SupplyChain {
-    private static IEnumerable<SupplyChain> _supplyChains = new List<SupplyChain>();
-    public static IEnumerable<SupplyChain> SupplyChains {
+    private static IList<SupplyChain> _supplyChains = new List<SupplyChain>();
+    public static IList<SupplyChain> SupplyChains {
         get => new List<SupplyChain>(_supplyChains);
         private set => _supplyChains = value;
     }
@@ -20,7 +20,7 @@ public class SupplyChain {
         Name = name;
         TransitionTime = transitionTime;
 
-        SupplyChains = SupplyChains.Append(this);
+        _supplyChains.Add(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
