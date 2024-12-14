@@ -19,7 +19,7 @@ public class Chemist : CartelMember {
         _chemists.Add(this);
     }
     
-    public static new void Serialize() {
+    public new static void Serialize() {
         string fileName = "Chemists.json";
         try {
             string jsonString = JsonSerializer.Serialize(Chemists, AppConfig.JsonSerializerOptions);
@@ -29,7 +29,7 @@ public class Chemist : CartelMember {
         }
     }
 
-    public static new void Deserialize() {
+    public new static void Deserialize() {
         string fileName = "Chemists.json";
         try {
             string jsonString = File.ReadAllText(fileName);

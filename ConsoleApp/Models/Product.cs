@@ -8,8 +8,7 @@ public enum AddLevelAttribute {
     Strong
 }
 
-public class Product
-{
+public class Product {
     private static IList<Product> _products = new List<Product>();
     private static IList<Warehouse> _connectedWarehouses = new List<Warehouse>();
 
@@ -48,27 +47,24 @@ public class Product
         Name = name;
         PricePerPound = pricePerPound;
         AddictivenessLevel = addictivenessLevel;
-        Products.Add(this);
+        _products.Add(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
     
-    public void AddProductStoredIn(Warehouse warehouse)
-    {
+    public void AddProductStoredIn(Warehouse warehouse) {
         _connectedWarehouses.Add(warehouse);
         Warehouse.AddProductToWarehouseInternally(this);
     }
     
-    public void RemoveProductStoredIn(Warehouse warehouse)
-    {
+    public void RemoveProductStoredIn(Warehouse warehouse) {
         _connectedWarehouses.Remove(warehouse);
         Warehouse.RemoveProductFromWarehouseInternally(this);
     }
     
     public static void AttachWarehouseInternally(Warehouse warehouse) => _connectedWarehouses.Add(warehouse);
 
-    public static void RemoveWarehouseInternally(Warehouse warehouse)
-    {
+    public static void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_connectedWarehouses.Remove(warehouse))
             throw new Exception("Warehouse not found.");
     }

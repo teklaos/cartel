@@ -19,7 +19,7 @@ public class Distributor : CartelMember {
         _distributors.Add(this);
     }
     
-    public static new void Serialize() {
+    public new static void Serialize() {
         string fileName = "Distributors.json";
         try {
             string jsonString = JsonSerializer.Serialize(Distributors, AppConfig.JsonSerializerOptions);
@@ -29,7 +29,7 @@ public class Distributor : CartelMember {
         }
     }
 
-    public static new void Deserialize() {
+    public new static void Deserialize() {
         string fileName = "Distributors.json";
         try {
             string jsonString = File.ReadAllText(fileName);
