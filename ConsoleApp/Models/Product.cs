@@ -9,9 +9,9 @@ public enum AddLevelAttribute {
 }
 
 public class Product {
-    private static IList<Product> _products = new List<Product>();
+    private static IEnumerable<Product> _products = new List<Product>();
     private static IList<Warehouse> _connectedWarehouses = new List<Warehouse>();
-    public static IList<Product> Products {
+    public static IEnumerable<Product> Products {
         get => new List<Product>(_products);
         private set => _products = value;
     }
@@ -46,7 +46,7 @@ public class Product {
         Name = name;
         PricePerPound = pricePerPound;
         AddictivenessLevel = addictivenessLevel;
-        _products.Add(this);
+        Products = Products.Append(this);
     }
 
     public void AddProductStoredIn(Warehouse warehouse) {

@@ -3,16 +3,16 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public abstract class CartelMember {
-    private static IList<CartelMember> _cartelMembers = new List<CartelMember>();
-    public static IList<CartelMember> CartelMembers {
+    private static IEnumerable<CartelMember> _cartelMembers = new List<CartelMember>();
+    public static IEnumerable<CartelMember> CartelMembers {
         get => new List<CartelMember>(_cartelMembers);
         private set => _cartelMembers = value;
     }
     public string Name { get; private set; }
     public int TrustLevel { get; private set; }
-    public IList<string> RulesToFollow { get; private set; }
+    public IEnumerable<string> RulesToFollow { get; private set; }
 
-    public CartelMember(string name, int trustLevel, IList<string> rulesToFollow) {
+    public CartelMember(string name, int trustLevel, IEnumerable<string> rulesToFollow) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
         if (trustLevel < 0)
@@ -29,7 +29,7 @@ public abstract class CartelMember {
         Name = name;
         TrustLevel = trustLevel;
         RulesToFollow = rulesToFollow;
-        _cartelMembers.Add(this);
+        CartelMembers = CartelMembers.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

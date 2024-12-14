@@ -2,7 +2,7 @@ using ConsoleApp.models;
 
 namespace ConsoleAppUnitTests;
 
-public class TestAssociations {
+public class TestAssociationsImplementation {
     [Test]
     public void TestInternalAssociationsAddFromWarehouse() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
@@ -10,10 +10,8 @@ public class TestAssociations {
 
         warehouse.AddProductToWarehouse(product);
 
-        Assert.Multiple(() => {
-            Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.Products.Count));
-            Assert.That(Warehouse.Warehouses, Has.Count.EqualTo(Product.ConnectedWarehouses.Count));
-        });
+        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.Products.Count()));
+        Assert.That(Warehouse.Warehouses.Count, Is.EqualTo(Product.ConnectedWarehouses.Count));
     }
 
     [Test]
@@ -23,10 +21,8 @@ public class TestAssociations {
 
         product.AddProductStoredIn(warehouse);
 
-        Assert.Multiple(() => {
-            Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.Products.Count));
-            Assert.That(Warehouse.Warehouses, Has.Count.EqualTo(Product.ConnectedWarehouses.Count));
-        });
+        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.Products.Count()));
+        Assert.That(Warehouse.Warehouses.Count, Is.EqualTo(Product.ConnectedWarehouses.Count));
         // Console.WriteLine($"Warehouses connected = {Warehouse.AssociatedProducts.Count}");
         // Console.WriteLine($"Products connected = {Warehouse.AssociatedProducts.Count}");
     }
@@ -39,7 +35,7 @@ public class TestAssociations {
         product.AddProductStoredIn(warehouse);
         product.RemoveProductStoredIn(warehouse);
 
-        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.ConnectedWarehouses.Count));
+        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.ConnectedWarehouses.Count()));
     }
 
     [Test]
@@ -50,6 +46,6 @@ public class TestAssociations {
         product.AddProductStoredIn(warehouse);
         warehouse.RemoveProductFromWarehouse(product);
 
-        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.ConnectedWarehouses.Count));
+        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.ConnectedWarehouses.Count()));
     }
 }

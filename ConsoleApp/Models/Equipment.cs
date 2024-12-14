@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Equipment {
-    private static IList<Equipment> _equipmentList = new List<Equipment>();
-    public static IList<Equipment> EquipmentList {
+    private static IEnumerable<Equipment> _equipmentList = new List<Equipment>();
+    public static IEnumerable<Equipment> EquipmentList {
         get => new List<Equipment>(_equipmentList);
         private set => _equipmentList = value;
     }
@@ -23,7 +23,7 @@ public class Equipment {
         Type = type;
         Name = name;
         Model = model;
-        _equipmentList.Add(this);
+        EquipmentList = EquipmentList.Append(this);
     }
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 

@@ -3,20 +3,20 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Distributor : CartelMember {
-    private static IList<Distributor> _distributors = new List<Distributor>();
-    public static IList<Distributor> Distributors {
+    private static IEnumerable<Distributor> _distributors = new List<Distributor>();
+    public static IEnumerable<Distributor> Distributors {
         get => new List<Distributor>(_distributors);
         private set => _distributors = value;
     }
     public int DealsMade { get; private set; }
 
-    public Distributor(string name, int trustLevel, IList<string> rulesToFollow, int dealsMade) :
+    public Distributor(string name, int trustLevel, IEnumerable<string> rulesToFollow, int dealsMade) :
     base(name, trustLevel, rulesToFollow) {
         if (dealsMade < 0)
             throw new ArgumentException("Made deals cannot be negative.");
 
         DealsMade = dealsMade;
-        _distributors.Add(this);
+        Distributors = Distributors.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

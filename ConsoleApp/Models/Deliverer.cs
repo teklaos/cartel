@@ -3,14 +3,14 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Deliverer : CartelMember {
-    private static IList<Deliverer> _deliverers = new List<Deliverer>();
-    public static IList<Deliverer> Deliverers {
+    private static IEnumerable<Deliverer> _deliverers = new List<Deliverer>();
+    public static IEnumerable<Deliverer> Deliverers {
         get => new List<Deliverer>(_deliverers);
         private set => _deliverers = value;
     }
 
-    public Deliverer(string name, int trustLevel, IList<string> rulesToFollow) :
-    base(name, trustLevel, rulesToFollow) => _deliverers.Add(this);
+    public Deliverer(string name, int trustLevel, IEnumerable<string> rulesToFollow) :
+    base(name, trustLevel, rulesToFollow) => Deliverers = Deliverers.Append(this);
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 

@@ -3,15 +3,15 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Dealer : Customer {
-    private static IList<Dealer> _dealers = new List<Dealer>();
-    public static IList<Dealer> Dealers {
+    private static IEnumerable<Dealer> _dealers = new List<Dealer>();
+    public static IEnumerable<Dealer> Dealers {
         get => new List<Dealer>(_dealers);
         private set => _dealers = value;
     }
     public string Territory { get; private set; }
-    public IList<string>? CriminalRecord { get; private set; }
+    public IEnumerable<string>? CriminalRecord { get; private set; }
 
-    public Dealer(string territory, IList<string> criminalRecord) :
+    public Dealer(string territory, IEnumerable<string> criminalRecord) :
     base() {
         if (string.IsNullOrWhiteSpace(territory))
             throw new ArgumentException("Territory cannot be null or whitespace.");
@@ -26,7 +26,7 @@ public class Dealer : Customer {
 
         Territory = territory;
         CriminalRecord = criminalRecord;
-        _dealers.Add(this);
+        Dealers = Dealers.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

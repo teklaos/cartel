@@ -3,15 +3,15 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Official : CartelMember {
-    private static IList<Official> _officials = new List<Official>();
-    public static IList<Official> Officials {
+    private static IEnumerable<Official> _officials = new List<Official>();
+    public static IEnumerable<Official> Officials {
         get => new List<Official>(_officials);
         private set => _officials = value;
     }
     public string Position { get; private set; }
     public string Department { get; private set; }
 
-    public Official(string name, int trustLevel, IList<string> rulesToFollow, string position, string department) :
+    public Official(string name, int trustLevel, IEnumerable<string> rulesToFollow, string position, string department) :
     base(name, trustLevel, rulesToFollow) {
         if (string.IsNullOrWhiteSpace(position))
             throw new ArgumentException("Position cannot be null or whitespace.");
@@ -20,7 +20,7 @@ public class Official : CartelMember {
 
         Position = position;
         Department = department;
-        _officials.Add(this);
+        Officials = Officials.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

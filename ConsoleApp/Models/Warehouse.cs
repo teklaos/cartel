@@ -3,9 +3,9 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Warehouse {
-    private static IList<Warehouse> _warehouses = new List<Warehouse>();
+    private static IEnumerable<Warehouse> _warehouses = new List<Warehouse>();
     private static IList<Product> _associatedProducts = new List<Product>();
-    public static IList<Warehouse> Warehouses {
+    public static IEnumerable<Warehouse> Warehouses {
         get => new List<Warehouse>(_warehouses);
         private set => _warehouses = value;
     }
@@ -24,7 +24,7 @@ public class Warehouse {
 
         Location = location;
         MaxCapacity = maxCapacity;
-        _warehouses.Add(this);
+        Warehouses = Warehouses.Append(this);
     }
 
     public void AddProductToWarehouse(Product product) {

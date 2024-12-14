@@ -3,20 +3,20 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Chemist : CartelMember {
-    private static IList<Chemist> _chemists = new List<Chemist>();
-    public static IList<Chemist> Chemists {
+    private static IEnumerable<Chemist> _chemists = new List<Chemist>();
+    public static IEnumerable<Chemist> Chemists {
         get => new List<Chemist>(_chemists);
         private set => _chemists = value;
     }
     public int PoundsCooked { get; private set; }
 
-    public Chemist(string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked) :
+    public Chemist(string name, int trustLevel, IEnumerable<string> rulesToFollow, int poundsCooked) :
     base(name, trustLevel, rulesToFollow) {
         if (poundsCooked < 0)
             throw new ArgumentException("Cooked pounds cannot be negative.");
 
         PoundsCooked = poundsCooked;
-        _chemists.Add(this);
+        Chemists = Chemists.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

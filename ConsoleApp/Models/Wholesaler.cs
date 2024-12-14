@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Wholesaler : Customer {
-    private static IList<Wholesaler> _wholesalers = new List<Wholesaler>();
-    public static IList<Wholesaler> Wholesalers {
+    private static IEnumerable<Wholesaler> _wholesalers = new List<Wholesaler>();
+    public static IEnumerable<Wholesaler> Wholesalers {
         get => new List<Wholesaler>(_wholesalers);
         private set => _wholesalers = value;
     }
@@ -19,7 +19,7 @@ public class Wholesaler : Customer {
 
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
-        _wholesalers.Add(this);
+        Wholesalers = Wholesalers.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };

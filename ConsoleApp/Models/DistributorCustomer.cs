@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class DistributorCustomer {
-    private static IList<DistributorCustomer> _distributorsCustomers = new List<DistributorCustomer>();
-    public static IList<DistributorCustomer> DistributorsCustomers {
+    private static IEnumerable<DistributorCustomer> _distributorsCustomers = new List<DistributorCustomer>();
+    public static IEnumerable<DistributorCustomer> DistributorsCustomers {
         get => new List<DistributorCustomer>(_distributorsCustomers);
         private set => _distributorsCustomers = value;
     }
@@ -29,7 +29,7 @@ public class DistributorCustomer {
         DealStartDate = dealStartDate;
         PoundsOfProduct = poundsOfProduct;
         DealEndDate = dealEndDate;
-        _distributorsCustomers.Add(this);
+        DistributorsCustomers = DistributorsCustomers.Append(this);
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
