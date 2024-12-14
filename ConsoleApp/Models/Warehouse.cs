@@ -3,7 +3,7 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Warehouse {
-    private static IEnumerable<Warehouse> _warehouses = new List<Warehouse>();
+    private static IList<Warehouse> _warehouses = new List<Warehouse>();
     private static IList<Product> _associatedProducts = new List<Product>();
     
     
@@ -27,7 +27,7 @@ public class Warehouse {
 
         Location = location;
         MaxCapacity = maxCapacity;
-        Warehouses.Add(this);
+        _warehouses.Add(this);
     }
     
 

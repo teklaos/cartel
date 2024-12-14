@@ -13,7 +13,7 @@ public class Deliverer : CartelMember {
     base(name, trustLevel, rulesToFollow) => _deliverers.Add(this);
 
 
-    public static new void Serialize() {
+    public new static void Serialize() {
         string fileName = "Deliverers.json";
         try {
             string jsonString = JsonSerializer.Serialize(Deliverers, AppConfig.JsonSerializerOptions);
@@ -23,7 +23,7 @@ public class Deliverer : CartelMember {
         }
     }
 
-    public static new void Deserialize() {
+    public new static void Deserialize() {
         string fileName = "Deliverers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
