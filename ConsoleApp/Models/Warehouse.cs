@@ -3,12 +3,15 @@ using System.Text.Json;
 namespace ConsoleApp.models;
 
 public class Warehouse {
-    private static IList<Warehouse> _warehouses = new List<Warehouse>();
+    private static IEnumerable<Warehouse> _warehouses = new List<Warehouse>();
     private static IList<Product> _associatedProducts = new List<Product>();
+    
+    
     public static IList<Warehouse> Warehouses {
         get => new List<Warehouse>(_warehouses);
         private set => _warehouses = value;
     }
+    
     public static IList<Product> AssociatedProducts {
         get => new List<Product>(_associatedProducts);
         private set => _associatedProducts = value;
@@ -24,27 +27,31 @@ public class Warehouse {
 
         Location = location;
         MaxCapacity = maxCapacity;
-        _warehouses.Add(this);
+        Warehouses.Add(this);
     }
+    
+    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
-    public void AddProductToWarehouse(Product product) {
+
+    public void AddProductToWarehouse(Product product)
+    {
         _associatedProducts.Add(product);
         Product.AttachWarehouseInternally(this);
     }
-
-    public void RemoveProductFromWarehouse(Product product) {
+    
+    public void RemoveProductFromWarehouse(Product product)
+    {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found exception.");
         Product.RemoveWarehouseInternally(this);
     }
-
+    
     public static void AddProductToWarehouseInternally(Product product) => _associatedProducts.Add(product);
-    public static void RemoveProductFromWarehouseInternally(Product product) {
+    public static void RemoveProductFromWarehouseInternally(Product product)
+    {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found exception.");
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public static void Serialize() {
         string fileName = "Warehouses.json";
