@@ -29,7 +29,7 @@ public class TestConstructorsInvalidInput {
     public void ChemistConstructorInvalidRules() {
         string name = "Gale Boetticher";
         int trustLevel = 9;
-        IEnumerable<string>? rules = null;
+        IList<string>? rules = null;
         int poundsCooked = 75;
 
         Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules, poundsCooked),
@@ -76,7 +76,7 @@ public class TestConstructorsInvalidInput {
     public void CitizenConstructorInvalidRules() {
         string name = "Gale Boetticher";
         int trustLevel = 9;
-        IEnumerable<string>? rules = null;
+        IList<string>? rules = null;
         string occupation = "test";
         int securityLevel = 5;
         Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
@@ -138,7 +138,7 @@ public class TestConstructorsInvalidInput {
     public void DelivererConstructorInvalidRules() {
         string name = "Danny";
         int trustLevel = 10;
-        IEnumerable<string>? rules = null;
+        IList<string>? rules = null;
 
         Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules),
             "Expected ArgumentException for null rules to follow collection.");
@@ -170,7 +170,7 @@ public class TestConstructorsInvalidInput {
     public void DistributorConstructorInvalidRules() {
         string name = "Danny";
         int trustLevel = 10;
-        IEnumerable<string>? rules = null;
+        IList<string>? rules = null;
         int dealsMade = 10;
 
         Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules, dealsMade),
@@ -320,7 +320,7 @@ public class TestConstructorsInvalidInput {
     public void OfficialConstructorInvalidRulesToFollow() {
         string name = "John Doe";
         int trustLevel = 8;
-        IEnumerable<string>? rules = null;
+        IList<string>? rules = null;
         string position = "Manager";
         string department = "Operations";
 
