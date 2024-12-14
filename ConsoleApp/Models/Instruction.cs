@@ -14,13 +14,11 @@ public class Instruction {
         Action = action;
         _instructions.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "Instructions.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Instructions, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Instructions, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

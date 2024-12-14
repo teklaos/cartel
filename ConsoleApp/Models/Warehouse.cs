@@ -30,8 +30,6 @@ public class Warehouse {
         Warehouses.Add(this);
     }
     
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
 
     public void AddProductToWarehouse(Product product)
     {
@@ -56,7 +54,7 @@ public class Warehouse {
     public static void Serialize() {
         string fileName = "Warehouses.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Warehouses, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Warehouses, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

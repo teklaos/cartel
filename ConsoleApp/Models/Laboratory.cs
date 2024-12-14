@@ -18,13 +18,11 @@ public class Laboratory {
         Location = location;
         _laboratories.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "Laboratories.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Laboratories, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Laboratories, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

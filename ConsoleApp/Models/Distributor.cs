@@ -18,13 +18,11 @@ public class Distributor : CartelMember {
         DealsMade = dealsMade;
         _distributors.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static new void Serialize() {
         string fileName = "Distributors.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Distributors, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Distributors, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

@@ -64,12 +64,10 @@ public class Product
         _connectedWarehouses.Remove(warehouse);
         Warehouse.RemoveProductFromWarehouseInternally(this);
     }
-
     
     public static void AttachWarehouseInternally(Warehouse warehouse) => _connectedWarehouses.Add(warehouse);
 
     public static void RemoveWarehouseInternally(Warehouse warehouse)
-    
     {
         if (!_connectedWarehouses.Remove(warehouse))
             throw new Exception("Warehouse not found.");
@@ -78,7 +76,7 @@ public class Product
     public static void Serialize() {
         string fileName = "Products.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Products, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Products, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
