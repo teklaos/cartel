@@ -25,12 +25,11 @@ public class Equipment {
         Model = model;
         _equipmentList.Add(this);
     }
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "Equipment.json";
         try {
-            string jsonString = JsonSerializer.Serialize(EquipmentList, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(EquipmentList, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

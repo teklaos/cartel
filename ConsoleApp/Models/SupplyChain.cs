@@ -22,13 +22,11 @@ public class SupplyChain {
 
         _supplyChains.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "SupplyChains.json";
         try {
-            string jsonString = JsonSerializer.Serialize(SupplyChains, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(SupplyChains, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

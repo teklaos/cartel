@@ -31,13 +31,11 @@ public abstract class CartelMember {
         RulesToFollow = rulesToFollow;
         _cartelMembers.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "CartelMembers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(CartelMembers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(CartelMembers, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
