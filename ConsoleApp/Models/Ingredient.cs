@@ -33,13 +33,11 @@ public class Ingredient {
         State = state;
         _ingredients.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "Ingredients.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Ingredients, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Ingredients, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

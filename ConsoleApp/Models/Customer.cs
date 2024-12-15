@@ -10,13 +10,11 @@ public class Customer {
     }
 
     public Customer() => _customers.Add(this);
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "Customers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Customers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Customers, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

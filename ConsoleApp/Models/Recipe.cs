@@ -12,13 +12,11 @@ public class Recipe {
     public int Complexity { get => _amountOfInstructions / 10; }
 
     public Recipe() => _recipes.Add(this);
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "Recipes.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Recipes, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Recipes, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);

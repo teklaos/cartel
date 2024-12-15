@@ -28,20 +28,18 @@ public class Dealer : Customer {
         CriminalRecord = criminalRecord;
         _dealers.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
-    public static new void Serialize() {
+    
+    public new static void Serialize() {
         string fileName = "Dealers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Dealers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Dealers, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
     }
 
-    public static new void Deserialize() {
+    public new static void Deserialize() {
         string fileName = "Dealers.json";
         try {
             string jsonString = File.ReadAllText(fileName);

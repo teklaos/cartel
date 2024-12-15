@@ -18,20 +18,18 @@ public class Chemist : CartelMember {
         PoundsCooked = poundsCooked;
         _chemists.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
-    public static new void Serialize() {
+    
+    public new static void Serialize() {
         string fileName = "Chemists.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Chemists, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(Chemists, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
     }
 
-    public static new void Deserialize() {
+    public new static void Deserialize() {
         string fileName = "Chemists.json";
         try {
             string jsonString = File.ReadAllText(fileName);

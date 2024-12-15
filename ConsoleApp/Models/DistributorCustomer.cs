@@ -31,13 +31,11 @@ public class DistributorCustomer {
         DealEndDate = dealEndDate;
         _distributorsCustomers.Add(this);
     }
-
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
+    
     public static void Serialize() {
         string fileName = "DistributorsCustomers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(DistributorsCustomers, _jsonOptions);
+            string jsonString = JsonSerializer.Serialize(DistributorsCustomers, AppConfig.JsonSerializerOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
