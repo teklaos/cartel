@@ -10,15 +10,9 @@ public enum AddLevelAttribute {
 
 public class Product {
     private static IList<Product> _products = new List<Product>();
-    private static IList<Warehouse> _connectedWarehouses = new List<Warehouse>();
-
     public static IList<Product> Products {
         get => new List<Product>(_products);
         private set => _products = value;
-    }
-    public static IList<Warehouse> ConnectedWarehouses {
-        get => new List<Warehouse>(_connectedWarehouses);
-        private set => _connectedWarehouses = value;
     }
     public string Name { get; private set; }
     public int PricePerPound { get; private set; }
@@ -38,12 +32,18 @@ public class Product {
     }
     public AddLevelAttribute AddictivenessLevel { get; private set; }
 
+    private static IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
+    public static IList<Warehouse> AssociatedWarehouses {
+        get => new List<Warehouse>(_associatedWarehouses);
+        private set => _associatedWarehouses = value;
+    }
+
     public Product(string name, int pricePerPound, AddLevelAttribute addictivenessLevel) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
         if (pricePerPound < 0)
             throw new ArgumentException("Price per pound cannot be negative.");
-        
+
         Name = name;
         PricePerPound = pricePerPound;
         AddictivenessLevel = addictivenessLevel;
@@ -51,24 +51,24 @@ public class Product {
     }
 
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-    
-    public void AddProductStoredIn(Warehouse warehouse) {
-        _connectedWarehouses.Add(warehouse);
-        Warehouse.AddProductToWarehouseInternally(this);
+
+    public void AddWarehouse(Warehouse warehouse) {
+        _associatedWarehouses.Add(warehouse);
+        Warehouse.AddProductInternally(this);
     }
-    
-    public void RemoveProductStoredIn(Warehouse warehouse) {
-        _connectedWarehouses.Remove(warehouse);
-        Warehouse.RemoveProductFromWarehouseInternally(this);
+
+    public void RemoveWarehouse(Warehouse warehouse) {
+        _associatedWarehouses.Remove(warehouse);
+        Warehouse.RemoveProductInternally(this);
     }
-    
-    public static void AttachWarehouseInternally(Warehouse warehouse) => _connectedWarehouses.Add(warehouse);
+
+    public static void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
 
     public static void RemoveWarehouseInternally(Warehouse warehouse) {
-        if (!_connectedWarehouses.Remove(warehouse))
+        if (!_associatedWarehouses.Remove(warehouse))
             throw new Exception("Warehouse not found.");
     }
-    
+
     public static void Serialize() {
         string fileName = "Products.json";
         try {

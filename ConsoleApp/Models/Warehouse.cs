@@ -4,20 +4,18 @@ namespace ConsoleApp.models;
 
 public class Warehouse {
     private static IList<Warehouse> _warehouses = new List<Warehouse>();
-    private static IList<Product> _associatedProducts = new List<Product>();
-    
-    
     public static IList<Warehouse> Warehouses {
         get => new List<Warehouse>(_warehouses);
         private set => _warehouses = value;
     }
-    
+    public string Location { get; private set; }
+    public int MaxCapacity { get; private set; }
+
+    private static IList<Product> _associatedProducts = new List<Product>();
     public static IList<Product> AssociatedProducts {
         get => new List<Product>(_associatedProducts);
         private set => _associatedProducts = value;
     }
-    public string Location { get; private set; }
-    public int MaxCapacity { get; private set; }
 
     public Warehouse(string location, int maxCapacity) {
         if (string.IsNullOrWhiteSpace(location))
@@ -29,24 +27,20 @@ public class Warehouse {
         MaxCapacity = maxCapacity;
         _warehouses.Add(this);
     }
-    
 
-    public void AddProductToWarehouse(Product product)
-    {
+    public void AddProduct(Product product) {
         _associatedProducts.Add(product);
-        Product.AttachWarehouseInternally(this);
+        Product.AddWarehouseInternally(this);
     }
-    
-    public void RemoveProductFromWarehouse(Product product)
-    {
+
+    public void RemoveProduct(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found exception.");
         Product.RemoveWarehouseInternally(this);
     }
-    
-    public static void AddProductToWarehouseInternally(Product product) => _associatedProducts.Add(product);
-    public static void RemoveProductFromWarehouseInternally(Product product)
-    {
+
+    public static void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public static void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found exception.");
     }
