@@ -32,9 +32,11 @@ public class Product {
     }
     public AddLevelAttribute AddictivenessLevel { get; private set; }
 
-    private static IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
-    public static IList<Warehouse> AssociatedWarehouses {
-        get => new List<Warehouse>(_associatedWarehouses);
+    private static IDictionary<Type, List<Warehouse>> _associatedWarehouses = 
+        new Dictionary<Type, List<Warehouse>>();
+    
+    public static IDictionary<Type, List<Warehouse>> AssociatedWarehouses {
+        get => new Dictionary<Type, List<Warehouse>>(_associatedWarehouses);
         private set => _associatedWarehouses = value;
     }
 
@@ -53,19 +55,19 @@ public class Product {
     private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
 
     public void AddWarehouse(Warehouse warehouse) {
-        _associatedWarehouses.Add(warehouse);
-        Warehouse.AddProductInternally(this);
+        _associatedWarehouses[GetType()].Add(warehouse);
+        Warehouse.AddProductInternally(this, GetType());
     }
 
     public void RemoveWarehouse(Warehouse warehouse) {
-        _associatedWarehouses.Remove(warehouse);
-        Warehouse.RemoveProductInternally(this);
+        _associatedWarehouses[GetType()].Remove(warehouse);
+        Warehouse.RemoveProductInternally(this, GetType());
     }
 
-    public static void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
+    public static void AddWarehouseInternally(Warehouse warehouse, Type type) => _associatedWarehouses[type].Add(warehouse);
 
-    public static void RemoveWarehouseInternally(Warehouse warehouse) {
-        if (!_associatedWarehouses.Remove(warehouse))
+    public static void RemoveWarehouseInternally(Warehouse warehouse, Type type) {
+        if (!_associatedWarehouses[type].Remove(warehouse))
             throw new Exception("Warehouse not found.");
     }
 

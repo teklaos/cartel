@@ -41,7 +41,7 @@ public class TestAssociations {
 
         Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.AssociatedWarehouses.Count));
     }
-
+    
     [Test]
     public void TestInternalAssociationsRemoveWarehouse() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
@@ -52,4 +52,5 @@ public class TestAssociations {
 
         Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.AssociatedWarehouses.Count));
     }
+    
 }

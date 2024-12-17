@@ -11,9 +11,11 @@ public class Warehouse {
     public string Location { get; private set; }
     public int MaxCapacity { get; private set; }
 
-    private static IList<Product> _associatedProducts = new List<Product>();
-    public static IList<Product> AssociatedProducts {
-        get => new List<Product>(_associatedProducts);
+    private static IDictionary<Type, List<Product>> _associatedProducts 
+        = new Dictionary<Type, List<Product>>();
+    
+    public static IDictionary<Type, List<Product>> AssociatedProducts {
+        get => new Dictionary<Type, List<Product>>(_associatedProducts);
         private set => _associatedProducts = value;
     }
 
@@ -29,19 +31,19 @@ public class Warehouse {
     }
 
     public void AddProduct(Product product) {
-        _associatedProducts.Add(product);
-        Product.AddWarehouseInternally(this);
+        _associatedProducts[GetType()].Add(product);
+        Product.AddWarehouseInternally(this, GetType());
     }
 
     public void RemoveProduct(Product product) {
-        if (!_associatedProducts.Remove(product))
+        if (!_associatedProducts[GetType()].Remove(product))
             throw new Exception("Product not found exception.");
-        Product.RemoveWarehouseInternally(this);
+        Product.RemoveWarehouseInternally(this, GetType());
     }
 
-    public static void AddProductInternally(Product product) => _associatedProducts.Add(product);
-    public static void RemoveProductInternally(Product product) {
-        if (!_associatedProducts.Remove(product))
+    public static void AddProductInternally(Product product, Type type) => _associatedProducts[type].Add(product);
+    public static void RemoveProductInternally(Product product, Type type) {
+        if (!_associatedProducts[type].Remove(product))
             throw new Exception("Product not found exception.");
     }
 
