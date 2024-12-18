@@ -22,7 +22,7 @@ public class Distributor : CartelMember {
     public new static void Serialize() {
         string fileName = "Distributors.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Distributors, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Distributors, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -33,7 +33,7 @@ public class Distributor : CartelMember {
         string fileName = "Distributors.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Distributors = JsonSerializer.Deserialize<List<Distributor>>(jsonString) ?? new List<Distributor>();
+            Distributors = JsonSerializer.Deserialize<List<Distributor>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

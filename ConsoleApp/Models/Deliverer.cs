@@ -39,7 +39,7 @@ public class Deliverer : CartelMember {
     public new static void Serialize() {
         string fileName = "Deliverers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Deliverers, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Deliverers, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -50,7 +50,7 @@ public class Deliverer : CartelMember {
         string fileName = "Deliverers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Deliverers = JsonSerializer.Deserialize<List<Deliverer>>(jsonString) ?? new List<Deliverer>();
+            Deliverers = JsonSerializer.Deserialize<List<Deliverer>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

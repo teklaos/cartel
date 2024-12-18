@@ -27,7 +27,7 @@ public class Citizen : CartelMember {
     public new static void Serialize() {
         string fileName = "Citizens.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Citizens, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Citizens, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -38,7 +38,7 @@ public class Citizen : CartelMember {
         string fileName = "Citizens.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString) ?? new List<Citizen>();
+            Citizens = JsonSerializer.Deserialize<List<Citizen>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

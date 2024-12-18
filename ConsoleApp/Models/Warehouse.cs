@@ -49,7 +49,7 @@ public class Warehouse {
     public static void Serialize() {
         string fileName = "Warehouses.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Warehouses, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Warehouses, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -60,7 +60,7 @@ public class Warehouse {
         string fileName = "Warehouses.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Warehouses = JsonSerializer.Deserialize<List<Warehouse>>(jsonString) ?? new List<Warehouse>();
+            Warehouses = JsonSerializer.Deserialize<List<Warehouse>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

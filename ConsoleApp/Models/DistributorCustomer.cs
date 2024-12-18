@@ -35,7 +35,7 @@ public class DistributorCustomer {
     public static void Serialize() {
         string fileName = "DistributorsCustomers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(DistributorsCustomers, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(DistributorsCustomers, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -46,7 +46,8 @@ public class DistributorCustomer {
         string fileName = "DistributorsCustomers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            DistributorsCustomers = JsonSerializer.Deserialize<List<DistributorCustomer>>(jsonString) ?? new List<DistributorCustomer>();
+            DistributorsCustomers = 
+                JsonSerializer.Deserialize<List<DistributorCustomer>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

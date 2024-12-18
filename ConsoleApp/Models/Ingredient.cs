@@ -37,7 +37,7 @@ public class Ingredient {
     public static void Serialize() {
         string fileName = "Ingredients.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Ingredients, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Ingredients, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -48,7 +48,7 @@ public class Ingredient {
         string fileName = "Ingredients.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
+            Ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

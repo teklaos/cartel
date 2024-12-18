@@ -22,7 +22,7 @@ public class Laboratory {
     public static void Serialize() {
         string fileName = "Laboratories.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Laboratories, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Laboratories, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -33,7 +33,7 @@ public class Laboratory {
         string fileName = "Laboratories.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString) ?? new List<Laboratory>();
+            Laboratories = JsonSerializer.Deserialize<List<Laboratory>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

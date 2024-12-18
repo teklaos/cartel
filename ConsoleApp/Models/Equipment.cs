@@ -29,7 +29,7 @@ public class Equipment {
     public static void Serialize() {
         string fileName = "Equipment.json";
         try {
-            string jsonString = JsonSerializer.Serialize(EquipmentList, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(EquipmentList, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -40,7 +40,7 @@ public class Equipment {
         string fileName = "Equipment.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            EquipmentList = JsonSerializer.Deserialize<List<Equipment>>(jsonString) ?? new List<Equipment>();
+            EquipmentList = JsonSerializer.Deserialize<List<Equipment>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

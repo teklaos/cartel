@@ -16,7 +16,7 @@ public class Recipe {
     public static void Serialize() {
         string fileName = "Recipes.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Recipes, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Recipes, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -27,7 +27,7 @@ public class Recipe {
         string fileName = "Recipes.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Recipes = JsonSerializer.Deserialize<List<Recipe>>(jsonString) ?? new List<Recipe>();
+            Recipes = JsonSerializer.Deserialize<List<Recipe>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

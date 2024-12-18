@@ -95,7 +95,7 @@ public class Product {
     public static void Serialize() {
         string fileName = "Products.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Products, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Products, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -106,7 +106,7 @@ public class Product {
         string fileName = "Products.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Products = JsonSerializer.Deserialize<List<Product>>(jsonString) ?? new List<Product>();
+            Products = JsonSerializer.Deserialize<List<Product>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

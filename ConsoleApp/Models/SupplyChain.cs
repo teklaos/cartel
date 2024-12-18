@@ -26,7 +26,7 @@ public class SupplyChain {
     public static void Serialize() {
         string fileName = "SupplyChains.json";
         try {
-            string jsonString = JsonSerializer.Serialize(SupplyChains, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(SupplyChains, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -37,7 +37,7 @@ public class SupplyChain {
         string fileName = "SupplyChains.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            SupplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString) ?? new List<SupplyChain>();
+            SupplyChains = JsonSerializer.Deserialize<List<SupplyChain>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

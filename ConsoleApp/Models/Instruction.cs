@@ -18,7 +18,7 @@ public class Instruction {
     public static void Serialize() {
         string fileName = "Instructions.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Instructions, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Instructions, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -29,7 +29,7 @@ public class Instruction {
         string fileName = "Instructions.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Instructions = JsonSerializer.Deserialize<List<Instruction>>(jsonString) ?? new List<Instruction>();
+            Instructions = JsonSerializer.Deserialize<List<Instruction>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
