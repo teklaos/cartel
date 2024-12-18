@@ -4,53 +4,85 @@ namespace ConsoleAppUnitTests;
 
 public class TestAssociations {
     [Test]
-    public void TestInternalAssociationsAddFromWarehouse() {
+    public void TestWarehouseAddProduct() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
         Product product = new("Meth", 1000, AddLevelAttribute.Strong);
 
         warehouse.AddProduct(product);
 
-        Assert.Multiple(() => {
-            Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.Products.Count));
-            Assert.That(Warehouse.Warehouses, Has.Count.EqualTo(Product.AssociatedWarehouses.Count));
-        });
+        Assert.That(warehouse.AssociatedProducts, Has.Count.EqualTo(product.AssociatedWarehouses.Count));
     }
 
     [Test]
-    public void TestInternalAssociationsAttachWarehouse() {
-        Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
-
-        product.AddWarehouse(warehouse);
-
-        Assert.Multiple(() => {
-            Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.Products.Count));
-            Assert.That(Warehouse.Warehouses, Has.Count.EqualTo(Product.AssociatedWarehouses.Count));
-        });
-        // Console.WriteLine($"Warehouses connected = {Warehouse.AssociatedProducts.Count}");
-        // Console.WriteLine($"Products connected = {Warehouse.AssociatedProducts.Count}");
-    }
-
-    [Test]
-    public void TestInternalAssociationsRemoveProduct() {
-        Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
-
-        product.AddWarehouse(warehouse);
-        product.RemoveWarehouse(warehouse);
-
-        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.AssociatedWarehouses.Count));
-    }
-    
-    [Test]
-    public void TestInternalAssociationsRemoveWarehouse() {
+    public void TestWarehouseRemoveProduct() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
         Product product = new("Meth", 1000, AddLevelAttribute.Strong);
 
         product.AddWarehouse(warehouse);
         warehouse.RemoveProduct(product);
 
-        Assert.That(Warehouse.AssociatedProducts, Has.Count.EqualTo(Product.AssociatedWarehouses.Count));
+        Assert.That(warehouse.AssociatedProducts, Has.Count.EqualTo(product.AssociatedWarehouses.Count));
     }
-    
+
+    [Test]
+    public void TestProductAddWarehouse() {
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Warehouse warehouse = new("Warsaw, Praga", 1000);
+
+        product.AddWarehouse(warehouse);
+
+        Assert.That(product.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedProducts.Count));
+    }
+
+    [Test]
+    public void TestProductRemoveWarehouse() {
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Warehouse warehouse = new("Warsaw, Praga", 1000);
+
+        warehouse.AddProduct(product);
+        product.RemoveWarehouse(warehouse);
+
+        Assert.That(product.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedProducts.Count));
+    }
+
+    [Test]
+    public void TestDelivererAddProduct() {
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        deliverer.AddProduct(product);
+
+        Assert.That(deliverer.AssociatedProducts, Has.Count.EqualTo(product.AssociatedDeliverers.Count));
+    }
+
+    [Test]
+    public void TestDelivererRemoveProduct() {
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        product.AddDeliverer(deliverer);
+        deliverer.RemoveProduct(product);
+
+        Assert.That(deliverer.AssociatedProducts, Has.Count.EqualTo(product.AssociatedDeliverers.Count));
+    }
+
+    [Test]
+    public void TestProductAddDeliverer() {
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+
+        product.AddDeliverer(deliverer);
+        Assert.That(product.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedProducts.Count));
+    }
+
+    [Test]
+    public void TestProductRemoveDeliverer() {
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+
+        deliverer.AddProduct(product);
+        product.RemoveDeliverer(deliverer);
+
+        Assert.That(product.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedProducts.Count));
+    }
 }

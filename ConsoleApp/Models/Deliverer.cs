@@ -9,9 +9,32 @@ public class Deliverer : CartelMember {
         private set => _deliverers = value;
     }
 
+    private IList<Product> _associatedProducts = new List<Product>();
+    public IList<Product> AssociatedProducts {
+        get => new List<Product>(_associatedProducts);
+        private set => _associatedProducts = value;
+    }
+
     public Deliverer(string name, int trustLevel, IList<string> rulesToFollow) :
     base(name, trustLevel, rulesToFollow) => _deliverers.Add(this);
 
+    public void AddProduct(Product product) {
+        _associatedProducts.Add(product);
+        product.AddDelivererInternally(this);
+    }
+
+    public void RemoveProduct(Product product) {
+        if (!_associatedProducts.Remove(product))
+            throw new ArgumentException("Product not found.");
+        product.RemoveDelivererInternally(this);
+    }
+
+    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+
+    public void RemoveProductInternally(Product product) {
+        if (!_associatedProducts.Remove(product))
+            throw new ArgumentException("Product not found.");
+    }
 
     public new static void Serialize() {
         string fileName = "Deliverers.json";

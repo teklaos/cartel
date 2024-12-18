@@ -32,11 +32,15 @@ public class Product {
     }
     public AddLevelAttribute AddictivenessLevel { get; private set; }
 
-    private static IDictionary<Type, List<Warehouse>> _associatedWarehouses = 
-        new Dictionary<Type, List<Warehouse>>();
-    
-    public static IDictionary<Type, List<Warehouse>> AssociatedWarehouses {
-        get => new Dictionary<Type, List<Warehouse>>(_associatedWarehouses);
+    private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
+    public IList<Deliverer> AssociatedDeliverers {
+        get => new List<Deliverer>(_associatedDeliverers);
+        private set => _associatedDeliverers = value;
+    }
+
+    private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
+    public IList<Warehouse> AssociatedWarehouses {
+        get => new List<Warehouse>(_associatedWarehouses);
         private set => _associatedWarehouses = value;
     }
 
@@ -52,23 +56,40 @@ public class Product {
         _products.Add(this);
     }
 
-    private static readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
-
     public void AddWarehouse(Warehouse warehouse) {
-        _associatedWarehouses[GetType()].Add(warehouse);
-        Warehouse.AddProductInternally(this, GetType());
+        _associatedWarehouses.Add(warehouse);
+        warehouse.AddProductInternally(this);
     }
 
     public void RemoveWarehouse(Warehouse warehouse) {
-        _associatedWarehouses[GetType()].Remove(warehouse);
-        Warehouse.RemoveProductInternally(this, GetType());
+        if (!_associatedWarehouses.Remove(warehouse))
+            throw new ArgumentException("Warehouse not found.");
+        warehouse.RemoveProductInternally(this);
     }
 
-    public static void AddWarehouseInternally(Warehouse warehouse, Type type) => _associatedWarehouses[type].Add(warehouse);
+    public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
 
-    public static void RemoveWarehouseInternally(Warehouse warehouse, Type type) {
-        if (!_associatedWarehouses[type].Remove(warehouse))
-            throw new Exception("Warehouse not found.");
+    public void RemoveWarehouseInternally(Warehouse warehouse) {
+        if (!_associatedWarehouses.Remove(warehouse))
+            throw new ArgumentException("Warehouse not found.");
+    }
+
+    public void AddDeliverer(Deliverer deliverer) {
+        _associatedDeliverers.Add(deliverer);
+        deliverer.AddProductInternally(this);
+    }
+
+    public void RemoveDeliverer(Deliverer deliverer) {
+        if (!_associatedDeliverers.Remove(deliverer))
+            throw new ArgumentException("Deliverer not found.");
+        deliverer.RemoveProductInternally(this);
+    }
+
+    public void AddDelivererInternally(Deliverer deliverer) => _associatedDeliverers.Add(deliverer);
+
+    public void RemoveDelivererInternally(Deliverer deliverer) {
+        if (!_associatedDeliverers.Remove(deliverer))
+            throw new ArgumentException("Deliverer not found.");
     }
 
     public static void Serialize() {
