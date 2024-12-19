@@ -8,6 +8,13 @@ public class Chemist : CartelMember {
         get => new List<Chemist>(_chemists);
         private set => _chemists = value;
     }
+
+    private IList<Product> _associatedProducts = new List<Product>();
+    public IList<Product> AssociatedProducts {
+        get => new List<Product>(_associatedProducts);
+        private set => _associatedProducts = value;
+    }
+
     public int PoundsCooked { get; private set; }
 
     public Chemist(string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked) :
@@ -17,6 +24,23 @@ public class Chemist : CartelMember {
 
         PoundsCooked = poundsCooked;
         _chemists.Add(this);
+    }
+
+    public void AddProduct(Product product) {
+        _associatedProducts.Add(product);
+        product.AddChemistInternally(this);
+    }
+
+    public void RemoveProduct(Product product) {
+        if (!_associatedProducts.Remove(product))
+            throw new Exception("Product not found exception.");
+        product.RemoveChemistInternally(this);
+    }
+
+    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public void RemoveProductInternally(Product product) {
+        if (!_associatedProducts.Remove(product))
+            throw new Exception("Product not found exception.");
     }
     
     public new static void Serialize() {

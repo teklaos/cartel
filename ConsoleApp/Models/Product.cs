@@ -44,6 +44,12 @@ public class Product {
         private set => _associatedWarehouses = value;
     }
 
+    private IList<Chemist> _associatedChemists = new List<Chemist>();
+    public IList<Chemist> AssociatedChemists {
+        get => new List<Chemist>(_associatedChemists);
+        private set => _associatedChemists = value;
+    }
+
     public Product(string name, int pricePerPound, AddLevelAttribute addictivenessLevel) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
@@ -90,6 +96,23 @@ public class Product {
     public void RemoveDelivererInternally(Deliverer deliverer) {
         if (!_associatedDeliverers.Remove(deliverer))
             throw new ArgumentException("Deliverer not found.");
+    }
+
+    public void AddChemist(Chemist chemist) {
+        _associatedChemists.Add(chemist);
+        chemist.AddProductInternally(this);
+    }
+
+    public void RemoveChemist(Chemist chemist) {
+        if(!_associatedChemists.Remove(chemist))
+            throw new ArgumentException("Chemist not found.");
+    }
+
+    public void AddChemistInternally(Chemist chemist) => _associatedChemists.Add(chemist);
+    
+    public void RemoveChemistInternally(Chemist chemist) {
+        if(!_associatedChemists.Remove(chemist))
+            throw new Exception("Chemist not found.");
     }
 
     public static void Serialize() {

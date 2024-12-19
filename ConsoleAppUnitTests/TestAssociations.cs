@@ -72,6 +72,7 @@ public class TestAssociations {
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
 
         product.AddDeliverer(deliverer);
+
         Assert.That(product.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedProducts.Count));
     }
 
@@ -84,5 +85,45 @@ public class TestAssociations {
         product.RemoveDeliverer(deliverer);
 
         Assert.That(product.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedProducts.Count));
+    }
+
+    [Test]
+    public void TestChemistAddProduct() {
+        Chemist chemist = new("Danny", 10, ["Do not steal meth"], 90);
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        chemist.AddProduct(product);
+
+        Assert.That(chemist.AssociatedProducts, Has.Count.EqualTo(product.AssociatedChemists.Count));
+    }
+
+    [Test]
+    public void TestChemistRemoveProduct() {
+        Chemist chemist = new("Danny", 10, ["Do not steal meth"], 90);
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        product.AddChemist(chemist);
+        chemist.RemoveProduct(product);
+
+        Assert.That(chemist.AssociatedProducts, Has.Count.EqualTo(product.AssociatedChemists.Count));
+    }
+
+    [Test]
+    public void TestProductAddChemist() {
+        Chemist chemist = new("Danny", 10, ["Do not steal meth"], 90);
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        product.AddChemist(chemist);
+
+        Assert.That(product.AssociatedChemists, Has.Count.EqualTo(chemist.AssociatedProducts.Count));
+    }
+
+    [Test]
+    public void TestProductRemoveChemist() {
+        Chemist chemist = new("Danny", 10, ["Do not steal meth"], 90);
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        chemist.AddProduct(product);
+        product.RemoveChemist(chemist);
     }
 }
