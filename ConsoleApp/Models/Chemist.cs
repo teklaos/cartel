@@ -38,6 +38,7 @@ public class Chemist : CartelMember {
     }
 
     public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found exception.");

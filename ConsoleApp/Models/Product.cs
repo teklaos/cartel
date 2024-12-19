@@ -50,6 +50,13 @@ public class Product {
         private set => _associatedChemists = value;
     }
 
+    private IList<Recipe> _associatedRecipes = new List<Recipe>();
+
+    public IList<Recipe> AssociatedRecipes {
+        get => new List<Recipe>(_associatedRecipes);
+        private set => _associatedRecipes = value;
+    }
+
     public Product(string name, int pricePerPound, AddLevelAttribute addictivenessLevel) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
@@ -106,13 +113,32 @@ public class Product {
     public void RemoveChemist(Chemist chemist) {
         if(!_associatedChemists.Remove(chemist))
             throw new ArgumentException("Chemist not found.");
+        chemist.RemoveProductInternally(this);
     }
 
     public void AddChemistInternally(Chemist chemist) => _associatedChemists.Add(chemist);
     
     public void RemoveChemistInternally(Chemist chemist) {
         if(!_associatedChemists.Remove(chemist))
-            throw new Exception("Chemist not found.");
+            throw new ArgumentException("Chemist not found.");
+    }
+
+    public void AddRecipe(Recipe recipe) {
+        _associatedRecipes.Add(recipe);
+        recipe.AddProductInternally(this);
+    }
+
+    public void RemoveRecipe(Recipe recipe) {
+        if(!_associatedRecipes.Remove(recipe))
+            throw new ArgumentException("Recipe not found.");
+        recipe.RemoveProductInternally(this);
+    }
+
+    public void AddRecipeInternally(Recipe recipe) => _associatedRecipes.Add(recipe);
+    
+    public void RemoveRecipeInternally(Recipe recipe) {
+        if(!_associatedRecipes.Remove(recipe))
+            throw new ArgumentException("Recipe not found.");
     }
 
     public static void Serialize() {
