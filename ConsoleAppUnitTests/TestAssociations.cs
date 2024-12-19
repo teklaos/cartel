@@ -296,4 +296,46 @@ public class TestAssociations {
 
         Assert.That(laboratory.AssociatedIngridients, Has.Count.EqualTo(ingredient.AssociatedLaboratories.Count));
     }
+
+    [Test]
+    public void TestIngredientAddSupplyChain() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        SupplyChain supplyChain = new("Madelin", 6);
+
+        ingredient.AddSupplyChain(supplyChain);
+
+        Assert.That(ingredient.AssociatedSupplyChains, Has.Count.EqualTo(supplyChain.AssociatedIngridients.Count));
+    }
+
+    [Test]
+    public void TestIngredientRemoveSupplyChain() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        SupplyChain supplyChain = new("Madelin", 6);
+
+        supplyChain.AddIngredient(ingredient);
+        ingredient.RemoveSupplyChain(supplyChain);
+
+        Assert.That(ingredient.AssociatedSupplyChains, Has.Count.EqualTo(supplyChain.AssociatedIngridients.Count));
+    }
+
+    [Test]
+    public void TestSupplyChainAddIngredient() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        SupplyChain supplyChain = new("Madelin", 6);
+
+        supplyChain.AddIngredient(ingredient);
+
+        Assert.That(supplyChain.AssociatedIngridients, Has.Count.EqualTo(ingredient.AssociatedSupplyChains.Count));
+    }
+
+    [Test]
+    public void TestSupplyChainRemoveIngredient() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        SupplyChain supplyChain = new("Madelin", 6);
+
+        ingredient.AddSupplyChain(supplyChain);
+        supplyChain.RemoveIngredient(ingredient);
+
+        Assert.That(supplyChain.AssociatedIngridients, Has.Count.EqualTo(ingredient.AssociatedSupplyChains.Count));
+    }
 }

@@ -8,6 +8,13 @@ public class SupplyChain {
         get => new List<SupplyChain>(_supplyChains);
         private set => _supplyChains = value;
     }
+
+    private IList<Ingredient> _associatedIngridients = new List<Ingredient>();
+    public IList<Ingredient> AssociatedIngridients {
+        get => new List<Ingredient>(_associatedIngridients);
+        private set => _associatedIngridients = value;
+    }
+
     public string Name { get; private set; }
     public int TransitionTime { get; private set; }
 
@@ -22,6 +29,25 @@ public class SupplyChain {
 
         _supplyChains.Add(this);
     }
+
+    public void AddIngredient(Ingredient ingredient) {
+        _associatedIngridients.Add(ingredient);
+        ingredient.AddSupplyChainInternally(this);
+    }
+
+    public void RemoveIngredient(Ingredient ingredient) {
+        if(!_associatedIngridients.Remove(ingredient))
+            throw new ArgumentException("SupplyChain not found.");
+        ingredient.RemoveSupplyChainInternally(this);
+    }
+
+    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngridients.Add(ingredient);
+
+    public void RemoveIngredientInternally(Ingredient ingredient) {
+        if (!_associatedIngridients.Remove(ingredient))
+            throw new ArgumentException("Ingridient not found.");
+    }
+    
     
     public static void Serialize() {
         string fileName = "SupplyChains.json";

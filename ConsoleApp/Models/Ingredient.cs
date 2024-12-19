@@ -20,6 +20,13 @@ public class Ingredient {
         get => new List<Laboratory>(_associatedLaboratories);
         private set => _associatedLaboratories = value;
     }
+
+    public IList<SupplyChain> _associatedSupplyChains = new List<SupplyChain>();
+    public IList<SupplyChain> AssociatedSupplyChains {
+        get => new List<SupplyChain>(_associatedSupplyChains);
+        private set => _associatedSupplyChains = value;
+    }
+
     public string Name { get; private set; }
     public int PricePerPound { get; private set; }
     public string ChemicalFormula { get; private set; }
@@ -50,12 +57,30 @@ public class Ingredient {
             throw new ArgumentException("Laboratory not found.");
         laboratory.RemoveIngredientInternally(this);
     }
-    
+
     public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
 
     public void RemoveLaboratoryInternally(Laboratory laboratory) {
         if (!_associatedLaboratories.Remove(laboratory))
             throw new ArgumentException("Laboratory not found.");
+    }
+
+    public void AddSupplyChain(SupplyChain supplyChain) {
+        _associatedSupplyChains.Add(supplyChain);
+        supplyChain.AddIngredientInternally(this);
+    }
+
+    public void RemoveSupplyChain(SupplyChain supplyChain) {
+        if(!_associatedSupplyChains.Remove(supplyChain))
+            throw new ArgumentException("SupplyChain not found.");
+        supplyChain.RemoveIngredientInternally(this);
+    }
+    
+    public void AddSupplyChainInternally(SupplyChain supplyChain) => _associatedSupplyChains.Add(supplyChain);
+
+    public void RemoveSupplyChainInternally(SupplyChain supplyChain) {
+        if(!_associatedSupplyChains.Remove(supplyChain))
+            throw new ArgumentException("SupplyChain not found.");
     }
     
     public static void Serialize() {
