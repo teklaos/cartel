@@ -1,15 +1,28 @@
+using System.Collections;
 using System.Text.Json;
+using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Chemist : CartelMember {
+public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
     private static IList<Chemist> _chemists = new List<Chemist>();
+    private IList<Product> _associatedProducts = new List<Product>();
+    private IList<Chemist> _supervisedChemists = new List<Chemist>();
+    private IList<Chemist> _supervisors = new List<Chemist>();
+    
+    public IList<Chemist> Supervisors {
+        get => new List<Chemist>(_supervisors);
+        private set => _supervisors = value;
+    }
+    public IList<Chemist> SupervisedChemists {
+        get => new List<Chemist>(_supervisedChemists);
+        private set => _supervisedChemists = value;
+    }
     public static IList<Chemist> Chemists {
         get => new List<Chemist>(_chemists);
         private set => _chemists = value;
     }
 
-    private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
         get => new List<Product>(_associatedProducts);
         private set => _associatedProducts = value;
@@ -24,6 +37,25 @@ public class Chemist : CartelMember {
 
         PoundsCooked = poundsCooked;
         _chemists.Add(this);
+    }
+
+
+    public void CreateSelfConnection(Chemist entity)
+    {
+        _supervisedChemists.Add(entity);
+        entity.Supervisors.Add(this);
+    }
+
+    public void DestroySelfConnection(Chemist entity)
+    {
+        _supervisedChemists.Remove(entity);
+        entity.Supervisors.Remove(this);
+    }
+
+    public void EditSelfConnection(Chemist entity)
+    {
+        DestroySelfConnection(entity);
+        CreateSelfConnection(entity);
     }
 
     public void AddProduct(Product product) {
