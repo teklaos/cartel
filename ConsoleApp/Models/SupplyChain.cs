@@ -9,10 +9,10 @@ public class SupplyChain {
         private set => _supplyChains = value;
     }
 
-    private IList<Ingredient> _associatedIngridients = new List<Ingredient>();
-    public IList<Ingredient> AssociatedIngridients {
-        get => new List<Ingredient>(_associatedIngridients);
-        private set => _associatedIngridients = value;
+    private IList<Ingredient> _associatedIngredients = new List<Ingredient>();
+    public IList<Ingredient> AssociatedIngredients {
+        get => new List<Ingredient>(_associatedIngredients);
+        private set => _associatedIngredients = value;
     }
 
     public string Name { get; private set; }
@@ -31,25 +31,25 @@ public class SupplyChain {
     }
 
     public void AddIngredient(Ingredient ingredient) {
-        _associatedIngridients.Add(ingredient);
+        _associatedIngredients.Add(ingredient);
         ingredient.AddSupplyChainInternally(this);
     }
 
     public void RemoveIngredient(Ingredient ingredient) {
-        if(!_associatedIngridients.Remove(ingredient))
+        if(!_associatedIngredients.Remove(ingredient))
             throw new ArgumentException("SupplyChain not found.");
         ingredient.RemoveSupplyChainInternally(this);
     }
 
-    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngridients.Add(ingredient);
+    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngredients.Add(ingredient);
 
     public void RemoveIngredientInternally(Ingredient ingredient) {
-        if (!_associatedIngridients.Remove(ingredient))
-            throw new ArgumentException("Ingridient not found.");
+        if (!_associatedIngredients.Remove(ingredient))
+            throw new ArgumentException("Ingredient not found.");
     }
 
     public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
-        if(_associatedIngridients.Contains(oldIngredient)) {
+        if(_associatedIngredients.Contains(oldIngredient)) {
             RemoveIngredient(oldIngredient);
         } else {
             throw new ArgumentException("Old ingredient not found.");

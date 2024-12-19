@@ -96,7 +96,7 @@ public class Ingredient {
         if(_associatedSupplyChains.Contains(oldSupplyChain)) {
             RemoveSupplyChain(oldSupplyChain);
         } else {
-            throw new ArgumentException("Old supplychain not found.");
+            throw new ArgumentException("Old supply chain not found.");
         }
         AddSupplyChain(newSupplyChain);
     }

@@ -18,7 +18,7 @@ public class Warehouse {
     }
 
     public IList<Distributor> _associatedDistributors = new List<Distributor>();
-    public IList<Distributor> AssociatedDistibutors {
+    public IList<Distributor> AssociatedDistributors {
         get => new List<Distributor>(_associatedDistributors);
         private set => _associatedDistributors = value;
     }

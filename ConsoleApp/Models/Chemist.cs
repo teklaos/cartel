@@ -46,16 +46,16 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
         entity.Supervisors.Add(this);
     }
 
-    public void DestroySelfConnection(Chemist entity)
+    public void RemoveSelfConnection(Chemist entity)
     {
         _supervisedChemists.Remove(entity);
         entity.Supervisors.Remove(this);
     }
 
-    public void ModifySelfConnection(Chemist entity)
+    public void EditSelfConnection(Chemist oldEntity, Chemist newEntity)
     {
-        DestroySelfConnection(entity);
-        CreateSelfConnection(entity);
+        RemoveSelfConnection(oldEntity);
+        CreateSelfConnection(newEntity);
     }
 
     public void AddProduct(Product product) {
@@ -107,7 +107,7 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
     
     ~Chemist()
     {
-        DestroySelfConnection(this);
+        RemoveSelfConnection(this);
     }
 
 }

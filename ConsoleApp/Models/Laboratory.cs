@@ -5,8 +5,6 @@ namespace ConsoleApp.models;
 
 public class Laboratory : ICompositionConnection<Equipment>
 {
-
-
     private IList<Equipment> _equipments = new List<Equipment>();
     public IList<Equipment> AssociatedEquipment {
         get => new List<Equipment>(_equipments);
@@ -25,10 +23,10 @@ public class Laboratory : ICompositionConnection<Equipment>
         private set => _associatedProducts = value;
     }
 
-    private IList<Ingredient> _associatedIngridients = new List<Ingredient>();
-    public IList<Ingredient> AssociatedIngridients {
-        get => new List<Ingredient>(_associatedIngridients);
-        private set => _associatedIngridients = value;
+    private IList<Ingredient> _associatedIngredients = new List<Ingredient>();
+    public IList<Ingredient> AssociatedIngredients {
+        get => new List<Ingredient>(_associatedIngredients);
+        private set => _associatedIngredients = value;
     }
 
     public string Location { get; private set; }
@@ -70,25 +68,25 @@ public class Laboratory : ICompositionConnection<Equipment>
     }
 
     public void AddIngredient(Ingredient ingredient) {
-        _associatedIngridients.Add(ingredient);
+        _associatedIngredients.Add(ingredient);
         ingredient.AddLaboratoryInternally(this);
     }
 
     public void RemoveIngredient(Ingredient ingredient) {
-        if(!_associatedIngridients.Remove(ingredient))
+        if(!_associatedIngredients.Remove(ingredient))
             throw new ArgumentException("Ingredient not found.");
         ingredient.RemoveLaboratoryInternally(this);
     }
     
-    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngridients.Add(ingredient);
+    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngredients.Add(ingredient);
 
     public void RemoveIngredientInternally(Ingredient ingredient) {
-        if (!_associatedIngridients.Remove(ingredient))
-            throw new ArgumentException("Ingridient not found.");
+        if (!_associatedIngredients.Remove(ingredient))
+            throw new ArgumentException("Ingredient not found.");
     }
 
     public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
-        if(_associatedIngridients.Contains(oldIngredient)) {
+        if(_associatedIngredients.Contains(oldIngredient)) {
             RemoveIngredient(oldIngredient);
         } else {
             throw new ArgumentException("Old ingredient not found.");
@@ -104,7 +102,7 @@ public class Laboratory : ICompositionConnection<Equipment>
         _equipments.Add(entity);
     }
 
-    public void DestroyCompositionConnection(Equipment entity)
+    public void RemoveCompositionConnection(Equipment entity)
     {
         if (entity.AssignedLab == null)
             throw new Exception("Equipment has not been attached to the lab yet.");
@@ -112,10 +110,10 @@ public class Laboratory : ICompositionConnection<Equipment>
         entity.RemoveLab();
     }
 
-    public void ModifyCompositionConnection(Equipment entity)
+    public void EditCompositionConnection(Equipment oldEntity, Equipment newEntity)
     {
-        DestroyCompositionConnection(entity);
-        CreateCompositionConnection(entity);
+        RemoveCompositionConnection(oldEntity);
+        CreateCompositionConnection(newEntity);
     }
 
     public static void Serialize() {
