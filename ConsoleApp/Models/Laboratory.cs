@@ -5,10 +5,10 @@ namespace ConsoleApp.models;
 
 public class Laboratory : ICompositionConnection<Equipment>
 {
-    private IList<Equipment> _equipments = new List<Equipment>();
+    private IList<Equipment> _associatedEquipment = new List<Equipment>();
     public IList<Equipment> AssociatedEquipment {
-        get => new List<Equipment>(_equipments);
-        private set => _equipments = value;
+        get => new List<Equipment>(_associatedEquipment);
+        private set => _associatedEquipment = value;
     }
     
     private static IList<Laboratory> _laboratories = new List<Laboratory>();
@@ -94,26 +94,26 @@ public class Laboratory : ICompositionConnection<Equipment>
         AddIngredient(newIngredient);
     }
     
-    public void CreateCompositionConnection(Equipment entity)
+    public void AddCompositionConnection(Equipment equipment)
     {
-        if (entity.AssignedLab != null)
+        if (equipment.AssignedLab != null)
             throw new Exception("Equipment already attached to the lab.");
-        entity.AttachLab(this);
-        _equipments.Add(entity);
+        _associatedEquipment.Add(equipment);
+        equipment.AddLaboratory(this);
     }
 
-    public void RemoveCompositionConnection(Equipment entity)
+    public void RemoveCompositionConnection(Equipment equipment)
     {
-        if (entity.AssignedLab == null)
+        if (equipment.AssignedLab == null)
             throw new Exception("Equipment has not been attached to the lab yet.");
-        _equipments.Remove(entity);
-        entity.RemoveLab();
+        _associatedEquipment.Remove(equipment);
+        equipment.RemoveLaboratory();
     }
 
     public void EditCompositionConnection(Equipment oldEntity, Equipment newEntity)
     {
         RemoveCompositionConnection(oldEntity);
-        CreateCompositionConnection(newEntity);
+        AddCompositionConnection(newEntity);
     }
 
     public static void Serialize() {

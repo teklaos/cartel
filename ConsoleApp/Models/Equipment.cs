@@ -27,12 +27,12 @@ public class Equipment {
         _equipmentList.Add(this);
     }
 
-    public void AttachLab(Laboratory laboratory)
+    public void AddLaboratory(Laboratory laboratory)
     {
         AssignedLab = laboratory;
     }
     
-    public void RemoveLab()
+    public void RemoveLaboratory()
     {
         AssignedLab = null;
     }
