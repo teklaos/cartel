@@ -380,4 +380,21 @@ public class TestAssociations {
 
         Assert.That(deliverer.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedDeliverers.Count));
     }
+
+    [Test]
+    public void EditProduct_ShouldReplaceOldProductWithNewProduct()
+    {
+        Recipe recipe = new Recipe();
+        Product oldProduct = new Product("Meth", 100, AddLevelAttribute.Strong);
+        Product newProduct = new Product("Meth", 1001, AddLevelAttribute.Strong);
+
+        recipe.AddProduct(oldProduct);
+
+        Assert.Contains(oldProduct, recipe.AssociatedProducts.ToList());
+
+        recipe.EditProduct(oldProduct, newProduct);
+
+        Assert.False(recipe.AssociatedProducts.Contains(oldProduct));
+        Assert.Contains(newProduct, recipe.AssociatedProducts.ToList());
+    }
 }

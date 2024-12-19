@@ -28,7 +28,7 @@ public class Recipe {
 
     public void RemoveProduct(Product product) {
         if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found exception.");
+            throw new ArgumentException("Product not found exception.");
         product.RemoveRecipeInternally(this);
     }
 
@@ -36,8 +36,18 @@ public class Recipe {
     
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found exception.");
+            throw new ArgumentException("Product not found exception.");
     }
+
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        if (_associatedProducts.Contains(oldProduct)) {
+            RemoveProduct(oldProduct);  
+        } else {
+            throw new ArgumentException("Old product not found.");
+        }
+        AddProduct(newProduct);  
+    }
+
     
     public static void Serialize() {
         string fileName = "Recipes.json";
