@@ -212,4 +212,46 @@ public class TestAssociations {
         
         Assert.That(product.AssociatedLaboratories, Has.Count.EqualTo(laboratory.AssociatedProducts.Count));
     }
+
+    [Test]
+    public void TestDistributorAddWarehouse() {
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Warehouse warehouse = new("Madelin", 500);
+
+        distributor.AddWarehouse(warehouse);
+
+        Assert.That(distributor.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedDistibutors.Count));
+    }
+
+    [Test]
+    public void TestDistributorRemoveWarehouse() {
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Warehouse warehouse = new("Madelin", 500);
+
+        warehouse.AddDistributor(distributor);
+        distributor.RemoveWarehouse(warehouse);
+
+        Assert.That(distributor.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedDistibutors.Count));
+    }
+
+    [Test]
+    public void TestWarehouseAddDistributor() {
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Warehouse warehouse = new("Madelin", 500);
+
+        warehouse.AddDistributor(distributor);
+
+        Assert.That(warehouse.AssociatedDistibutors, Has.Count.EqualTo(distributor.AssociatedWarehouses.Count));
+    }
+
+    [Test]
+    public void TestWarehouseRemoveDistributor() {
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Warehouse warehouse = new("Madelin", 500);
+
+        distributor.AddWarehouse(warehouse);
+        warehouse.RemoveDistributor(distributor);
+
+        Assert.That(warehouse.AssociatedDistibutors, Has.Count.EqualTo(distributor.AssociatedWarehouses.Count));
+    }
 }

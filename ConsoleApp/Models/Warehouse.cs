@@ -17,6 +17,12 @@ public class Warehouse {
         private set => _associatedProducts = value;
     }
 
+    public IList<Distributor> _associatedDistributors = new List<Distributor>();
+    public IList<Distributor> AssociatedDistibutors {
+        get => new List<Distributor>(_associatedDistributors);
+        private set => _associatedDistributors = value;
+    }
+
     public Warehouse(string location, int maxCapacity) {
         if (string.IsNullOrWhiteSpace(location))
             throw new ArgumentException("Location cannot be null or whitespace.");
@@ -44,6 +50,23 @@ public class Warehouse {
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new ArgumentException("Product not found.");
+    }
+
+    public void AddDistributor(Distributor distributor) {
+        _associatedDistributors.Add(distributor);
+        distributor.AddWarehouseInternally(this);
+    }
+
+    public void RemoveDistributor(Distributor distributor) {
+        if(!_associatedDistributors.Remove(distributor))
+            throw new ArgumentException("Distributor not found");
+        distributor.RemoveWarehouseInternally(this);
+    }
+    public void AddDistributorInternally(Distributor distributor) => _associatedDistributors.Add(distributor);
+
+    public void RemoveDistributorInternally(Distributor distributor) {
+        if(!_associatedDistributors.Remove(distributor))
+            throw new ArgumentException("Distributor not found");
     }
 
     public static void Serialize() {
