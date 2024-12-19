@@ -170,4 +170,46 @@ public class TestAssociations {
 
         Assert.That(product.AssociatedRecipes, Has.Count.EqualTo(recipe.AssociatedProducts.Count));
     }
+
+    [Test]
+    public void TestLaboratoryAddProduct() {
+        Laboratory laboratory = new("Madelin");
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        laboratory.AddProduct(product);
+
+        Assert.That(laboratory.AssociatedProducts, Has.Count.EqualTo(product.AssociatedLaboratories.Count));
+    }
+
+    [Test]
+    public void TestLaboratoryRemoveProduct() {
+        Laboratory laboratory = new("Madelin");
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        product.AddLaboratory(laboratory);
+        laboratory.RemoveProduct(product);
+
+        Assert.That(laboratory.AssociatedProducts, Has.Count.EqualTo(product.AssociatedLaboratories.Count));
+    }
+
+    [Test]
+    public void TestProductAddLaboratory() {
+        Laboratory laboratory = new("Madelin");
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        product.AddLaboratory(laboratory);
+
+        Assert.That(product.AssociatedLaboratories, Has.Count.EqualTo(laboratory.AssociatedProducts.Count));
+    }
+
+    [Test]
+    public void TestProductRemoveLaboratory() {
+        Laboratory laboratory = new("Madelin");
+        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+
+        laboratory.AddProduct(product);
+        product.RemoveLaboratory(laboratory);
+        
+        Assert.That(product.AssociatedLaboratories, Has.Count.EqualTo(laboratory.AssociatedProducts.Count));
+    }
 }

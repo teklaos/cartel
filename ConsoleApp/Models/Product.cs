@@ -51,10 +51,15 @@ public class Product {
     }
 
     private IList<Recipe> _associatedRecipes = new List<Recipe>();
-
     public IList<Recipe> AssociatedRecipes {
         get => new List<Recipe>(_associatedRecipes);
         private set => _associatedRecipes = value;
+    }
+
+    private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
+    public IList<Laboratory> AssociatedLaboratories {
+        get => new List<Laboratory>(_associatedLaboratories);
+        private set => _associatedLaboratories = value;
     }
 
     public Product(string name, int pricePerPound, AddLevelAttribute addictivenessLevel) {
@@ -139,6 +144,24 @@ public class Product {
     public void RemoveRecipeInternally(Recipe recipe) {
         if(!_associatedRecipes.Remove(recipe))
             throw new ArgumentException("Recipe not found.");
+    }
+
+    public void AddLaboratory(Laboratory laboratory) {
+        _associatedLaboratories.Add(laboratory);
+        laboratory.AddProductInternally(this);
+    }
+
+    public void RemoveLaboratory(Laboratory laboratory) {
+        if(!_associatedLaboratories.Remove(laboratory))
+            throw new ArgumentException("Laboratory not found.");
+        laboratory.RemoveProductInternally(this);
+    }
+
+    public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
+
+    public void RemoveLaboratoryInternally(Laboratory laboratory) {
+        if(!_associatedLaboratories.Remove(laboratory))
+            throw new ArgumentException("Laboratory not found.");
     }
 
     public static void Serialize() {
