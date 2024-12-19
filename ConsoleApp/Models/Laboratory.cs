@@ -1,8 +1,18 @@
 using System.Text.Json;
+using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Laboratory {
+public class Laboratory : ICompositionConnection<Equipment>
+{
+
+
+    private IList<Equipment> _equipments = new List<Equipment>();
+    public IList<Equipment> AssociatedEquipment {
+        get => new List<Equipment>(_equipments);
+        private set => _equipments = value;
+    }
+    
     private static IList<Laboratory> _laboratories = new List<Laboratory>();
     public static IList<Laboratory> Laboratories {
         get => new List<Laboratory>(_laboratories);
@@ -68,6 +78,28 @@ public class Laboratory {
             throw new ArgumentException("Ingridient not found.");
     }
     
+    public void CreateCompositionConnection(Equipment entity)
+    {
+        if (entity.AssignedLab != null)
+            throw new Exception("Equipment already attached to the lab.");
+        entity.AttachLab(this);
+        _equipments.Add(entity);
+    }
+
+    public void DestroyCompositionConnection(Equipment entity)
+    {
+        if (entity.AssignedLab == null)
+            throw new Exception("Equipment has not been attached to the lab yet.");
+        _equipments.Remove(entity);
+        entity.RemoveLab();
+    }
+
+    public void ModifyCompositionConnection(Equipment entity)
+    {
+        DestroyCompositionConnection(entity);
+        CreateCompositionConnection(entity);
+    }
+
     public static void Serialize() {
         string fileName = "Laboratories.json";
         try {

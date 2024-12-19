@@ -11,6 +11,7 @@ public class Equipment {
     public string Type { get; private set; }
     public string Name { get; private set; }
     public string Model { get; private set; }
+    public Laboratory? AssignedLab { get; private set; }
 
     public Equipment(string type, string name, string model) {
         if (string.IsNullOrWhiteSpace(type))
@@ -24,6 +25,16 @@ public class Equipment {
         Name = name;
         Model = model;
         _equipmentList.Add(this);
+    }
+
+    public void AttachLab(Laboratory laboratory)
+    {
+        AssignedLab = laboratory;
+    }
+    
+    public void RemoveLab()
+    {
+        AssignedLab = null;
     }
     
     public static void Serialize() {
