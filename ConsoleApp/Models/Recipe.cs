@@ -1,8 +1,9 @@
 using System.Text.Json;
+using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Recipe {
+public class Recipe : ICompositionConnection<Instruction> {
     private static IList<Recipe> _recipes = new List<Recipe>();
     public static IList<Recipe> Recipes {
         get => new List<Recipe>(_recipes);
@@ -15,11 +16,16 @@ public class Recipe {
         private set => _associatedProducts = value;
     }
 
+    private IList<Instruction> _associatedInstructions = new List<Instruction>();
+    public IList<Instruction> AssociatedInstructions {
+        get => new List<Instruction>(_associatedInstructions);
+        private set => _associatedInstructions = value;
+    }
+
     private readonly int _amountOfInstructions = 55;
     public int Complexity { get => _amountOfInstructions / 10; }
 
     public Recipe() => _recipes.Add(this);
-
     
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
@@ -48,7 +54,25 @@ public class Recipe {
         AddProduct(newProduct);  
     }
 
-    
+    public void AddCompositionConnection(Instruction instruction) {
+        if (instruction.AssociatedRecipe != null)
+            throw new ArgumentException("Instruction is already associated with a recipe.");
+        _associatedInstructions.Add(instruction);
+        instruction.AddRecipe(this);
+    }
+
+    public void RemoveCompositionConnection(Instruction instruction) {
+        if (instruction.AssociatedRecipe == null)
+            throw new ArgumentException("Instruction is not associated with a recipe.");
+        _associatedInstructions.Remove(instruction);
+        instruction.RemoveRecipe();
+    }
+
+    public void EditCompositionConnection(Instruction oldInstruction, Instruction newInstruction) {
+        RemoveCompositionConnection(oldInstruction);
+        AddCompositionConnection(newInstruction);
+    }
+
     public static void Serialize() {
         string fileName = "Recipes.json";
         try {

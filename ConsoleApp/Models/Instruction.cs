@@ -10,9 +10,19 @@ public class Instruction {
     }
     public string Action { get; private set; }
 
+    public Recipe? AssociatedRecipe { get; private set; }
+
     public Instruction(string action) {
         Action = action;
         _instructions.Add(this);
+    }
+
+    public void AddRecipe(Recipe recipe) {
+        AssociatedRecipe = recipe;
+    }
+
+    public void RemoveRecipe() {
+        AssociatedRecipe = null;
     }
     
     public static void Serialize() {
