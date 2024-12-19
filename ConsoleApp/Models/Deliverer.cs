@@ -42,6 +42,15 @@ public class Deliverer : CartelMember {
             throw new ArgumentException("Product not found.");
     }
 
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        if (_associatedProducts.Contains(oldProduct)) {
+            RemoveProduct(oldProduct);  
+        } else {
+            throw new ArgumentException("Old product not found.");
+        }
+        AddProduct(newProduct);  
+    }
+
     public void AddWarehouse(Warehouse warehouse) {
         _associatedWarehouses.Add(warehouse);
         warehouse.AddDelivererInternally(this);
@@ -58,6 +67,15 @@ public class Deliverer : CartelMember {
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Warehouse not found.");
+    }
+
+    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
+        if (_associatedWarehouses.Contains(oldWarehouse)) {
+            RemoveWarehouse(oldWarehouse);  
+        } else {
+            throw new ArgumentException("Old warehouse not found.");
+        }
+        AddWarehouse(newWarehouse);  
     }
 
     public new static void Serialize() {

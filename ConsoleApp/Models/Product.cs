@@ -92,6 +92,15 @@ public class Product {
             throw new ArgumentException("Warehouse not found.");
     }
 
+    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
+        if (_associatedWarehouses.Contains(oldWarehouse)) {
+            RemoveWarehouse(oldWarehouse);  
+        } else {
+            throw new ArgumentException("Old warehouse not found.");
+        }
+        AddWarehouse(newWarehouse);  
+    }
+
     public void AddDeliverer(Deliverer deliverer) {
         _associatedDeliverers.Add(deliverer);
         deliverer.AddProductInternally(this);
@@ -108,6 +117,15 @@ public class Product {
     public void RemoveDelivererInternally(Deliverer deliverer) {
         if (!_associatedDeliverers.Remove(deliverer))
             throw new ArgumentException("Deliverer not found.");
+    }
+
+    public void EditDeliverer(Deliverer oldDeliverer, Deliverer newDeliverer) {
+        if (_associatedDeliverers.Contains(oldDeliverer)) {
+            RemoveDeliverer(oldDeliverer);  
+        } else {
+            throw new ArgumentException("Old deliverer not found.");
+        }
+        AddDeliverer(newDeliverer);  
     }
 
     public void AddChemist(Chemist chemist) {
@@ -128,6 +146,15 @@ public class Product {
             throw new ArgumentException("Chemist not found.");
     }
 
+    public void EditChemist(Chemist oldChemist, Chemist newChemist) {
+        if (_associatedChemists.Contains(oldChemist)) {
+            RemoveChemist(oldChemist);  
+        } else {
+            throw new ArgumentException("Old chemist not found.");
+        }
+        AddChemist(newChemist);  
+    }
+
     public void AddRecipe(Recipe recipe) {
         _associatedRecipes.Add(recipe);
         recipe.AddProductInternally(this);
@@ -146,6 +173,15 @@ public class Product {
             throw new ArgumentException("Recipe not found.");
     }
 
+    public void EditRecipe(Recipe oldRecipe, Recipe newRecipe) {
+        if (_associatedRecipes.Contains(oldRecipe)) {
+            RemoveRecipe(oldRecipe);  
+        } else {
+            throw new ArgumentException("Old recipe not found.");
+        }
+        AddRecipe(newRecipe);  
+    }
+
     public void AddLaboratory(Laboratory laboratory) {
         _associatedLaboratories.Add(laboratory);
         laboratory.AddProductInternally(this);
@@ -162,6 +198,15 @@ public class Product {
     public void RemoveLaboratoryInternally(Laboratory laboratory) {
         if(!_associatedLaboratories.Remove(laboratory))
             throw new ArgumentException("Laboratory not found.");
+    }
+
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        if (_associatedLaboratories.Contains(oldLaboratory)) {
+            RemoveLaboratory(oldLaboratory);  
+        } else {
+            throw new ArgumentException("Old laboratory not found.");
+        }
+        AddLaboratory(newLaboratory);  
     }
 
     public static void Serialize() {

@@ -58,6 +58,15 @@ public class Warehouse {
             throw new ArgumentException("Product not found.");
     }
 
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        if (_associatedProducts.Contains(oldProduct)) {
+            RemoveProduct(oldProduct);  
+        } else {
+            throw new ArgumentException("Old product not found.");
+        }
+        AddProduct(newProduct);  
+    }
+
     public void AddDistributor(Distributor distributor) {
         _associatedDistributors.Add(distributor);
         distributor.AddWarehouseInternally(this);
@@ -73,6 +82,15 @@ public class Warehouse {
     public void RemoveDistributorInternally(Distributor distributor) {
         if(!_associatedDistributors.Remove(distributor))
             throw new ArgumentException("Distributor not found");
+    }
+
+    public void EditDistributor(Distributor oldDistributor, Distributor newDistributor) {
+        if(_associatedDistributors.Contains(oldDistributor)) {
+            RemoveDistributor(oldDistributor);
+        } else {
+            throw new ArgumentException("Old distributor not found");
+        }
+        AddDistributor(newDistributor);
     }
 
     public void AddDeliverer(Deliverer deliverer) {
@@ -91,6 +109,15 @@ public class Warehouse {
     public void RemoveDelivererInternally(Deliverer deliverer) {
         if (!_associatedDeliverers.Remove(deliverer))
             throw new ArgumentException("Deliverer not found.");
+    }
+
+    public void EditDeliverer(Deliverer oldDeliverer, Deliverer newDeliverer) {
+        if (_associatedDeliverers.Contains(oldDeliverer)) {
+            RemoveDeliverer(oldDeliverer);  
+        } else {
+            throw new ArgumentException("Old deliverer not found.");
+        }
+        AddDeliverer(newDeliverer);  
     }
 
     public static void Serialize() {

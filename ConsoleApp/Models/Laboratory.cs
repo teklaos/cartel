@@ -60,6 +60,15 @@ public class Laboratory : ICompositionConnection<Equipment>
             throw new Exception("Product not found.");
     }
 
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        if (_associatedProducts.Contains(oldProduct)) {
+            RemoveProduct(oldProduct);  
+        } else {
+            throw new ArgumentException("Old product not found.");
+        }
+        AddProduct(newProduct);  
+    }
+
     public void AddIngredient(Ingredient ingredient) {
         _associatedIngridients.Add(ingredient);
         ingredient.AddLaboratoryInternally(this);
@@ -76,6 +85,15 @@ public class Laboratory : ICompositionConnection<Equipment>
     public void RemoveIngredientInternally(Ingredient ingredient) {
         if (!_associatedIngridients.Remove(ingredient))
             throw new ArgumentException("Ingridient not found.");
+    }
+
+    public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
+        if(_associatedIngridients.Contains(oldIngredient)) {
+            RemoveIngredient(oldIngredient);
+        } else {
+            throw new ArgumentException("Old ingredient not found.");
+        }
+        AddIngredient(newIngredient);
     }
     
     public void CreateCompositionConnection(Equipment entity)

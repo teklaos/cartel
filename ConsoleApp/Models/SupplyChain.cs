@@ -47,6 +47,15 @@ public class SupplyChain {
         if (!_associatedIngridients.Remove(ingredient))
             throw new ArgumentException("Ingridient not found.");
     }
+
+    public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
+        if(_associatedIngridients.Contains(oldIngredient)) {
+            RemoveIngredient(oldIngredient);
+        } else {
+            throw new ArgumentException("Old ingredient not found.");
+        }
+        AddIngredient(newIngredient);
+    }
     
     
     public static void Serialize() {

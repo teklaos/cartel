@@ -65,6 +65,15 @@ public class Ingredient {
             throw new ArgumentException("Laboratory not found.");
     }
 
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        if (_associatedLaboratories.Contains(oldLaboratory)) {
+            RemoveLaboratory(oldLaboratory);  
+        } else {
+            throw new ArgumentException("Old laboratory not found.");
+        }
+        AddLaboratory(newLaboratory);  
+    }
+
     public void AddSupplyChain(SupplyChain supplyChain) {
         _associatedSupplyChains.Add(supplyChain);
         supplyChain.AddIngredientInternally(this);
@@ -81,6 +90,15 @@ public class Ingredient {
     public void RemoveSupplyChainInternally(SupplyChain supplyChain) {
         if(!_associatedSupplyChains.Remove(supplyChain))
             throw new ArgumentException("SupplyChain not found.");
+    }
+
+    public void EditSupplyChain(SupplyChain oldSupplyChain, SupplyChain newSupplyChain) {
+        if(_associatedSupplyChains.Contains(oldSupplyChain)) {
+            RemoveSupplyChain(oldSupplyChain);
+        } else {
+            throw new ArgumentException("Old supplychain not found.");
+        }
+        AddSupplyChain(newSupplyChain);
     }
     
     public static void Serialize() {

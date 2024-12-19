@@ -43,6 +43,15 @@ public class Distributor : CartelMember {
         if(!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Warehouse not found.");
     }
+
+    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
+        if (_associatedWarehouses.Contains(oldWarehouse)) {
+            RemoveWarehouse(oldWarehouse);  
+        } else {
+            throw new ArgumentException("Old warehouse not found.");
+        }
+        AddWarehouse(newWarehouse);  
+    }
     
     public new static void Serialize() {
         string fileName = "Distributors.json";

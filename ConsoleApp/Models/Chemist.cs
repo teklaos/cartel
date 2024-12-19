@@ -75,6 +75,15 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found exception.");
     }
+
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        if (_associatedProducts.Contains(oldProduct)) {
+            RemoveProduct(oldProduct);  
+        } else {
+            throw new ArgumentException("Old product not found.");
+        }
+        AddProduct(newProduct);  
+    }
     
     public new static void Serialize() {
         string fileName = "Chemists.json";
