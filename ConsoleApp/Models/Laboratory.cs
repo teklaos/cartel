@@ -15,6 +15,12 @@ public class Laboratory {
         private set => _associatedProducts = value;
     }
 
+    private IList<Ingredient> _associatedIngridients = new List<Ingredient>();
+    public IList<Ingredient> AssociatedIngridients {
+        get => new List<Ingredient>(_associatedIngridients);
+        private set => _associatedIngridients = value;
+    }
+
     public string Location { get; private set; }
     public static int MaxPoundsPerCook { get; } = 50;
 
@@ -33,7 +39,7 @@ public class Laboratory {
 
     public void RemoveProduct(Product product) {
         if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found exception.");
+            throw new Exception("Product not found.");
         product.RemoveLaboratoryInternally(this);
     }
 
@@ -41,7 +47,25 @@ public class Laboratory {
     
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found exception.");
+            throw new Exception("Product not found.");
+    }
+
+    public void AddIngredient(Ingredient ingredient) {
+        _associatedIngridients.Add(ingredient);
+        ingredient.AddLaboratoryInternally(this);
+    }
+
+    public void RemoveIngredient(Ingredient ingredient) {
+        if(!_associatedIngridients.Remove(ingredient))
+            throw new ArgumentException("Ingredient not found.");
+        ingredient.RemoveLaboratoryInternally(this);
+    }
+    
+    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngridients.Add(ingredient);
+
+    public void RemoveIngredientInternally(Ingredient ingredient) {
+        if (!_associatedIngridients.Remove(ingredient))
+            throw new ArgumentException("Ingridient not found.");
     }
     
     public static void Serialize() {

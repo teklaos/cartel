@@ -14,6 +14,12 @@ public class Ingredient {
         get => new List<Ingredient>(_ingredients);
         private set => _ingredients = value;
     }
+
+    private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
+    public IList<Laboratory> AssociatedLaboratories {
+        get => new List<Laboratory>(_associatedLaboratories);
+        private set => _associatedLaboratories = value;
+    }
     public string Name { get; private set; }
     public int PricePerPound { get; private set; }
     public string ChemicalFormula { get; private set; }
@@ -32,6 +38,24 @@ public class Ingredient {
         ChemicalFormula = chemicalFormula;
         State = state;
         _ingredients.Add(this);
+    }
+
+    public void AddLaboratory(Laboratory laboratory) {
+        _associatedLaboratories.Add(laboratory);
+        laboratory.AddIngredientInternally(this);
+    }
+
+    public void RemoveLaboratory(Laboratory laboratory) {
+        if(!_associatedLaboratories.Remove(laboratory))
+            throw new ArgumentException("Laboratory not found.");
+        laboratory.RemoveIngredientInternally(this);
+    }
+    
+    public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
+
+    public void RemoveLaboratoryInternally(Laboratory laboratory) {
+        if (!_associatedLaboratories.Remove(laboratory))
+            throw new ArgumentException("Laboratory not found.");
     }
     
     public static void Serialize() {

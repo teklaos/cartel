@@ -254,4 +254,46 @@ public class TestAssociations {
 
         Assert.That(warehouse.AssociatedDistibutors, Has.Count.EqualTo(distributor.AssociatedWarehouses.Count));
     }
+
+    [Test]
+    public void TestIngredientAddLaboratory() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Laboratory laboratory = new("Madelin");
+
+        ingredient.AddLaboratory(laboratory);
+
+        Assert.That(ingredient.AssociatedLaboratories, Has.Count.EqualTo(laboratory.AssociatedIngridients.Count));
+    }
+
+    [Test]
+    public void TestIngredientRemoveLaboratory() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Laboratory laboratory = new("Madelin");
+
+        laboratory.AddIngredient(ingredient);
+        ingredient.RemoveLaboratory(laboratory);
+
+        Assert.That(ingredient.AssociatedLaboratories, Has.Count.EqualTo(laboratory.AssociatedIngridients.Count));
+    }
+
+    [Test]
+    public void TestLaboratoryAddIngredient() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Laboratory laboratory = new("Madelin");
+
+        laboratory.AddIngredient(ingredient);
+
+        Assert.That(laboratory.AssociatedIngridients, Has.Count.EqualTo(ingredient.AssociatedLaboratories.Count));
+    }
+
+    [Test]
+    public void TestLaboratoryRemoveIngredient() {
+        Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Laboratory laboratory = new("Madelin");
+
+        ingredient.AddLaboratory(laboratory);
+        laboratory.RemoveIngredient(ingredient);
+
+        Assert.That(laboratory.AssociatedIngridients, Has.Count.EqualTo(ingredient.AssociatedLaboratories.Count));
+    }
 }
