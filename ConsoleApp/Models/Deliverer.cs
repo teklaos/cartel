@@ -35,20 +35,16 @@ public class Deliverer : CartelMember {
         product.RemoveDelivererInternally(this);
     }
 
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        RemoveProduct(oldProduct);
+        AddProduct(newProduct);
+    }
+
     public void AddProductInternally(Product product) => _associatedProducts.Add(product);
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new ArgumentException("Product not found.");
-    }
-
-    public void EditProduct(Product oldProduct, Product newProduct) {
-        if (_associatedProducts.Contains(oldProduct)) {
-            RemoveProduct(oldProduct);  
-        } else {
-            throw new ArgumentException("Old product not found.");
-        }
-        AddProduct(newProduct);  
     }
 
     public void AddWarehouse(Warehouse warehouse) {
@@ -62,20 +58,16 @@ public class Deliverer : CartelMember {
         warehouse.RemoveDelivererInternally(this);
     }
 
+    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
+        RemoveWarehouse(oldWarehouse);
+        AddWarehouse(newWarehouse);
+    }
+
     public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
 
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Warehouse not found.");
-    }
-
-    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
-        if (_associatedWarehouses.Contains(oldWarehouse)) {
-            RemoveWarehouse(oldWarehouse);  
-        } else {
-            throw new ArgumentException("Old warehouse not found.");
-        }
-        AddWarehouse(newWarehouse);  
     }
 
     public new static void Serialize() {

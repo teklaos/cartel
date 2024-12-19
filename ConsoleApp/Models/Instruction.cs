@@ -24,7 +24,7 @@ public class Instruction {
     public void RemoveRecipe() {
         AssociatedRecipe = null;
     }
-    
+
     public static void Serialize() {
         string fileName = "Instructions.json";
         try {

@@ -9,6 +9,8 @@ public class Recipe : ICompositionConnection<Instruction> {
         get => new List<Recipe>(_recipes);
         private set => _recipes = value;
     }
+    private readonly int _amountOfInstructions = 55;
+    public int Complexity { get => _amountOfInstructions / 10; }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
@@ -22,11 +24,8 @@ public class Recipe : ICompositionConnection<Instruction> {
         private set => _associatedInstructions = value;
     }
 
-    private readonly int _amountOfInstructions = 55;
-    public int Complexity { get => _amountOfInstructions / 10; }
-
     public Recipe() => _recipes.Add(this);
-    
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddRecipeInternally(this);
@@ -38,20 +37,16 @@ public class Recipe : ICompositionConnection<Instruction> {
         product.RemoveRecipeInternally(this);
     }
 
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        RemoveProduct(oldProduct);
+        AddProduct(newProduct);
+    }
+
     public void AddProductInternally(Product product) => _associatedProducts.Add(product);
-    
+
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new ArgumentException("Product not found exception.");
-    }
-
-    public void EditProduct(Product oldProduct, Product newProduct) {
-        if (_associatedProducts.Contains(oldProduct)) {
-            RemoveProduct(oldProduct);  
-        } else {
-            throw new ArgumentException("Old product not found.");
-        }
-        AddProduct(newProduct);  
     }
 
     public void AddCompositionConnection(Instruction instruction) {

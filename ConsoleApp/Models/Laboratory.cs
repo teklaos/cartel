@@ -3,14 +3,7 @@ using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Laboratory : ICompositionConnection<Equipment>
-{
-    private IList<Equipment> _associatedEquipment = new List<Equipment>();
-    public IList<Equipment> AssociatedEquipment {
-        get => new List<Equipment>(_associatedEquipment);
-        private set => _associatedEquipment = value;
-    }
-    
+public class Laboratory : ICompositionConnection<Equipment> {
     private static IList<Laboratory> _laboratories = new List<Laboratory>();
     public static IList<Laboratory> Laboratories {
         get => new List<Laboratory>(_laboratories);
@@ -27,6 +20,12 @@ public class Laboratory : ICompositionConnection<Equipment>
     public IList<Ingredient> AssociatedIngredients {
         get => new List<Ingredient>(_associatedIngredients);
         private set => _associatedIngredients = value;
+    }
+
+    private IList<Equipment> _associatedEquipment = new List<Equipment>();
+    public IList<Equipment> AssociatedEquipment {
+        get => new List<Equipment>(_associatedEquipment);
+        private set => _associatedEquipment = value;
     }
 
     public string Location { get; private set; }
@@ -51,20 +50,16 @@ public class Laboratory : ICompositionConnection<Equipment>
         product.RemoveLaboratoryInternally(this);
     }
 
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        RemoveProduct(oldProduct);
+        AddProduct(newProduct);
+    }
+
     public void AddProductInternally(Product product) => _associatedProducts.Add(product);
-    
+
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new Exception("Product not found.");
-    }
-
-    public void EditProduct(Product oldProduct, Product newProduct) {
-        if (_associatedProducts.Contains(oldProduct)) {
-            RemoveProduct(oldProduct);  
-        } else {
-            throw new ArgumentException("Old product not found.");
-        }
-        AddProduct(newProduct);  
     }
 
     public void AddIngredient(Ingredient ingredient) {
@@ -73,11 +68,16 @@ public class Laboratory : ICompositionConnection<Equipment>
     }
 
     public void RemoveIngredient(Ingredient ingredient) {
-        if(!_associatedIngredients.Remove(ingredient))
+        if (!_associatedIngredients.Remove(ingredient))
             throw new ArgumentException("Ingredient not found.");
         ingredient.RemoveLaboratoryInternally(this);
     }
-    
+
+    public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
+        RemoveIngredient(oldIngredient);
+        AddIngredient(newIngredient);
+    }
+
     public void AddIngredientInternally(Ingredient ingredient) => _associatedIngredients.Add(ingredient);
 
     public void RemoveIngredientInternally(Ingredient ingredient) {
@@ -85,33 +85,21 @@ public class Laboratory : ICompositionConnection<Equipment>
             throw new ArgumentException("Ingredient not found.");
     }
 
-    public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
-        if(_associatedIngredients.Contains(oldIngredient)) {
-            RemoveIngredient(oldIngredient);
-        } else {
-            throw new ArgumentException("Old ingredient not found.");
-        }
-        AddIngredient(newIngredient);
-    }
-    
-    public void AddCompositionConnection(Equipment equipment)
-    {
+    public void AddCompositionConnection(Equipment equipment) {
         if (equipment.AssociatedLab != null)
             throw new Exception("Equipment already attached to the lab.");
         _associatedEquipment.Add(equipment);
         equipment.AddLaboratory(this);
     }
 
-    public void RemoveCompositionConnection(Equipment equipment)
-    {
+    public void RemoveCompositionConnection(Equipment equipment) {
         if (equipment.AssociatedLab == null)
             throw new Exception("Equipment has not been attached to the lab yet.");
         _associatedEquipment.Remove(equipment);
         equipment.RemoveLaboratory();
     }
 
-    public void EditCompositionConnection(Equipment oldEquipment, Equipment newEquipment)
-    {
+    public void EditCompositionConnection(Equipment oldEquipment, Equipment newEquipment) {
         RemoveCompositionConnection(oldEquipment);
         AddCompositionConnection(newEquipment);
     }

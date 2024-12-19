@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Text.Json;
 using ConsoleApp.Abstractions.Interfaces;
 
@@ -6,29 +5,29 @@ namespace ConsoleApp.models;
 
 public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
     private static IList<Chemist> _chemists = new List<Chemist>();
-    private IList<Product> _associatedProducts = new List<Product>();
-    private IList<Chemist> _supervisedChemists = new List<Chemist>();
-    private IList<Chemist> _supervisors = new List<Chemist>();
-    
-    public IList<Chemist> Supervisors {
-        get => new List<Chemist>(_supervisors);
-        private set => _supervisors = value;
-    }
-    public IList<Chemist> SupervisedChemists {
-        get => new List<Chemist>(_supervisedChemists);
-        private set => _supervisedChemists = value;
-    }
     public static IList<Chemist> Chemists {
         get => new List<Chemist>(_chemists);
         private set => _chemists = value;
     }
+    public int PoundsCooked { get; private set; }
 
+    private IList<Chemist> _supervisors = new List<Chemist>();
+    public IList<Chemist> Supervisors {
+        get => new List<Chemist>(_supervisors);
+        private set => _supervisors = value;
+    }
+
+    private IList<Chemist> _supervisedChemists = new List<Chemist>();
+    public IList<Chemist> SupervisedChemists {
+        get => new List<Chemist>(_supervisedChemists);
+        private set => _supervisedChemists = value;
+    }
+
+    private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
         get => new List<Product>(_associatedProducts);
         private set => _associatedProducts = value;
     }
-
-    public int PoundsCooked { get; private set; }
 
     public Chemist(string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked) :
     base(name, trustLevel, rulesToFollow) {
@@ -39,21 +38,17 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
         _chemists.Add(this);
     }
 
-
-    public void AddSelfConnection(Chemist entity)
-    {
+    public void AddSelfConnection(Chemist entity) {
         _supervisedChemists.Add(entity);
         entity.Supervisors.Add(this);
     }
 
-    public void RemoveSelfConnection(Chemist entity)
-    {
+    public void RemoveSelfConnection(Chemist entity) {
         _supervisedChemists.Remove(entity);
         entity.Supervisors.Remove(this);
     }
 
-    public void EditSelfConnection(Chemist oldEntity, Chemist newEntity)
-    {
+    public void EditSelfConnection(Chemist oldEntity, Chemist newEntity) {
         RemoveSelfConnection(oldEntity);
         AddSelfConnection(newEntity);
     }
@@ -65,26 +60,22 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
 
     public void RemoveProduct(Product product) {
         if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found exception.");
+            throw new ArgumentException("Product not found.");
         product.RemoveChemistInternally(this);
     }
 
-    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
-    
-    public void RemoveProductInternally(Product product) {
-        if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found exception.");
+    public void EditProduct(Product oldProduct, Product newProduct) {
+        RemoveProduct(oldProduct);
+        AddProduct(newProduct);
     }
 
-    public void EditProduct(Product oldProduct, Product newProduct) {
-        if (_associatedProducts.Contains(oldProduct)) {
-            RemoveProduct(oldProduct);  
-        } else {
-            throw new ArgumentException("Old product not found.");
-        }
-        AddProduct(newProduct);  
+    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+
+    public void RemoveProductInternally(Product product) {
+        if (!_associatedProducts.Remove(product))
+            throw new ArgumentException("Product not found.");
     }
-    
+
     public new static void Serialize() {
         string fileName = "Chemists.json";
         try {
@@ -104,9 +95,8 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
             Console.WriteLine(ex.Message);
         }
     }
-    
-    ~Chemist()
-    {
+
+    ~Chemist() {
         RemoveSelfConnection(this);
     }
 

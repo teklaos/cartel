@@ -32,16 +32,16 @@ public class Product {
     }
     public AddLevelAttribute AddictivenessLevel { get; private set; }
 
-    private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
-    public IList<Deliverer> AssociatedDeliverers {
-        get => new List<Deliverer>(_associatedDeliverers);
-        private set => _associatedDeliverers = value;
-    }
-
     private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
     public IList<Warehouse> AssociatedWarehouses {
         get => new List<Warehouse>(_associatedWarehouses);
         private set => _associatedWarehouses = value;
+    }
+
+    private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
+    public IList<Deliverer> AssociatedDeliverers {
+        get => new List<Deliverer>(_associatedDeliverers);
+        private set => _associatedDeliverers = value;
     }
 
     private IList<Chemist> _associatedChemists = new List<Chemist>();
@@ -85,20 +85,16 @@ public class Product {
         warehouse.RemoveProductInternally(this);
     }
 
+    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
+        RemoveWarehouse(oldWarehouse);
+        AddWarehouse(newWarehouse);
+    }
+
     public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
 
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Warehouse not found.");
-    }
-
-    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
-        if (_associatedWarehouses.Contains(oldWarehouse)) {
-            RemoveWarehouse(oldWarehouse);  
-        } else {
-            throw new ArgumentException("Old warehouse not found.");
-        }
-        AddWarehouse(newWarehouse);  
     }
 
     public void AddDeliverer(Deliverer deliverer) {
@@ -112,20 +108,16 @@ public class Product {
         deliverer.RemoveProductInternally(this);
     }
 
+    public void EditDeliverer(Deliverer oldDeliverer, Deliverer newDeliverer) {
+        RemoveDeliverer(oldDeliverer);
+        AddDeliverer(newDeliverer);
+    }
+
     public void AddDelivererInternally(Deliverer deliverer) => _associatedDeliverers.Add(deliverer);
 
     public void RemoveDelivererInternally(Deliverer deliverer) {
         if (!_associatedDeliverers.Remove(deliverer))
             throw new ArgumentException("Deliverer not found.");
-    }
-
-    public void EditDeliverer(Deliverer oldDeliverer, Deliverer newDeliverer) {
-        if (_associatedDeliverers.Contains(oldDeliverer)) {
-            RemoveDeliverer(oldDeliverer);  
-        } else {
-            throw new ArgumentException("Old deliverer not found.");
-        }
-        AddDeliverer(newDeliverer);  
     }
 
     public void AddChemist(Chemist chemist) {
@@ -134,25 +126,21 @@ public class Product {
     }
 
     public void RemoveChemist(Chemist chemist) {
-        if(!_associatedChemists.Remove(chemist))
+        if (!_associatedChemists.Remove(chemist))
             throw new ArgumentException("Chemist not found.");
         chemist.RemoveProductInternally(this);
     }
 
-    public void AddChemistInternally(Chemist chemist) => _associatedChemists.Add(chemist);
-    
-    public void RemoveChemistInternally(Chemist chemist) {
-        if(!_associatedChemists.Remove(chemist))
-            throw new ArgumentException("Chemist not found.");
+    public void EditChemist(Chemist oldChemist, Chemist newChemist) {
+        RemoveChemist(oldChemist);
+        AddChemist(newChemist);
     }
 
-    public void EditChemist(Chemist oldChemist, Chemist newChemist) {
-        if (_associatedChemists.Contains(oldChemist)) {
-            RemoveChemist(oldChemist);  
-        } else {
-            throw new ArgumentException("Old chemist not found.");
-        }
-        AddChemist(newChemist);  
+    public void AddChemistInternally(Chemist chemist) => _associatedChemists.Add(chemist);
+
+    public void RemoveChemistInternally(Chemist chemist) {
+        if (!_associatedChemists.Remove(chemist))
+            throw new ArgumentException("Chemist not found.");
     }
 
     public void AddRecipe(Recipe recipe) {
@@ -161,25 +149,21 @@ public class Product {
     }
 
     public void RemoveRecipe(Recipe recipe) {
-        if(!_associatedRecipes.Remove(recipe))
+        if (!_associatedRecipes.Remove(recipe))
             throw new ArgumentException("Recipe not found.");
         recipe.RemoveProductInternally(this);
     }
 
-    public void AddRecipeInternally(Recipe recipe) => _associatedRecipes.Add(recipe);
-    
-    public void RemoveRecipeInternally(Recipe recipe) {
-        if(!_associatedRecipes.Remove(recipe))
-            throw new ArgumentException("Recipe not found.");
+    public void EditRecipe(Recipe oldRecipe, Recipe newRecipe) {
+        RemoveRecipe(oldRecipe);
+        AddRecipe(newRecipe);
     }
 
-    public void EditRecipe(Recipe oldRecipe, Recipe newRecipe) {
-        if (_associatedRecipes.Contains(oldRecipe)) {
-            RemoveRecipe(oldRecipe);  
-        } else {
-            throw new ArgumentException("Old recipe not found.");
-        }
-        AddRecipe(newRecipe);  
+    public void AddRecipeInternally(Recipe recipe) => _associatedRecipes.Add(recipe);
+
+    public void RemoveRecipeInternally(Recipe recipe) {
+        if (!_associatedRecipes.Remove(recipe))
+            throw new ArgumentException("Recipe not found.");
     }
 
     public void AddLaboratory(Laboratory laboratory) {
@@ -188,25 +172,21 @@ public class Product {
     }
 
     public void RemoveLaboratory(Laboratory laboratory) {
-        if(!_associatedLaboratories.Remove(laboratory))
+        if (!_associatedLaboratories.Remove(laboratory))
             throw new ArgumentException("Laboratory not found.");
         laboratory.RemoveProductInternally(this);
+    }
+
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        RemoveLaboratory(oldLaboratory);
+        AddLaboratory(newLaboratory);
     }
 
     public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
 
     public void RemoveLaboratoryInternally(Laboratory laboratory) {
-        if(!_associatedLaboratories.Remove(laboratory))
+        if (!_associatedLaboratories.Remove(laboratory))
             throw new ArgumentException("Laboratory not found.");
-    }
-
-    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
-        if (_associatedLaboratories.Contains(oldLaboratory)) {
-            RemoveLaboratory(oldLaboratory);  
-        } else {
-            throw new ArgumentException("Old laboratory not found.");
-        }
-        AddLaboratory(newLaboratory);  
     }
 
     public static void Serialize() {

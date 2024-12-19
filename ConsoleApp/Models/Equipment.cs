@@ -27,16 +27,14 @@ public class Equipment {
         _equipmentList.Add(this);
     }
 
-    public void AddLaboratory(Laboratory laboratory)
-    {
+    public void AddLaboratory(Laboratory laboratory) {
         AssociatedLab = laboratory;
     }
-    
-    public void RemoveLaboratory()
-    {
+
+    public void RemoveLaboratory() {
         AssociatedLab = null;
     }
-    
+
     public static void Serialize() {
         string fileName = "Equipment.json";
         try {

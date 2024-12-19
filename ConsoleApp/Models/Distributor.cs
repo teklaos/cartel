@@ -8,14 +8,13 @@ public class Distributor : CartelMember {
         get => new List<Distributor>(_distributors);
         private set => _distributors = value;
     }
+    public int DealsMade { get; private set; }
 
     private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
     public IList<Warehouse> AssociatedWarehouses {
         get => new List<Warehouse>(_associatedWarehouses);
         private set => _associatedWarehouses = value;
     }
-
-    public int DealsMade { get; private set; }
 
     public Distributor(string name, int trustLevel, IList<string> rulesToFollow, int dealsMade) :
     base(name, trustLevel, rulesToFollow) {
@@ -32,27 +31,23 @@ public class Distributor : CartelMember {
     }
 
     public void RemoveWarehouse(Warehouse warehouse) {
-        if(!_associatedWarehouses.Remove(warehouse))
+        if (!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Distributor not found.");
         warehouse.RemoveDistributorInternally(this);
+    }
+
+    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
+        RemoveWarehouse(oldWarehouse);
+        AddWarehouse(newWarehouse);
     }
 
     public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
 
     public void RemoveWarehouseInternally(Warehouse warehouse) {
-        if(!_associatedWarehouses.Remove(warehouse))
+        if (!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Warehouse not found.");
     }
 
-    public void EditWarehouse(Warehouse oldWarehouse, Warehouse newWarehouse) {
-        if (_associatedWarehouses.Contains(oldWarehouse)) {
-            RemoveWarehouse(oldWarehouse);  
-        } else {
-            throw new ArgumentException("Old warehouse not found.");
-        }
-        AddWarehouse(newWarehouse);  
-    }
-    
     public new static void Serialize() {
         string fileName = "Distributors.json";
         try {

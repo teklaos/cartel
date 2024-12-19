@@ -14,6 +14,10 @@ public class Ingredient {
         get => new List<Ingredient>(_ingredients);
         private set => _ingredients = value;
     }
+    public string Name { get; private set; }
+    public int PricePerPound { get; private set; }
+    public string ChemicalFormula { get; private set; }
+    public StateAttribute State { get; private set; }
 
     private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
     public IList<Laboratory> AssociatedLaboratories {
@@ -26,11 +30,6 @@ public class Ingredient {
         get => new List<SupplyChain>(_associatedSupplyChains);
         private set => _associatedSupplyChains = value;
     }
-
-    public string Name { get; private set; }
-    public int PricePerPound { get; private set; }
-    public string ChemicalFormula { get; private set; }
-    public StateAttribute State { get; private set; }
 
     public Ingredient(string name, int pricePerPound, string chemicalFormula, StateAttribute state) {
         if (string.IsNullOrWhiteSpace(name))
@@ -53,9 +52,14 @@ public class Ingredient {
     }
 
     public void RemoveLaboratory(Laboratory laboratory) {
-        if(!_associatedLaboratories.Remove(laboratory))
+        if (!_associatedLaboratories.Remove(laboratory))
             throw new ArgumentException("Laboratory not found.");
         laboratory.RemoveIngredientInternally(this);
+    }
+
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        RemoveLaboratory(oldLaboratory);
+        AddLaboratory(newLaboratory);
     }
 
     public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
@@ -65,42 +69,33 @@ public class Ingredient {
             throw new ArgumentException("Laboratory not found.");
     }
 
-    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
-        if (_associatedLaboratories.Contains(oldLaboratory)) {
-            RemoveLaboratory(oldLaboratory);  
-        } else {
-            throw new ArgumentException("Old laboratory not found.");
-        }
-        AddLaboratory(newLaboratory);  
-    }
-
     public void AddSupplyChain(SupplyChain supplyChain) {
         _associatedSupplyChains.Add(supplyChain);
         supplyChain.AddIngredientInternally(this);
     }
 
     public void RemoveSupplyChain(SupplyChain supplyChain) {
-        if(!_associatedSupplyChains.Remove(supplyChain))
+        if (!_associatedSupplyChains.Remove(supplyChain))
             throw new ArgumentException("SupplyChain not found.");
         supplyChain.RemoveIngredientInternally(this);
     }
-    
+
     public void AddSupplyChainInternally(SupplyChain supplyChain) => _associatedSupplyChains.Add(supplyChain);
 
     public void RemoveSupplyChainInternally(SupplyChain supplyChain) {
-        if(!_associatedSupplyChains.Remove(supplyChain))
+        if (!_associatedSupplyChains.Remove(supplyChain))
             throw new ArgumentException("SupplyChain not found.");
     }
 
     public void EditSupplyChain(SupplyChain oldSupplyChain, SupplyChain newSupplyChain) {
-        if(_associatedSupplyChains.Contains(oldSupplyChain)) {
+        if (_associatedSupplyChains.Contains(oldSupplyChain)) {
             RemoveSupplyChain(oldSupplyChain);
         } else {
             throw new ArgumentException("Old supply chain not found.");
         }
         AddSupplyChain(newSupplyChain);
     }
-    
+
     public static void Serialize() {
         string fileName = "Ingredients.json";
         try {
