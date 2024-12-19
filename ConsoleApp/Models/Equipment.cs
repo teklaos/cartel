@@ -11,7 +11,7 @@ public class Equipment {
     public string Type { get; private set; }
     public string Name { get; private set; }
     public string Model { get; private set; }
-    public Laboratory? AssignedLab { get; private set; }
+    public Laboratory? AssociatedLab { get; private set; }
 
     public Equipment(string type, string name, string model) {
         if (string.IsNullOrWhiteSpace(type))
@@ -29,12 +29,12 @@ public class Equipment {
 
     public void AddLaboratory(Laboratory laboratory)
     {
-        AssignedLab = laboratory;
+        AssociatedLab = laboratory;
     }
     
     public void RemoveLaboratory()
     {
-        AssignedLab = null;
+        AssociatedLab = null;
     }
     
     public static void Serialize() {

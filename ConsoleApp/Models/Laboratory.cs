@@ -96,7 +96,7 @@ public class Laboratory : ICompositionConnection<Equipment>
     
     public void AddCompositionConnection(Equipment equipment)
     {
-        if (equipment.AssignedLab != null)
+        if (equipment.AssociatedLab != null)
             throw new Exception("Equipment already attached to the lab.");
         _associatedEquipment.Add(equipment);
         equipment.AddLaboratory(this);
@@ -104,16 +104,16 @@ public class Laboratory : ICompositionConnection<Equipment>
 
     public void RemoveCompositionConnection(Equipment equipment)
     {
-        if (equipment.AssignedLab == null)
+        if (equipment.AssociatedLab == null)
             throw new Exception("Equipment has not been attached to the lab yet.");
         _associatedEquipment.Remove(equipment);
         equipment.RemoveLaboratory();
     }
 
-    public void EditCompositionConnection(Equipment oldEntity, Equipment newEntity)
+    public void EditCompositionConnection(Equipment oldEquipment, Equipment newEquipment)
     {
-        RemoveCompositionConnection(oldEntity);
-        AddCompositionConnection(newEntity);
+        RemoveCompositionConnection(oldEquipment);
+        AddCompositionConnection(newEquipment);
     }
 
     public static void Serialize() {
