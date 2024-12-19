@@ -15,6 +15,12 @@ public class Deliverer : CartelMember {
         private set => _associatedProducts = value;
     }
 
+    private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
+    public IList<Warehouse> AssociatedWarehouses {
+        get => new List<Warehouse>(_associatedWarehouses);
+        private set => _associatedWarehouses = value;
+    }
+
     public Deliverer(string name, int trustLevel, IList<string> rulesToFollow) :
     base(name, trustLevel, rulesToFollow) => _deliverers.Add(this);
 
@@ -34,6 +40,24 @@ public class Deliverer : CartelMember {
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
             throw new ArgumentException("Product not found.");
+    }
+
+    public void AddWarehouse(Warehouse warehouse) {
+        _associatedWarehouses.Add(warehouse);
+        warehouse.AddDelivererInternally(this);
+    }
+
+    public void RemoveWarehouse(Warehouse warehouse) {
+        if (!_associatedWarehouses.Remove(warehouse))
+            throw new ArgumentException("Warehouse not found.");
+        warehouse.RemoveDelivererInternally(this);
+    }
+
+    public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
+
+    public void RemoveWarehouseInternally(Warehouse warehouse) {
+        if (!_associatedWarehouses.Remove(warehouse))
+            throw new ArgumentException("Warehouse not found.");
     }
 
     public new static void Serialize() {

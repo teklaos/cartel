@@ -23,6 +23,12 @@ public class Warehouse {
         private set => _associatedDistributors = value;
     }
 
+    private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
+    public IList<Deliverer> AssociatedDeliverers {
+        get => new List<Deliverer>(_associatedDeliverers);
+        private set => _associatedDeliverers = value;
+    }
+
     public Warehouse(string location, int maxCapacity) {
         if (string.IsNullOrWhiteSpace(location))
             throw new ArgumentException("Location cannot be null or whitespace.");
@@ -67,6 +73,24 @@ public class Warehouse {
     public void RemoveDistributorInternally(Distributor distributor) {
         if(!_associatedDistributors.Remove(distributor))
             throw new ArgumentException("Distributor not found");
+    }
+
+    public void AddDeliverer(Deliverer deliverer) {
+        _associatedDeliverers.Add(deliverer);
+        deliverer.AddWarehouseInternally(this);
+    }
+
+    public void RemoveDeliverer(Deliverer deliverer) {
+        if (!_associatedDeliverers.Remove(deliverer))
+            throw new ArgumentException("Deliverer not found.");
+        deliverer.RemoveWarehouseInternally(this);
+    }
+    
+    public void AddDelivererInternally(Deliverer deliverer) => _associatedDeliverers.Add(deliverer);
+
+    public void RemoveDelivererInternally(Deliverer deliverer) {
+        if (!_associatedDeliverers.Remove(deliverer))
+            throw new ArgumentException("Deliverer not found.");
     }
 
     public static void Serialize() {

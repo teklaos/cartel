@@ -338,4 +338,46 @@ public class TestAssociations {
 
         Assert.That(supplyChain.AssociatedIngridients, Has.Count.EqualTo(ingredient.AssociatedSupplyChains.Count));
     }
+
+    [Test]
+    public void TestWarehouseAddDeliverer() {
+        Warehouse warehouse = new("Madelin", 500);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+
+        warehouse.AddDeliverer(deliverer);
+
+        Assert.That(warehouse.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedWarehouses.Count));
+    }
+
+    [Test]
+    public void TestWarehouseRemoveDeliverer() {
+        Warehouse warehouse = new("Madelin", 500);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+
+        deliverer.AddWarehouse(warehouse);
+        warehouse.RemoveDeliverer(deliverer);
+
+        Assert.That(warehouse.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedWarehouses.Count));
+    }
+
+    [Test]
+    public void TestDelivererAddWarehouse() {
+        Warehouse warehouse = new("Madelin", 500);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+
+        deliverer.AddWarehouse(warehouse);
+
+        Assert.That(deliverer.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedDeliverers.Count));
+    }
+
+    [Test]
+    public void TestDelivererRemoveWarehouse() {
+        Warehouse warehouse = new("Madelin", 500);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+
+        warehouse.AddDeliverer(deliverer);
+        deliverer.RemoveWarehouse(warehouse);
+
+        Assert.That(deliverer.AssociatedWarehouses, Has.Count.EqualTo(warehouse.AssociatedDeliverers.Count));
+    }
 }
