@@ -15,6 +15,7 @@ public class Product {
         private set => _products = value;
     }
     public string Name { get; private set; }
+    public double Weight { get; private set; }
     public int PricePerPound { get; private set; }
     private readonly int _poundsCooked = 2000;
     public double PurityPercentage {
@@ -62,13 +63,16 @@ public class Product {
         private set => _associatedLaboratories = value;
     }
 
-    public Product(string name, int pricePerPound, AddLevelAttribute addictivenessLevel) {
+    public Product(string name, double weight, int pricePerPound, AddLevelAttribute addictivenessLevel) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
+        if (weight < 0)
+            throw new ArgumentException("Weight cannot be negative.");
         if (pricePerPound < 0)
             throw new ArgumentException("Price per pound cannot be negative.");
 
         Name = name;
+        Weight = weight;
         PricePerPound = pricePerPound;
         AddictivenessLevel = addictivenessLevel;
         _products.Add(this);

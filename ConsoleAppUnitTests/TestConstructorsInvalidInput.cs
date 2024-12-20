@@ -355,20 +355,33 @@ public class TestConstructorsInvalidInput {
     [Test]
     public void ProductConstructorInvalidName() {
         string name = "   ";
+        double weight = 100;
         int pricePerPound = 1000;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, pricePerPound, addictivenessLevel),
+        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
             "Expected ArgumentException for an empty name.");
+    }
+
+    [Test]
+    public void ProductConstructorInvalidWeight() {
+        string name = "Cocaine";
+        double weight = -10;
+        int pricePerPound = 1000;
+        var addictivenessLevel = AddLevelAttribute.Strong;
+
+        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
+            "Expected ArgumentException for negative price per pound.");
     }
 
     [Test]
     public void ProductConstructorInvalidPricePerPound() {
         string name = "Cocaine";
+        double weight = 100;
         int pricePerPound = -100;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, pricePerPound, addictivenessLevel),
+        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
             "Expected ArgumentException for negative price per pound.");
     }
 

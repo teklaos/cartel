@@ -6,7 +6,7 @@ public class TestAssociations {
     [Test]
     public void TestWarehouseAddProduct() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         warehouse.AddProduct(product);
 
@@ -16,7 +16,7 @@ public class TestAssociations {
     [Test]
     public void TestWarehouseRemoveProduct() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddWarehouse(warehouse);
         warehouse.RemoveProduct(product);
@@ -27,8 +27,8 @@ public class TestAssociations {
     public void TestWarehouseEditProduct()
     {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Product oldProduct = new Product("Meth", 100, AddLevelAttribute.Strong);
-        Product newProduct = new Product("Meth", 1001, AddLevelAttribute.Strong);
+        Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
         warehouse.AddProduct(oldProduct);
 
@@ -42,7 +42,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductAddWarehouse() {
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
         Warehouse warehouse = new("Warsaw, Praga", 1000);
 
         product.AddWarehouse(warehouse);
@@ -52,7 +52,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductRemoveWarehouse() {
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
         Warehouse warehouse = new("Warsaw, Praga", 1000);
 
         warehouse.AddProduct(product);
@@ -63,7 +63,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductEditWarehouse() {
-        Product product = new Product("Meth", 100, AddLevelAttribute.Strong);
+        Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Warehouse newWarehouse = new("Warsaw, Praga", 1000);
         Warehouse oldWarehouse = new("Warsaw, Praga", 1001);
 
@@ -80,7 +80,7 @@ public class TestAssociations {
     [Test]
     public void TestDelivererAddProduct() {
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         deliverer.AddProduct(product);
 
@@ -90,7 +90,7 @@ public class TestAssociations {
     [Test]
     public void TestDelivererRemoveProduct() {
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddDeliverer(deliverer);
         deliverer.RemoveProduct(product);
@@ -101,8 +101,8 @@ public class TestAssociations {
     public void TestDelivererEditProduct()
     {
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
-        Product oldProduct = new Product("Meth", 100, AddLevelAttribute.Strong);
-        Product newProduct = new Product("Meth", 1001, AddLevelAttribute.Strong);
+        Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
         deliverer.AddProduct(oldProduct);
 
@@ -116,7 +116,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductAddDeliverer() {
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
 
         product.AddDeliverer(deliverer);
@@ -126,7 +126,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductRemoveDeliverer() {
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
 
         deliverer.AddProduct(product);
@@ -137,7 +137,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductEditDeliverer() {
-        Product product = new Product("Meth", 100, AddLevelAttribute.Strong);
+        Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."]);
         Deliverer oldDeliverer = new("Mike", 11, ["Do not kill customers."]);
 
@@ -154,7 +154,7 @@ public class TestAssociations {
     [Test]
     public void TestChemistAddProduct() {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         chemist.AddProduct(product);
 
@@ -164,7 +164,7 @@ public class TestAssociations {
     [Test]
     public void TestChemistRemoveProduct() {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddChemist(chemist);
         chemist.RemoveProduct(product);
@@ -175,8 +175,8 @@ public class TestAssociations {
     public void TestChemistEditProduct()
     {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Product oldProduct = new Product("Meth", 100, AddLevelAttribute.Strong);
-        Product newProduct = new Product("Meth", 1001, AddLevelAttribute.Strong);
+        Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
         chemist.AddProduct(oldProduct);
 
@@ -191,7 +191,7 @@ public class TestAssociations {
     [Test]
     public void TestProductAddChemist() {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddChemist(chemist);
 
@@ -201,7 +201,7 @@ public class TestAssociations {
     [Test]
     public void TestProductRemoveChemist() {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         chemist.AddProduct(product);
         product.RemoveChemist(chemist);
@@ -211,7 +211,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductEditChemist() {
-        Product product = new Product("Meth", 100, AddLevelAttribute.Strong);
+        Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Chemist newChemist = new("Danny", 10, ["Do not steal meth."], 90);
         Chemist oldChemist = new("Danny", 11, ["Do not steal meth."], 90);
 
@@ -228,7 +228,7 @@ public class TestAssociations {
     [Test]
     public void TestRecipeAddProduct() {
         Recipe recipe = new(); 
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
         
         recipe.AddProduct(product);
 
@@ -238,7 +238,7 @@ public class TestAssociations {
     [Test]
     public void TestRecipeRemoveProduct() {
         Recipe recipe = new(); 
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddRecipe(recipe);
         recipe.RemoveProduct(product);
@@ -250,8 +250,8 @@ public class TestAssociations {
     public void TestRecipeEditProduct()
     {
         Recipe recipe = new Recipe();
-        Product oldProduct = new Product("Meth", 100, AddLevelAttribute.Strong);
-        Product newProduct = new Product("Meth", 1001, AddLevelAttribute.Strong);
+        Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
         recipe.AddProduct(oldProduct);
 
@@ -266,7 +266,7 @@ public class TestAssociations {
     [Test]
     public void TestProductAddRecipe() {
         Recipe recipe = new(); 
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddRecipe(recipe);
 
@@ -276,7 +276,7 @@ public class TestAssociations {
     [Test]
     public void TestProductRemoveRecipe() {
         Recipe recipe = new(); 
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         recipe.AddProduct(product);
         product.RemoveRecipe(recipe);
@@ -287,7 +287,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductEditRecipe() {
-        Product product = new Product("Meth", 100, AddLevelAttribute.Strong);
+        Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Recipe newRecipe = new Recipe();
         Recipe oldRecipe = new Recipe();
 
@@ -305,7 +305,7 @@ public class TestAssociations {
     [Test]
     public void TestLaboratoryAddProduct() {
         Laboratory laboratory = new("Madelyn");
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         laboratory.AddProduct(product);
 
@@ -315,7 +315,7 @@ public class TestAssociations {
     [Test]
     public void TestLaboratoryRemoveProduct() {
         Laboratory laboratory = new("Madelyn");
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddLaboratory(laboratory);
         laboratory.RemoveProduct(product);
@@ -327,8 +327,8 @@ public class TestAssociations {
     public void TestLaboratoryEditProduct()
     {
         Laboratory laboratory = new("Madelyn");
-        Product oldProduct = new Product("Meth", 100, AddLevelAttribute.Strong);
-        Product newProduct = new Product("Meth", 1001, AddLevelAttribute.Strong);
+        Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
         laboratory.AddProduct(oldProduct);
 
@@ -343,7 +343,7 @@ public class TestAssociations {
     [Test]
     public void TestProductAddLaboratory() {
         Laboratory laboratory = new("Madelyn");
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddLaboratory(laboratory);
 
@@ -353,7 +353,7 @@ public class TestAssociations {
     [Test]
     public void TestProductRemoveLaboratory() {
         Laboratory laboratory = new("Madelyn");
-        Product product = new("Meth", 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         laboratory.AddProduct(product);
         product.RemoveLaboratory(laboratory);
@@ -363,7 +363,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductEditLaboratory() {
-        Product product = new Product("Meth", 100, AddLevelAttribute.Strong);
+        Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Laboratory newLaboratory = new("Madelyn");
         Laboratory oldLaboratory = new("Drained");
 

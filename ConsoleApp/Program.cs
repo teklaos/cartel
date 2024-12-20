@@ -4,7 +4,7 @@ namespace ConsoleApp;
 
 public class Program {
     public static void Main(string[] args) {
-        Product product = new("Methamphetamine", 2500, AddLevelAttribute.Strong);
+        Product product = new("Methamphetamine", 200, 2500, AddLevelAttribute.Strong);
         Warehouse warehouse = new("Warsaw, Praga", 10000);
 
         product.AddWarehouse(warehouse);

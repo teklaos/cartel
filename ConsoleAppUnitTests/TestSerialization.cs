@@ -562,7 +562,7 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteProductToFile() {
-        _ = new Product("Meth", 15, AddLevelAttribute.Strong);
+        _ = new Product("Meth", 15, 15000, AddLevelAttribute.Strong);
 
         Product.Serialize();
         Assert.That(File.Exists("Products.json"), Is.True);
@@ -571,13 +571,14 @@ public class TestSerialization {
         Assert.Multiple(() => {
             Assert.That(jsonContent, Does.Contain("Meth"));
             Assert.That(jsonContent, Does.Contain("15"));
+            Assert.That(jsonContent, Does.Contain("15000"));
             Assert.That(jsonContent, Does.Contain("2"));
         });
     }
 
     [Test]
     public void DeserializationLoadProductFromFile() {
-        _ = new Product("Meth", 15, AddLevelAttribute.Strong);
+        _ = new Product("Meth", 15, 15000, AddLevelAttribute.Strong);
 
         Product.Serialize();
         Product.Deserialize();
@@ -587,14 +588,15 @@ public class TestSerialization {
         Assert.That(deserializedProduct, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedProduct.Name, Is.EqualTo("Meth"));
-            Assert.That(deserializedProduct.PricePerPound, Is.EqualTo(15));
+            Assert.That(deserializedProduct.Weight, Is.EqualTo(15));
+            Assert.That(deserializedProduct.PricePerPound, Is.EqualTo(15000));
             Assert.That(deserializedProduct.AddictivenessLevel, Is.EqualTo(AddLevelAttribute.Strong));
         });
     }
 
     [Test]
     public void SerializeAndDeserializeProductIntegrity() {
-        var originalProduct = new Product("Meth", 15, AddLevelAttribute.Strong);
+        var originalProduct = new Product("Meth", 15, 15000, AddLevelAttribute.Strong);
         Product.Serialize();
         Product.Deserialize();
         var deserializedProduct = Product.Products.Last();

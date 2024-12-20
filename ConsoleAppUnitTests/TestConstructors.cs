@@ -142,11 +142,12 @@ public class TestConstructors {
     [Test]
     public void TestProductConstructor() {
         AddLevelAttribute addictivenessLevel = AddLevelAttribute.Strong;
-        Product product = new Product("Meth", 15, addictivenessLevel);
+        Product product = new Product("Meth", 15, 15000, addictivenessLevel);
 
         Assert.Multiple(() => {
             Assert.That(product.Name, Is.EqualTo("Meth"));
-            Assert.That(product.PricePerPound, Is.EqualTo(15));
+            Assert.That(product.Weight, Is.EqualTo(15));
+            Assert.That(product.PricePerPound, Is.EqualTo(15000));
             // Assuming that ChemistPoundsCooked = 2000
             Assert.That(product.PurityPercentage, Is.EqualTo(90).Within(5));
             Assert.That(product.AddictivenessLevel, Is.EqualTo(addictivenessLevel));
