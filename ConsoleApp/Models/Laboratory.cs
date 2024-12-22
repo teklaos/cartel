@@ -3,7 +3,7 @@ using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Laboratory : ICompositionConnection<Equipment> {
+public class Laboratory : ICompositionAssociation<Equipment> {
     private static IList<Laboratory> _laboratories = new List<Laboratory>();
     public static IList<Laboratory> Laboratories {
         get => new List<Laboratory>(_laboratories);
@@ -85,23 +85,23 @@ public class Laboratory : ICompositionConnection<Equipment> {
             throw new ArgumentException("Ingredient not found.");
     }
 
-    public void AddCompositionConnection(Equipment equipment) {
+    public void AddCompositionAssociation(Equipment equipment) {
         if (equipment.AssociatedLab != null)
             throw new Exception("Equipment already attached to the lab.");
         _associatedEquipment.Add(equipment);
         equipment.AddLaboratory(this);
     }
 
-    public void RemoveCompositionConnection(Equipment equipment) {
+    public void RemoveCompositionAssociation(Equipment equipment) {
         if (equipment.AssociatedLab == null)
             throw new Exception("Equipment has not been attached to the lab yet.");
         _associatedEquipment.Remove(equipment);
         equipment.RemoveLaboratory();
     }
 
-    public void EditCompositionConnection(Equipment oldEquipment, Equipment newEquipment) {
-        RemoveCompositionConnection(oldEquipment);
-        AddCompositionConnection(newEquipment);
+    public void EditCompositionAssociation(Equipment oldEquipment, Equipment newEquipment) {
+        RemoveCompositionAssociation(oldEquipment);
+        AddCompositionAssociation(newEquipment);
     }
 
     public static void Serialize() {

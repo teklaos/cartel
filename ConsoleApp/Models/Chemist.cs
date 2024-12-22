@@ -3,7 +3,7 @@ using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
+public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
     private static IList<Chemist> _chemists = new List<Chemist>();
     public static IList<Chemist> Chemists {
         get => new List<Chemist>(_chemists);
@@ -34,35 +34,35 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
         _chemists.Add(this);
     }
 
-    public void AddSelfConnection(Chemist chemist) {
+    public void AddSelfAssociation(Chemist chemist) {
         if (chemist.Supervisor != null)
             throw new ArgumentException("Chemist has a supervisor.");
         _supervisedChemists.Add(chemist);
         chemist.Supervisor = this;
     }
 
-    public void RemoveSelfConnection(Chemist chemist) {
+    public void RemoveSelfAssociation(Chemist chemist) {
         // if (chemist.Supervisor == null)
         //     throw new ArgumentException("Chemist does not have a supervisor.");
         _supervisedChemists.Remove(chemist);
         chemist.Supervisor = null;
     }
 
-    public void EditSelfConnection(Chemist oldChemist, Chemist newChemist) {
-        RemoveSelfConnection(oldChemist);
-        AddSelfConnection(newChemist);
+    public void EditSelfAssociation(Chemist oldChemist, Chemist newChemist) {
+        RemoveSelfAssociation(oldChemist);
+        AddSelfAssociation(newChemist);
     }
 
     public void AddProduct(Product product) {
         if (product.AssociatedChemists.Count < 1)
-            throw new ArgumentException("Connection does not have enough chemists.");
+            throw new ArgumentException("Association does not have enough chemists.");
         _associatedProducts.Add(product);
         product.AddChemistInternally(this);
     }
 
     public void RemoveProduct(Product product) {
         if (product.AssociatedChemists.Count - 1 < 2)
-            throw new ArgumentException("Connection cannot be removed.");
+            throw new ArgumentException("Association cannot be removed.");
         if (!_associatedProducts.Remove(product))
             throw new ArgumentException("Product not found.");
         product.RemoveChemistInternally(this);
@@ -101,7 +101,7 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
     }
 
     ~Chemist() {
-        RemoveSelfConnection(this);
+        RemoveSelfAssociation(this);
     }
 
 }

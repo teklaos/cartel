@@ -3,7 +3,7 @@ using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public class Recipe : ICompositionConnection<Instruction> {
+public class Recipe : ICompositionAssociation<Instruction> {
     private static IList<Recipe> _recipes = new List<Recipe>();
     public static IList<Recipe> Recipes {
         get => new List<Recipe>(_recipes);
@@ -49,23 +49,23 @@ public class Recipe : ICompositionConnection<Instruction> {
             throw new ArgumentException("Product not found exception.");
     }
 
-    public void AddCompositionConnection(Instruction instruction) {
+    public void AddCompositionAssociation(Instruction instruction) {
         if (instruction.AssociatedRecipe != null)
             throw new ArgumentException("Instruction is already associated with a recipe.");
         _associatedInstructions.Add(instruction);
         instruction.AddRecipe(this);
     }
 
-    public void RemoveCompositionConnection(Instruction instruction) {
+    public void RemoveCompositionAssociation(Instruction instruction) {
         if (instruction.AssociatedRecipe == null)
             throw new ArgumentException("Instruction is not associated with a recipe.");
         _associatedInstructions.Remove(instruction);
         instruction.RemoveRecipe();
     }
 
-    public void EditCompositionConnection(Instruction oldInstruction, Instruction newInstruction) {
-        RemoveCompositionConnection(oldInstruction);
-        AddCompositionConnection(newInstruction);
+    public void EditCompositionAssociation(Instruction oldInstruction, Instruction newInstruction) {
+        RemoveCompositionAssociation(oldInstruction);
+        AddCompositionAssociation(newInstruction);
     }
 
     public static void Serialize() {
