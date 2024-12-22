@@ -24,6 +24,7 @@ public class TestAssociations {
         Assert.That(warehouse.AssociatedProducts, Has.Count.EqualTo(product.AssociatedWarehouses.Count));
     }
 
+    [Test]
     public void TestWarehouseEditProduct() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
@@ -31,12 +32,14 @@ public class TestAssociations {
 
         warehouse.AddProduct(oldProduct);
 
-        Assert.Contains(oldProduct, warehouse.AssociatedProducts.ToList());
+        Assert.That(warehouse.AssociatedProducts.Contains(oldProduct), Is.True);
 
         warehouse.EditProduct(oldProduct, newProduct);
 
-        Assert.False(warehouse.AssociatedProducts.Contains(oldProduct));
-        Assert.Contains(newProduct, warehouse.AssociatedProducts.ToList());
+        Assert.Multiple(() => {
+            Assert.That(warehouse.AssociatedProducts.Contains(oldProduct), Is.False);
+            Assert.That(warehouse.AssociatedProducts.Contains(newProduct), Is.True);
+        });
     }
 
     [Test]
@@ -68,12 +71,14 @@ public class TestAssociations {
 
         product.AddWarehouse(oldWarehouse);
 
-        Assert.Contains(oldWarehouse, product.AssociatedWarehouses.ToList());
+        Assert.That(product.AssociatedWarehouses.Contains(oldWarehouse), Is.True);
 
         product.EditWarehouse(oldWarehouse, newWarehouse);
 
-        Assert.False(product.AssociatedWarehouses.Contains(oldWarehouse));
-        Assert.Contains(newWarehouse, product.AssociatedWarehouses.ToList());
+        Assert.Multiple(() => {
+            Assert.That(product.AssociatedWarehouses.Contains(oldWarehouse), Is.False);
+            Assert.That(product.AssociatedWarehouses.Contains(newWarehouse), Is.True);
+        });
     }
 
     [Test]
@@ -97,6 +102,7 @@ public class TestAssociations {
         Assert.That(deliverer.AssociatedProducts, Has.Count.EqualTo(product.AssociatedDeliverers.Count));
     }
 
+    [Test]
     public void TestDelivererEditProduct() {
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
@@ -104,12 +110,14 @@ public class TestAssociations {
 
         deliverer.AddProduct(oldProduct);
 
-        Assert.Contains(oldProduct, deliverer.AssociatedProducts.ToList());
+        Assert.That(deliverer.AssociatedProducts.Contains(oldProduct), Is.True);
 
         deliverer.EditProduct(oldProduct, newProduct);
 
-        Assert.False(deliverer.AssociatedProducts.Contains(oldProduct));
-        Assert.Contains(newProduct, deliverer.AssociatedProducts.ToList());
+        Assert.Multiple(() => {
+            Assert.That(deliverer.AssociatedProducts.Contains(oldProduct), Is.False);
+            Assert.That(deliverer.AssociatedProducts.Contains(newProduct), Is.True);
+        });
     }
 
     [Test]
@@ -141,12 +149,14 @@ public class TestAssociations {
 
         product.AddDeliverer(oldDeliverer);
 
-        Assert.Contains(oldDeliverer, product.AssociatedDeliverers.ToList());
+        Assert.That(product.AssociatedDeliverers.Contains(oldDeliverer), Is.True);
 
         product.EditDeliverer(oldDeliverer, newDeliverer);
 
-        Assert.False(product.AssociatedDeliverers.Contains(oldDeliverer));
-        Assert.Contains(newDeliverer, product.AssociatedDeliverers.ToList());
+        Assert.Multiple(() => {
+            Assert.That(product.AssociatedDeliverers.Contains(oldDeliverer), Is.False);
+            Assert.That(product.AssociatedDeliverers.Contains(newDeliverer), Is.True);
+        });
     }
 
     [Test]
@@ -170,6 +180,7 @@ public class TestAssociations {
         Assert.That(chemist.AssociatedProducts, Has.Count.EqualTo(product.AssociatedChemists.Count));
     }
 
+    [Test]
     public void TestChemistEditProduct() {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
@@ -177,12 +188,14 @@ public class TestAssociations {
 
         chemist.AddProduct(oldProduct);
 
-        Assert.Contains(oldProduct, chemist.AssociatedProducts.ToList());
+        Assert.That(chemist.AssociatedProducts.Contains(oldProduct), Is.True);
 
         chemist.EditProduct(oldProduct, newProduct);
 
-        Assert.False(chemist.AssociatedProducts.Contains(oldProduct));
-        Assert.Contains(newProduct, chemist.AssociatedProducts.ToList());
+        Assert.Multiple(() => {
+            Assert.That(chemist.AssociatedProducts.Contains(oldProduct), Is.False);
+            Assert.That(chemist.AssociatedProducts.Contains(newProduct), Is.True);
+        });
     }
 
     [Test]
@@ -214,12 +227,14 @@ public class TestAssociations {
 
         product.AddChemist(oldChemist);
 
-        Assert.Contains(oldChemist, product.AssociatedChemists.ToList());
+        Assert.That(product.AssociatedChemists.Contains(oldChemist), Is.True);
 
         product.EditChemist(oldChemist, newChemist);
 
-        Assert.False(product.AssociatedChemists.Contains(oldChemist));
-        Assert.Contains(newChemist, product.AssociatedChemists.ToList());
+        Assert.Multiple(() => {
+            Assert.That(product.AssociatedChemists.Contains(oldChemist), Is.False);
+            Assert.That(product.AssociatedChemists.Contains(newChemist), Is.True);
+        });
     }
 
     [Test]
@@ -251,12 +266,14 @@ public class TestAssociations {
 
         recipe.AddProduct(oldProduct);
 
-        Assert.Contains(oldProduct, recipe.AssociatedProducts.ToList());
+        Assert.That(recipe.AssociatedProducts.Contains(oldProduct), Is.True);
 
         recipe.EditProduct(oldProduct, newProduct);
 
-        Assert.False(recipe.AssociatedProducts.Contains(oldProduct));
-        Assert.Contains(newProduct, recipe.AssociatedProducts.ToList());
+        Assert.Multiple(() => {
+            Assert.That(recipe.AssociatedProducts.Contains(oldProduct), Is.False);
+            Assert.That(recipe.AssociatedProducts.Contains(newProduct), Is.True);
+        });
     }
 
     [Test]
@@ -289,12 +306,14 @@ public class TestAssociations {
 
         product.AddRecipe(oldRecipe);
 
-        Assert.Contains(oldRecipe, product.AssociatedRecipes.ToList());
+        Assert.That(product.AssociatedRecipes.Contains(oldRecipe), Is.True);
 
         product.EditRecipe(oldRecipe, newRecipe);
 
-        Assert.False(product.AssociatedRecipes.Contains(oldRecipe));
-        Assert.Contains(newRecipe, product.AssociatedRecipes.ToList());
+        Assert.Multiple(() => {
+            Assert.That(product.AssociatedRecipes.Contains(oldRecipe), Is.False);
+            Assert.That(product.AssociatedRecipes.Contains(newRecipe), Is.True);
+        });
     }
 
 
@@ -327,12 +346,14 @@ public class TestAssociations {
 
         laboratory.AddProduct(oldProduct);
 
-        Assert.Contains(oldProduct, laboratory.AssociatedProducts.ToList());
+        Assert.That(laboratory.AssociatedProducts.Contains(oldProduct), Is.True);
 
         laboratory.EditProduct(oldProduct, newProduct);
 
-        Assert.False(laboratory.AssociatedProducts.Contains(oldProduct));
-        Assert.Contains(newProduct, laboratory.AssociatedProducts.ToList());
+        Assert.Multiple(() => {
+            Assert.That(laboratory.AssociatedProducts.Contains(oldProduct), Is.False);
+            Assert.That(laboratory.AssociatedProducts.Contains(newProduct), Is.True);
+        });
     }
 
     [Test]
@@ -364,12 +385,14 @@ public class TestAssociations {
 
         product.AddLaboratory(oldLaboratory);
 
-        Assert.Contains(oldLaboratory, product.AssociatedLaboratories.ToList());
+        Assert.That(product.AssociatedLaboratories.Contains(oldLaboratory), Is.True);
 
         product.EditLaboratory(oldLaboratory, newLaboratory);
 
-        Assert.False(product.AssociatedLaboratories.Contains(oldLaboratory));
-        Assert.Contains(newLaboratory, product.AssociatedLaboratories.ToList());
+        Assert.Multiple(() => {
+            Assert.That(product.AssociatedLaboratories.Contains(oldLaboratory), Is.False);
+            Assert.That(product.AssociatedLaboratories.Contains(newLaboratory), Is.True);
+        });
     }
 
     [Test]
@@ -401,12 +424,14 @@ public class TestAssociations {
 
         distributor.AddWarehouse(oldWarehouse);
 
-        Assert.Contains(oldWarehouse, distributor.AssociatedWarehouses.ToList());
+        Assert.That(distributor.AssociatedWarehouses.Contains(oldWarehouse), Is.True);
 
         distributor.EditWarehouse(oldWarehouse, newWarehouse);
 
-        Assert.False(distributor.AssociatedWarehouses.Contains(oldWarehouse));
-        Assert.Contains(newWarehouse, distributor.AssociatedWarehouses.ToList());
+        Assert.Multiple(() => {
+            Assert.That(distributor.AssociatedWarehouses.Contains(oldWarehouse), Is.False);
+            Assert.That(distributor.AssociatedWarehouses.Contains(newWarehouse), Is.True);
+        });
     }
 
     [Test]
@@ -438,12 +463,14 @@ public class TestAssociations {
 
         warehouse.AddDistributor(oldDistributor);
 
-        Assert.Contains(oldDistributor, warehouse.AssociatedDistributors.ToList());
+        Assert.That(warehouse.AssociatedDistributors.Contains(oldDistributor), Is.True);
 
         warehouse.EditDistributor(oldDistributor, newDistributor);
 
-        Assert.False(warehouse.AssociatedDistributors.Contains(oldDistributor));
-        Assert.Contains(newDistributor, warehouse.AssociatedDistributors.ToList());
+        Assert.Multiple(() => {
+            Assert.That(warehouse.AssociatedDistributors.Contains(oldDistributor), Is.False);
+            Assert.That(warehouse.AssociatedDistributors.Contains(newDistributor), Is.True);
+        });
     }
 
     [Test]
@@ -475,12 +502,14 @@ public class TestAssociations {
 
         ingredient.AddLaboratory(oldLaboratory);
 
-        Assert.Contains(oldLaboratory, ingredient.AssociatedLaboratories.ToList());
+        Assert.That(ingredient.AssociatedLaboratories.Contains(oldLaboratory), Is.True);
 
         ingredient.EditLaboratory(oldLaboratory, newLaboratory);
 
-        Assert.False(ingredient.AssociatedLaboratories.Contains(oldLaboratory));
-        Assert.Contains(newLaboratory, ingredient.AssociatedLaboratories.ToList());
+        Assert.Multiple(() => {
+            Assert.That(ingredient.AssociatedLaboratories.Contains(oldLaboratory), Is.False);
+            Assert.That(ingredient.AssociatedLaboratories.Contains(newLaboratory), Is.True);
+        });
     }
 
     [Test]
@@ -512,12 +541,14 @@ public class TestAssociations {
 
         laboratory.AddIngredient(oldIngredient);
 
-        Assert.Contains(oldIngredient, laboratory.AssociatedIngredients.ToList());
+        Assert.That(laboratory.AssociatedIngredients.Contains(oldIngredient), Is.True);
 
         laboratory.EditIngredient(oldIngredient, newIngredient);
 
-        Assert.False(laboratory.AssociatedIngredients.Contains(oldIngredient));
-        Assert.Contains(newIngredient, laboratory.AssociatedIngredients.ToList());
+        Assert.Multiple(() => {
+            Assert.That(laboratory.AssociatedIngredients.Contains(oldIngredient), Is.False);
+            Assert.That(laboratory.AssociatedIngredients.Contains(newIngredient), Is.True);
+        });
     }
 
     [Test]
@@ -617,6 +648,7 @@ public class TestAssociations {
         Assert.That(warehouse.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedWarehouses.Count));
     }
 
+    [Test]
     public void TestWarehouseEditDeliverer() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
         Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."]);
@@ -624,12 +656,14 @@ public class TestAssociations {
 
         warehouse.AddDeliverer(oldDeliverer);
 
-        Assert.Contains(oldDeliverer, warehouse.AssociatedDeliverers.ToList());
+        Assert.That(warehouse.AssociatedDeliverers.Contains(oldDeliverer), Is.True);
 
         warehouse.EditDeliverer(oldDeliverer, newDeliverer);
 
-        Assert.False(warehouse.AssociatedDeliverers.Contains(oldDeliverer));
-        Assert.Contains(newDeliverer, warehouse.AssociatedDeliverers.ToList());
+        Assert.Multiple(() => {
+            Assert.That(warehouse.AssociatedDeliverers.Contains(oldDeliverer), Is.False);
+            Assert.That(warehouse.AssociatedDeliverers.Contains(newDeliverer), Is.True);
+        });
     }
 
     [Test]
@@ -661,11 +695,13 @@ public class TestAssociations {
 
         deliverer.AddWarehouse(oldWarehouse);
 
-        Assert.Contains(oldWarehouse, deliverer.AssociatedWarehouses.ToList());
+        Assert.That(deliverer.AssociatedWarehouses.Contains(oldWarehouse), Is.True);
 
         deliverer.EditWarehouse(oldWarehouse, newWarehouse);
 
-        Assert.False(deliverer.AssociatedWarehouses.Contains(oldWarehouse));
-        Assert.Contains(newWarehouse, deliverer.AssociatedWarehouses.ToList());
+        Assert.Multiple(() => {
+            Assert.That(deliverer.AssociatedWarehouses.Contains(oldWarehouse), Is.False);
+            Assert.That(deliverer.AssociatedWarehouses.Contains(newWarehouse), Is.True);
+        });
     }
 }
