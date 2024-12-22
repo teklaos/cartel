@@ -11,11 +11,7 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
     }
     public int PoundsCooked { get; private set; }
 
-    private IList<Chemist> _supervisors = new List<Chemist>();
-    public IList<Chemist> Supervisors {
-        get => new List<Chemist>(_supervisors);
-        private set => _supervisors = value;
-    }
+    public Chemist? Supervisor { get; private set; }
 
     private IList<Chemist> _supervisedChemists = new List<Chemist>();
     public IList<Chemist> SupervisedChemists {
@@ -38,19 +34,23 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
         _chemists.Add(this);
     }
 
-    public void AddSelfConnection(Chemist entity) {
-        _supervisedChemists.Add(entity);
-        entity.Supervisors.Add(this);
+    public void AddSelfConnection(Chemist chemist) {
+        if (chemist.Supervisor != null)
+            throw new ArgumentException("Chemist has a supervisor.");
+        _supervisedChemists.Add(chemist);
+        chemist.Supervisor = this;
     }
 
-    public void RemoveSelfConnection(Chemist entity) {
-        _supervisedChemists.Remove(entity);
-        entity.Supervisors.Remove(this);
+    public void RemoveSelfConnection(Chemist chemist) {
+        // if (chemist.Supervisor == null)
+        //     throw new ArgumentException("Chemist does not have a supervisor.");
+        _supervisedChemists.Remove(chemist);
+        chemist.Supervisor = null;
     }
 
-    public void EditSelfConnection(Chemist oldEntity, Chemist newEntity) {
-        RemoveSelfConnection(oldEntity);
-        AddSelfConnection(newEntity);
+    public void EditSelfConnection(Chemist oldChemist, Chemist newChemist) {
+        RemoveSelfConnection(oldChemist);
+        AddSelfConnection(newChemist);
     }
 
     public void AddProduct(Product product) {
