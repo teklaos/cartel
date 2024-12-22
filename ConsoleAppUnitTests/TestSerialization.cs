@@ -604,6 +604,7 @@ public class TestSerialization {
         Assert.That(deserializedProduct, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedProduct.Name, Is.EqualTo(originalProduct.Name));
+            Assert.That(deserializedProduct.Weight, Is.EqualTo(originalProduct.Weight)); 
             Assert.That(deserializedProduct.PricePerPound, Is.EqualTo(originalProduct.PricePerPound));
             Assert.That(deserializedProduct.PurityPercentage, Is.EqualTo(originalProduct.PurityPercentage));
             Assert.That(deserializedProduct.AddictivenessLevel, Is.EqualTo(originalProduct.AddictivenessLevel));
