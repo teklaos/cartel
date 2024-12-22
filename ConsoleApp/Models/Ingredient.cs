@@ -25,11 +25,7 @@ public class Ingredient {
         private set => _associatedLaboratories = value;
     }
 
-    public IList<SupplyChain> _associatedSupplyChains = new List<SupplyChain>();
-    public IList<SupplyChain> AssociatedSupplyChains {
-        get => new List<SupplyChain>(_associatedSupplyChains);
-        private set => _associatedSupplyChains = value;
-    }
+    public SupplyChain? AssociatedSupplyChain { get; private set; }
 
     public Ingredient(string name, int pricePerPound, string chemicalFormula, StateAttribute state) {
         if (string.IsNullOrWhiteSpace(name))
@@ -70,29 +66,26 @@ public class Ingredient {
     }
 
     public void AddSupplyChain(SupplyChain supplyChain) {
-        _associatedSupplyChains.Add(supplyChain);
+        AssociatedSupplyChain = supplyChain;
         supplyChain.AddIngredientInternally(this);
     }
 
-    public void RemoveSupplyChain(SupplyChain supplyChain) {
-        if (!_associatedSupplyChains.Remove(supplyChain))
-            throw new ArgumentException("SupplyChain not found.");
-        supplyChain.RemoveIngredientInternally(this);
+    public void RemoveSupplyChain() {
+        if (AssociatedSupplyChain == null)
+            throw new ArgumentException("No supply chain to remove.");
+        AssociatedSupplyChain.RemoveIngredientInternally(this);
+        AssociatedSupplyChain = null;
     }
 
-    public void AddSupplyChainInternally(SupplyChain supplyChain) => _associatedSupplyChains.Add(supplyChain);
+    public void AddSupplyChainInternally(SupplyChain supplyChain) =>
+        AssociatedSupplyChain = supplyChain;
 
-    public void RemoveSupplyChainInternally(SupplyChain supplyChain) {
-        if (!_associatedSupplyChains.Remove(supplyChain))
-            throw new ArgumentException("SupplyChain not found.");
+    public void RemoveSupplyChainInternally() {
+        AssociatedSupplyChain = null;
     }
 
-    public void EditSupplyChain(SupplyChain oldSupplyChain, SupplyChain newSupplyChain) {
-        if (_associatedSupplyChains.Contains(oldSupplyChain)) {
-            RemoveSupplyChain(oldSupplyChain);
-        } else {
-            throw new ArgumentException("Old supply chain not found.");
-        }
+    public void EditSupplyChain(SupplyChain newSupplyChain) {
+        RemoveSupplyChain();
         AddSupplyChain(newSupplyChain);
     }
 

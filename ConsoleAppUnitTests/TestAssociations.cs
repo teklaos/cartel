@@ -24,8 +24,7 @@ public class TestAssociations {
         Assert.That(warehouse.AssociatedProducts, Has.Count.EqualTo(product.AssociatedWarehouses.Count));
     }
 
-    public void TestWarehouseEditProduct()
-    {
+    public void TestWarehouseEditProduct() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
@@ -98,8 +97,7 @@ public class TestAssociations {
         Assert.That(deliverer.AssociatedProducts, Has.Count.EqualTo(product.AssociatedDeliverers.Count));
     }
 
-    public void TestDelivererEditProduct()
-    {
+    public void TestDelivererEditProduct() {
         Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
@@ -172,8 +170,7 @@ public class TestAssociations {
         Assert.That(chemist.AssociatedProducts, Has.Count.EqualTo(product.AssociatedChemists.Count));
     }
 
-    public void TestChemistEditProduct()
-    {
+    public void TestChemistEditProduct() {
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
@@ -227,9 +224,9 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeAddProduct() {
-        Recipe recipe = new(); 
+        Recipe recipe = new();
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
-        
+
         recipe.AddProduct(product);
 
         Assert.That(recipe.AssociatedProducts, Has.Count.EqualTo(product.AssociatedRecipes.Count));
@@ -237,7 +234,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeRemoveProduct() {
-        Recipe recipe = new(); 
+        Recipe recipe = new();
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddRecipe(recipe);
@@ -247,8 +244,7 @@ public class TestAssociations {
     }
 
     [Test]
-    public void TestRecipeEditProduct()
-    {
+    public void TestRecipeEditProduct() {
         Recipe recipe = new Recipe();
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
@@ -265,7 +261,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductAddRecipe() {
-        Recipe recipe = new(); 
+        Recipe recipe = new();
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddRecipe(recipe);
@@ -275,7 +271,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductRemoveRecipe() {
-        Recipe recipe = new(); 
+        Recipe recipe = new();
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         recipe.AddProduct(product);
@@ -300,7 +296,7 @@ public class TestAssociations {
         Assert.False(product.AssociatedRecipes.Contains(oldRecipe));
         Assert.Contains(newRecipe, product.AssociatedRecipes.ToList());
     }
-    
+
 
     [Test]
     public void TestLaboratoryAddProduct() {
@@ -324,8 +320,7 @@ public class TestAssociations {
     }
 
     [Test]
-    public void TestLaboratoryEditProduct()
-    {
+    public void TestLaboratoryEditProduct() {
         Laboratory laboratory = new("Madelyn");
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
@@ -357,7 +352,7 @@ public class TestAssociations {
 
         laboratory.AddProduct(product);
         product.RemoveLaboratory(laboratory);
-        
+
         Assert.That(product.AssociatedLaboratories, Has.Count.EqualTo(laboratory.AssociatedProducts.Count));
     }
 
@@ -399,8 +394,7 @@ public class TestAssociations {
     }
 
     [Test]
-    public void TestDistributorEditWarehouse()
-    {
+    public void TestDistributorEditWarehouse() {
         Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
         Warehouse newWarehouse = new("Madelyn", 500);
         Warehouse oldWarehouse = new("Madelyn", 501);
@@ -437,8 +431,7 @@ public class TestAssociations {
     }
 
     [Test]
-    public void TestWarehouseEditDistributor()
-    {
+    public void TestWarehouseEditDistributor() {
         Warehouse warehouse = new("Madelyn", 500);
         Distributor oldDistributor = new("Danny", 10, ["Don't steal"], 15);
         Distributor newDistributor = new("Danny", 11, ["Don't steal"], 15);
@@ -475,8 +468,7 @@ public class TestAssociations {
     }
 
     [Test]
-    public void TestIngredientEditLaboratory()
-    {
+    public void TestIngredientEditLaboratory() {
         Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
         Laboratory newLaboratory = new("Madelyn");
         Laboratory oldLaboratory = new("Drained");
@@ -513,8 +505,7 @@ public class TestAssociations {
     }
 
     [Test]
-    public void TestLaboratoryEditIngredient()
-    {
+    public void TestLaboratoryEditIngredient() {
         Laboratory laboratory = new("Madelyn");
         Ingredient newIngredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
         Ingredient oldIngredient = new Ingredient("Crystal", 201, "C₁₀H₁₅N", StateAttribute.Solid);
@@ -536,7 +527,7 @@ public class TestAssociations {
 
         ingredient.AddSupplyChain(supplyChain);
 
-        Assert.That(ingredient.AssociatedSupplyChains, Has.Count.EqualTo(supplyChain.AssociatedIngredients.Count));
+        Assert.That(ingredient.AssociatedSupplyChain, Is.EqualTo(supplyChain));
     }
 
     [Test]
@@ -545,26 +536,24 @@ public class TestAssociations {
         SupplyChain supplyChain = new("Madelyn", 6);
 
         supplyChain.AddIngredient(ingredient);
-        ingredient.RemoveSupplyChain(supplyChain);
+        ingredient.RemoveSupplyChain();
 
-        Assert.That(ingredient.AssociatedSupplyChains, Has.Count.EqualTo(supplyChain.AssociatedIngredients.Count));
+        Assert.That(ingredient.AssociatedSupplyChain, Is.Null);
     }
 
     [Test]
-    public void TestIngredientEditSupplyChain()
-    {
+    public void TestIngredientEditSupplyChain() {
         Ingredient ingredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
         SupplyChain newSupplyChain = new("Madelyn", 6);
         SupplyChain oldSupplyChain = new("Madelyn", 7);
 
         ingredient.AddSupplyChain(oldSupplyChain);
 
-        Assert.Contains(oldSupplyChain, ingredient.AssociatedSupplyChains.ToList());
+        Assert.That(ingredient.AssociatedSupplyChain, Is.EqualTo(oldSupplyChain));
 
-        ingredient.EditSupplyChain(oldSupplyChain, newSupplyChain);
+        ingredient.EditSupplyChain(newSupplyChain);
 
-        Assert.False(ingredient.AssociatedSupplyChains.Contains(oldSupplyChain));
-        Assert.Contains(newSupplyChain, ingredient.AssociatedSupplyChains.ToList());
+        Assert.That(ingredient.AssociatedSupplyChain, Is.EqualTo(newSupplyChain));
     }
 
     [Test]
@@ -574,7 +563,7 @@ public class TestAssociations {
 
         supplyChain.AddIngredient(ingredient);
 
-        Assert.That(supplyChain.AssociatedIngredients, Has.Count.EqualTo(ingredient.AssociatedSupplyChains.Count));
+        Assert.That(supplyChain.AssociatedIngredients.Contains(ingredient), Is.True);
     }
 
     [Test]
@@ -585,24 +574,25 @@ public class TestAssociations {
         ingredient.AddSupplyChain(supplyChain);
         supplyChain.RemoveIngredient(ingredient);
 
-        Assert.That(supplyChain.AssociatedIngredients, Has.Count.EqualTo(ingredient.AssociatedSupplyChains.Count));
+        Assert.That(supplyChain.AssociatedIngredients.Contains(ingredient), Is.False);
     }
 
     [Test]
-    public void TestSupplyChainEditIngredient()
-    {
+    public void TestSupplyChainEditIngredient() {
         SupplyChain supplyChain = new("Madelyn", 6);
         Ingredient newIngredient = new Ingredient("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
         Ingredient oldIngredient = new Ingredient("Crystal", 201, "C₁₀H₁₅N", StateAttribute.Solid);
 
         supplyChain.AddIngredient(oldIngredient);
 
-        Assert.Contains(oldIngredient, supplyChain.AssociatedIngredients.ToList());
+        Assert.That(supplyChain.AssociatedIngredients.Contains(oldIngredient), Is.True);
 
         supplyChain.EditIngredient(oldIngredient, newIngredient);
 
-        Assert.False(supplyChain.AssociatedIngredients.Contains(oldIngredient));
-        Assert.Contains(newIngredient, supplyChain.AssociatedIngredients.ToList());
+        Assert.Multiple(() => {
+            Assert.That(supplyChain.AssociatedIngredients.Contains(oldIngredient), Is.False);
+            Assert.That(supplyChain.AssociatedIngredients.Contains(newIngredient), Is.True);
+        });
     }
 
 
@@ -627,8 +617,7 @@ public class TestAssociations {
         Assert.That(warehouse.AssociatedDeliverers, Has.Count.EqualTo(deliverer.AssociatedWarehouses.Count));
     }
 
-    public void TestWarehouseEditDeliverer()
-    {
+    public void TestWarehouseEditDeliverer() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
         Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."]);
         Deliverer oldDeliverer = new("Mike", 11, ["Do not kill customers."]);

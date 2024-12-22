@@ -36,8 +36,8 @@ public class SupplyChain {
 
     public void RemoveIngredient(Ingredient ingredient) {
         if (!_associatedIngredients.Remove(ingredient))
-            throw new ArgumentException("SupplyChain not found.");
-        ingredient.RemoveSupplyChainInternally(this);
+            throw new ArgumentException("Ingredient not found.");
+        ingredient.RemoveSupplyChainInternally();
     }
 
     public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
