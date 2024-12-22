@@ -54,11 +54,15 @@ public class Chemist : CartelMember, IReflexiveConnection<Chemist> {
     }
 
     public void AddProduct(Product product) {
+        if (product.AssociatedChemists.Count < 1)
+            throw new ArgumentException("Connection does not have enough chemists.");
         _associatedProducts.Add(product);
         product.AddChemistInternally(this);
     }
 
     public void RemoveProduct(Product product) {
+        if (product.AssociatedChemists.Count - 1 < 2)
+            throw new ArgumentException("Connection cannot be removed.");
         if (!_associatedProducts.Remove(product))
             throw new ArgumentException("Product not found.");
         product.RemoveChemistInternally(this);

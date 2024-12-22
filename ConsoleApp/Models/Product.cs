@@ -124,12 +124,20 @@ public class Product {
             throw new ArgumentException("Deliverer not found.");
     }
 
-    public void AddChemist(Chemist chemist) {
-        _associatedChemists.Add(chemist);
-        chemist.AddProductInternally(this);
+    public void AddChemists(params Chemist[] chemists) {
+        if (chemists.Distinct().Count() != chemists.Length)
+            throw new ArgumentException("Chemists should be unique.");
+        if (_associatedChemists.Count + chemists.Length < 2)
+            throw new ArgumentException("Not enough chemists.");
+        foreach (Chemist chemist in chemists) {
+            _associatedChemists.Add(chemist);
+            chemist.AddProductInternally(this);
+        }
     }
 
     public void RemoveChemist(Chemist chemist) {
+        if (_associatedChemists.Count - 1 < 2)
+            throw new ArgumentException("Chemist cannot be deleted.");
         if (!_associatedChemists.Remove(chemist))
             throw new ArgumentException("Chemist not found.");
         chemist.RemoveProductInternally(this);
@@ -137,7 +145,7 @@ public class Product {
 
     public void EditChemist(Chemist oldChemist, Chemist newChemist) {
         RemoveChemist(oldChemist);
-        AddChemist(newChemist);
+        AddChemists(newChemist);
     }
 
     public void AddChemistInternally(Chemist chemist) => _associatedChemists.Add(chemist);

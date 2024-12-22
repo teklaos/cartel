@@ -161,35 +161,46 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistAddProduct() {
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
+        product.AddChemists(ch1, ch2);
         chemist.AddProduct(product);
 
-        Assert.That(chemist.AssociatedProducts, Has.Count.EqualTo(product.AssociatedChemists.Count));
+        Assert.That(product.AssociatedChemists.Contains(chemist), Is.True);
     }
 
     [Test]
     public void TestChemistRemoveProduct() {
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
-        product.AddChemist(chemist);
+        product.AddChemists(ch1, ch2, chemist);
         chemist.RemoveProduct(product);
 
-        Assert.That(chemist.AssociatedProducts, Has.Count.EqualTo(product.AssociatedChemists.Count));
+        Assert.That(product.AssociatedChemists.Contains(chemist), Is.False);
     }
 
     [Test]
     public void TestChemistEditProduct() {
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
+        Product oldProduct = new("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Chemist ch3 = new("Gale", 10, ["Do not steal meth."], 250);
+        Chemist ch4 = new("Gus", 10, ["Do not steal meth."], 0);
+        Product newProduct = new("Meth", 101, 1000, AddLevelAttribute.Strong);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
+        oldProduct.AddChemists(ch1, ch2);
         chemist.AddProduct(oldProduct);
 
         Assert.That(chemist.AssociatedProducts.Contains(oldProduct), Is.True);
 
+        newProduct.AddChemists(ch3, ch4);
         chemist.EditProduct(oldProduct, newProduct);
 
         Assert.Multiple(() => {
@@ -200,32 +211,42 @@ public class TestAssociations {
 
     [Test]
     public void TestProductAddChemist() {
-        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
+        Chemist chemist1 = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist chemist2 = new("Danny", 10, ["Do not steal meth."], 90);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
-        product.AddChemist(chemist);
+        product.AddChemists(chemist1, chemist2);
 
-        Assert.That(product.AssociatedChemists, Has.Count.EqualTo(chemist.AssociatedProducts.Count));
+        Assert.Multiple(() => {
+            Assert.That(chemist1.AssociatedProducts.Contains(product), Is.True);
+            Assert.That(chemist2.AssociatedProducts.Contains(product), Is.True);
+        });
     }
 
     [Test]
     public void TestProductRemoveChemist() {
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
+        product.AddChemists(ch1, ch2);
         chemist.AddProduct(product);
         product.RemoveChemist(chemist);
 
-        Assert.That(product.AssociatedChemists, Has.Count.EqualTo(chemist.AssociatedProducts.Count));
+        Assert.That(chemist.AssociatedProducts.Contains(product), Is.False);
     }
 
     [Test]
     public void TestProductEditChemist() {
         Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
         Chemist newChemist = new("Danny", 10, ["Do not steal meth."], 90);
         Chemist oldChemist = new("Danny", 11, ["Do not steal meth."], 90);
 
-        product.AddChemist(oldChemist);
+        product.AddChemists(ch1, ch2);
+        product.AddChemists(oldChemist);
 
         Assert.That(product.AssociatedChemists.Contains(oldChemist), Is.True);
 
