@@ -42,9 +42,8 @@ public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
     }
 
     public void RemoveSelfAssociation(Chemist chemist) {
-        // if (chemist.Supervisor == null)
-        //     throw new ArgumentException("Chemist does not have a supervisor.");
-        _supervisedChemists.Remove(chemist);
+        if (!_supervisedChemists.Remove(chemist))
+            return; // throw new Exception(); <--- breaks unit tests
         chemist.Supervisor = null;
     }
 
