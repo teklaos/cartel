@@ -75,15 +75,15 @@ public class TestConstructors {
 
     [Test]
     public void TestDistributorCustomerConstructor() {
-        DateTime dealStartDate = new DateTime(2024, 5, 20);
-        DateTime dealEndDate = new DateTime(2024, 5, 21);
+        DateTime startDate = new DateTime(2024, 5, 20);
+        DateTime endDate = new DateTime(2024, 5, 21);
 
-        DistributorCustomer distributorCustomer = new DistributorCustomer(dealStartDate, 15, dealEndDate);
+        Deal deal = new Deal(startDate, 15, endDate);
 
         Assert.Multiple(() => {
-            Assert.That(distributorCustomer.DealStartDate, Is.EqualTo(dealStartDate));
-            Assert.That(distributorCustomer.PoundsOfProduct, Is.EqualTo(15));
-            Assert.That(distributorCustomer.DealEndDate, Is.EqualTo(dealEndDate));
+            Assert.That(deal.StartDate, Is.EqualTo(startDate));
+            Assert.That(deal.PoundsOfProduct, Is.EqualTo(15));
+            Assert.That(deal.EndDate, Is.EqualTo(endDate));
         });
     }
 

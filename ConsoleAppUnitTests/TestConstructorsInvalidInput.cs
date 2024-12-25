@@ -189,35 +189,35 @@ public class TestConstructorsInvalidInput {
     }
 
     [Test]
-    public void DistributorCustomerConstructorInvalidDealStartDate() {
-        DateTime invalidDealStartDate = new DateTime(1800, 5, 20);
-        DateTime dealEndDate = new DateTime(2024, 5, 21);
+    public void DealConstructorInvalidDealStartDate() {
+        DateTime invalidStartDate = new DateTime(1800, 5, 20);
+        DateTime endDate = new DateTime(2024, 5, 21);
 
         int poundsOfProduct = 10;
 
-        Assert.Throws<ArgumentException>(() => new DistributorCustomer(invalidDealStartDate, poundsOfProduct, dealEndDate),
+        Assert.Throws<ArgumentException>(() => new Deal(invalidStartDate, poundsOfProduct, endDate),
             "Expected ArgumentException for deal start date earlier than year 1890.");
     }
 
     [Test]
-    public void DistributorCustomerConstructorInvalidDealEndDate() {
-        DateTime dealStartDate = new DateTime(2024, 5, 20);
-        DateTime invalidDealEndDate = new DateTime(2025, 5, 21);
+    public void DealConstructorInvalidDealEndDate() {
+        DateTime startDate = new DateTime(2024, 5, 20);
+        DateTime invalidEndDate = new DateTime(2025, 5, 21);
 
         int poundsOfProduct = 10;
 
-        Assert.Throws<ArgumentException>(() => new DistributorCustomer(dealStartDate, poundsOfProduct, invalidDealEndDate),
+        Assert.Throws<ArgumentException>(() => new Deal(startDate, poundsOfProduct, invalidEndDate),
             "Expected ArgumentException for deal end date in the future.");
     }
 
     [Test]
-    public void DistributorCustomerConstructorInvalidPoundsOfProduct() {
-        DateTime dealStartDate = new DateTime(2024, 5, 20);
-        DateTime dealEndDate = new DateTime(2024, 5, 21);
+    public void DealConstructorInvalidPoundsOfProduct() {
+        DateTime startDate = new DateTime(2024, 5, 20);
+        DateTime endDate = new DateTime(2024, 5, 21);
 
         int invalidPoundsOfProduct = -10;
 
-        Assert.Throws<ArgumentException>(() => new DistributorCustomer(dealStartDate, invalidPoundsOfProduct, dealEndDate),
+        Assert.Throws<ArgumentException>(() => new Deal(startDate, invalidPoundsOfProduct, endDate),
             "Expected ArgumentException for negative pounds of product.");
     }
 

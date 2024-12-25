@@ -287,13 +287,13 @@ public class TestSerialization {
     }
 
     [Test]
-    public void SerializationWriteDistributorCustomerToFile() {
-        _ = new DistributorCustomer(new DateTime(2024, 5, 20), 15, new DateTime(2024, 5, 21));
+    public void SerializationWriteDealToFile() {
+        _ = new Deal(new DateTime(2024, 5, 20), 15, new DateTime(2024, 5, 21));
 
-        DistributorCustomer.Serialize();
-        Assert.That(File.Exists("DistributorsCustomers.json"), Is.True);
+        Deal.Serialize();
+        Assert.That(File.Exists("Deals.json"), Is.True);
 
-        var jsonContent = File.ReadAllText("DistributorsCustomers.json");
+        var jsonContent = File.ReadAllText("Deals.json");
         Assert.Multiple(() => {
             Assert.That(jsonContent, Does.Contain("2024-05-20"));
             Assert.That(jsonContent, Does.Contain("15"));
@@ -302,34 +302,34 @@ public class TestSerialization {
     }
 
     [Test]
-    public void DeserializationLoadDistributorCustomerFromFile() {
-        _ = new DistributorCustomer(new DateTime(2020, 4, 19), 10, new DateTime(2020, 4, 20));
+    public void DeserializationLoadDealFromFile() {
+        _ = new Deal(new DateTime(2020, 4, 19), 10, new DateTime(2020, 4, 20));
 
-        DistributorCustomer.Serialize();
-        DistributorCustomer.Deserialize();
-        Assert.That(DistributorCustomer.DistributorsCustomers, Is.Not.Null);
+        Deal.Serialize();
+        Deal.Deserialize();
+        Assert.That(Deal.Deals, Is.Not.Null);
 
-        var deserializedDistributorCustomer = DistributorCustomer.DistributorsCustomers.Last();
-        Assert.That(deserializedDistributorCustomer, Is.Not.Null);
+        var deserializedDeal = Deal.Deals.Last();
+        Assert.That(deserializedDeal, Is.Not.Null);
         Assert.Multiple(() => {
-            Assert.That(deserializedDistributorCustomer.DealStartDate, Is.EqualTo(new DateTime(2020, 4, 19)));
-            Assert.That(deserializedDistributorCustomer.PoundsOfProduct, Is.EqualTo(10));
-            Assert.That(deserializedDistributorCustomer.DealEndDate, Is.EqualTo(new DateTime(2020, 4, 20)));
+            Assert.That(deserializedDeal.StartDate, Is.EqualTo(new DateTime(2020, 4, 19)));
+            Assert.That(deserializedDeal.PoundsOfProduct, Is.EqualTo(10));
+            Assert.That(deserializedDeal.EndDate, Is.EqualTo(new DateTime(2020, 4, 20)));
         });
     }
 
     [Test]
-    public void SerializeAndDeserializeDistributorCustomerIntegrity() {
-        var originalDistributorCustomer = new DistributorCustomer(new DateTime(2005, 03, 07), 150, new DateTime(2005, 03, 08));
-        DistributorCustomer.Serialize();
-        DistributorCustomer.Deserialize();
-        var deserializedDistributorCustomer = DistributorCustomer.DistributorsCustomers.Last();
+    public void SerializeAndDeserializeDealIntegrity() {
+        var originalDeal = new Deal(new DateTime(2005, 03, 07), 150, new DateTime(2005, 03, 08));
+        Deal.Serialize();
+        Deal.Deserialize();
+        var deserializedDeal = Deal.Deals.Last();
 
-        Assert.That(deserializedDistributorCustomer, Is.Not.Null);
+        Assert.That(deserializedDeal, Is.Not.Null);
         Assert.Multiple(() => {
-            Assert.That(deserializedDistributorCustomer.DealStartDate, Is.EqualTo(originalDistributorCustomer.DealStartDate));
-            Assert.That(deserializedDistributorCustomer.PoundsOfProduct, Is.EqualTo(originalDistributorCustomer.PoundsOfProduct));
-            Assert.That(deserializedDistributorCustomer.DealEndDate, Is.EqualTo(originalDistributorCustomer.DealEndDate));
+            Assert.That(deserializedDeal.StartDate, Is.EqualTo(originalDeal.StartDate));
+            Assert.That(deserializedDeal.PoundsOfProduct, Is.EqualTo(originalDeal.PoundsOfProduct));
+            Assert.That(deserializedDeal.EndDate, Is.EqualTo(originalDeal.EndDate));
         });
     }
 
