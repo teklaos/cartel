@@ -220,4 +220,9 @@ public class Product {
             Console.WriteLine(ex.Message);
         }
     }
+
+    public static void Clear() {
+        _products.Clear();
+        Serialize();
+    }
 }

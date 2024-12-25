@@ -44,4 +44,9 @@ public class Instruction {
             Console.WriteLine(ex.Message);
         }
     }
+
+    public static void Clear() {
+        _instructions.Clear();
+        Serialize();
+    }
 }
