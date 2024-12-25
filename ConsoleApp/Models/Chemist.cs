@@ -35,6 +35,8 @@ public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
     }
 
     public void AddSelfAssociation(Chemist chemist) {
+        if (this == chemist)
+            throw new ArgumentException("Chemist cannot supervise themselves.");
         if (chemist.Supervisor != null)
             throw new ArgumentException("Chemist has a supervisor.");
         _supervisedChemists.Add(chemist);
