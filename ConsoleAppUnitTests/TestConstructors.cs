@@ -157,9 +157,23 @@ public class TestConstructors {
     [Test]
     public void TestRecipeConstructor() {
         Recipe recipe = new Recipe();
+        List<Instruction> instructions = [
+            new Instruction("Combine"),
+            new Instruction("Stir for 5 minutes"),
+            new Instruction("Add"),
+            new Instruction("Stir for 15 minutes."),
+            new Instruction("Wait for 10 minutes."),
+            new Instruction("Combine"),
+            new Instruction("Stir for 15 minutes."),
+            new Instruction("Add"),
+            new Instruction("Stir for 30 minutes."),
+            new Instruction("Wait for 10 minutes.")
+        ];
 
-        // Assuming that AmountOfInstructions = 55
-        Assert.That(recipe.Complexity, Is.EqualTo(5));
+        foreach (var i in instructions)
+            recipe.AddCompositionAssociation(i);
+
+        Assert.That(recipe.Complexity, Is.EqualTo(1));
     }
 
     [Test]
@@ -190,5 +204,10 @@ public class TestConstructors {
             Assert.That(wholesaler.CommissionPercentage, Is.EqualTo(15));
             Assert.That(wholesaler.MonthlyCustomers, Is.EqualTo(55));
         });
+    }
+
+    [TearDown]
+    public void TearDown() {
+        Instruction.Clear();
     }
 }

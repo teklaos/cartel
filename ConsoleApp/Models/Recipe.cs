@@ -9,8 +9,7 @@ public class Recipe : ICompositionAssociation<Instruction> {
         get => new List<Recipe>(_recipes);
         private set => _recipes = value;
     }
-    private readonly int _amountOfInstructions = 55;
-    public int Complexity { get => _amountOfInstructions / 10; }
+    public int Complexity { get => _associatedInstructions.Count / 10; }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {

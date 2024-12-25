@@ -189,18 +189,16 @@ public class TestAssociations {
     public void TestChemistEditProduct() {
         Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
         Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
-        Product oldProduct = new("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Chemist ch3 = new("Gale", 10, ["Do not steal meth."], 250);
-        Chemist ch4 = new("Gus", 10, ["Do not steal meth."], 0);
-        Product newProduct = new("Meth", 101, 1000, AddLevelAttribute.Strong);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
+        Product oldProduct = new("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product newProduct = new("Meth", 101, 1000, AddLevelAttribute.Strong);
 
         oldProduct.AddChemists(ch1, ch2);
         chemist.AddProduct(oldProduct);
 
         Assert.That(chemist.AssociatedProducts.Contains(oldProduct), Is.True);
 
-        newProduct.AddChemists(ch3, ch4);
+        newProduct.AddChemists(ch1, ch2);
         chemist.EditProduct(oldProduct, newProduct);
 
         Assert.Multiple(() => {
@@ -724,5 +722,10 @@ public class TestAssociations {
             Assert.That(deliverer.AssociatedWarehouses.Contains(oldWarehouse), Is.False);
             Assert.That(deliverer.AssociatedWarehouses.Contains(newWarehouse), Is.True);
         });
+    }
+
+    [TearDown]
+    public void TearDown() {
+        Product.Clear();
     }
 }
