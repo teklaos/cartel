@@ -17,15 +17,19 @@ public class Product {
     public string Name { get; private set; }
     public double Weight { get; private set; }
     public int PricePerPound { get; private set; }
-    private readonly int _poundsCooked = 2000;
     public double PurityPercentage {
         get {
+            if (_associatedChemists.Count == 0)
+                return 90.0;
+
+            int maxPoundsCooked = _associatedChemists.Max(ch => ch.PoundsCooked);
             double randomDouble = 0.8565;
-            if (_poundsCooked > 2000)
+            
+            if (maxPoundsCooked > 2000)
                 return 95 + Math.Round(randomDouble * 5, 2);
-            else if (_poundsCooked > 1000)
+            else if (maxPoundsCooked > 1000)
                 return 85 + Math.Round(randomDouble * 10, 2);
-            else if (_poundsCooked > 0)
+            else if (maxPoundsCooked > 0)
                 return 70 + Math.Round(randomDouble * 15, 2);
             else
                 return 50 + Math.Round(randomDouble * 20, 2);

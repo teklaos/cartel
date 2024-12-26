@@ -143,13 +143,16 @@ public class TestConstructors {
     public void TestProductConstructor() {
         AddLevelAttribute addictivenessLevel = AddLevelAttribute.Strong;
         Product product = new Product("Meth", 15, 15000, addictivenessLevel);
+        Chemist chemist1 = new Chemist("Walter", 10, ["Follow the rules."], 10000);
+        Chemist chemist2 = new Chemist("Jesse", 10, ["Follow the rules."], 1500);
+
+        product.AddChemists(chemist1, chemist2);
 
         Assert.Multiple(() => {
             Assert.That(product.Name, Is.EqualTo("Meth"));
             Assert.That(product.Weight, Is.EqualTo(15));
             Assert.That(product.PricePerPound, Is.EqualTo(15000));
-            // Assuming that ChemistPoundsCooked = 2000
-            Assert.That(product.PurityPercentage, Is.EqualTo(90).Within(5));
+            Assert.That(product.PurityPercentage, Is.EqualTo(97.5).Within(2.5));
             Assert.That(product.AddictivenessLevel, Is.EqualTo(addictivenessLevel));
         });
     }
@@ -159,7 +162,7 @@ public class TestConstructors {
         Recipe recipe = new Recipe();
         List<Instruction> instructions = [
             new Instruction("Combine"),
-            new Instruction("Stir for 5 minutes"),
+            new Instruction("Stir for 5 minutes."),
             new Instruction("Add"),
             new Instruction("Stir for 15 minutes."),
             new Instruction("Wait for 10 minutes."),
