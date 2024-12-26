@@ -23,7 +23,8 @@ public class Recipe : ICompositionAssociation<Instruction> {
         private set => _associatedInstructions = value;
     }
 
-    public Recipe() => _recipes.Add(this);
+    public Recipe() =>
+        _recipes.Add(this);
 
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
@@ -41,7 +42,8 @@ public class Recipe : ICompositionAssociation<Instruction> {
         AddProduct(newProduct);
     }
 
-    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public void AddProductInternally(Product product) =>
+        _associatedProducts.Add(product);
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))

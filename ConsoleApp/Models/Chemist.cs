@@ -74,7 +74,8 @@ public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
         AddProduct(newProduct);
     }
 
-    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public void AddProductInternally(Product product) =>
+        _associatedProducts.Add(product);
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))

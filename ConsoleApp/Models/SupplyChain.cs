@@ -45,7 +45,8 @@ public class SupplyChain {
         AddIngredient(newIngredient);
     }
 
-    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngredients.Add(ingredient);
+    public void AddIngredientInternally(Ingredient ingredient) =>
+        _associatedIngredients.Add(ingredient);
 
     public void RemoveIngredientInternally(Ingredient ingredient) {
         if (!_associatedIngredients.Remove(ingredient))

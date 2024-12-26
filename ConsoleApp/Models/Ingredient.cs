@@ -58,7 +58,8 @@ public class Ingredient {
         AddLaboratory(newLaboratory);
     }
 
-    public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
+    public void AddLaboratoryInternally(Laboratory laboratory) =>
+        _associatedLaboratories.Add(laboratory);
 
     public void RemoveLaboratoryInternally(Laboratory laboratory) {
         if (!_associatedLaboratories.Remove(laboratory))

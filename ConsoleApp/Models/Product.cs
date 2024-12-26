@@ -24,7 +24,7 @@ public class Product {
 
             int maxPoundsCooked = _associatedChemists.Max(ch => ch.PoundsCooked);
             double randomDouble = 0.8565;
-            
+
             if (maxPoundsCooked > 2000)
                 return 95 + Math.Round(randomDouble * 5, 2);
             else if (maxPoundsCooked > 1000)
@@ -98,7 +98,8 @@ public class Product {
         AddWarehouse(newWarehouse);
     }
 
-    public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
+    public void AddWarehouseInternally(Warehouse warehouse) =>
+        _associatedWarehouses.Add(warehouse);
 
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))
@@ -121,7 +122,8 @@ public class Product {
         AddDeliverer(newDeliverer);
     }
 
-    public void AddDelivererInternally(Deliverer deliverer) => _associatedDeliverers.Add(deliverer);
+    public void AddDelivererInternally(Deliverer deliverer) =>
+        _associatedDeliverers.Add(deliverer);
 
     public void RemoveDelivererInternally(Deliverer deliverer) {
         if (!_associatedDeliverers.Remove(deliverer))
@@ -152,7 +154,8 @@ public class Product {
         AddChemists(newChemist);
     }
 
-    public void AddChemistInternally(Chemist chemist) => _associatedChemists.Add(chemist);
+    public void AddChemistInternally(Chemist chemist) =>
+        _associatedChemists.Add(chemist);
 
     public void RemoveChemistInternally(Chemist chemist) {
         if (!_associatedChemists.Remove(chemist))
@@ -175,7 +178,8 @@ public class Product {
         AddRecipe(newRecipe);
     }
 
-    public void AddRecipeInternally(Recipe recipe) => _associatedRecipes.Add(recipe);
+    public void AddRecipeInternally(Recipe recipe) =>
+        _associatedRecipes.Add(recipe);
 
     public void RemoveRecipeInternally(Recipe recipe) {
         if (!_associatedRecipes.Remove(recipe))
@@ -198,7 +202,8 @@ public class Product {
         AddLaboratory(newLaboratory);
     }
 
-    public void AddLaboratoryInternally(Laboratory laboratory) => _associatedLaboratories.Add(laboratory);
+    public void AddLaboratoryInternally(Laboratory laboratory) =>
+        _associatedLaboratories.Add(laboratory);
 
     public void RemoveLaboratoryInternally(Laboratory laboratory) {
         if (!_associatedLaboratories.Remove(laboratory))

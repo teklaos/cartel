@@ -22,7 +22,8 @@ public class Deliverer : CartelMember {
     }
 
     public Deliverer(string name, int trustLevel, IList<string> rulesToFollow) :
-    base(name, trustLevel, rulesToFollow) => _deliverers.Add(this);
+    base(name, trustLevel, rulesToFollow) =>
+        _deliverers.Add(this);
 
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
@@ -40,7 +41,8 @@ public class Deliverer : CartelMember {
         AddProduct(newProduct);
     }
 
-    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public void AddProductInternally(Product product) =>
+        _associatedProducts.Add(product);
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
@@ -63,7 +65,8 @@ public class Deliverer : CartelMember {
         AddWarehouse(newWarehouse);
     }
 
-    public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
+    public void AddWarehouseInternally(Warehouse warehouse) =>
+        _associatedWarehouses.Add(warehouse);
 
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))

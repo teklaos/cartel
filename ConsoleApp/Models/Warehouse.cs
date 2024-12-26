@@ -56,7 +56,8 @@ public class Warehouse {
         AddProduct(newProduct);
     }
 
-    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public void AddProductInternally(Product product) =>
+        _associatedProducts.Add(product);
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
@@ -79,7 +80,8 @@ public class Warehouse {
         AddDistributor(newDistributor);
     }
 
-    public void AddDistributorInternally(Distributor distributor) => _associatedDistributors.Add(distributor);
+    public void AddDistributorInternally(Distributor distributor) =>
+        _associatedDistributors.Add(distributor);
 
     public void RemoveDistributorInternally(Distributor distributor) {
         if (!_associatedDistributors.Remove(distributor))
@@ -102,7 +104,8 @@ public class Warehouse {
         AddDeliverer(newDeliverer);
     }
 
-    public void AddDelivererInternally(Deliverer deliverer) => _associatedDeliverers.Add(deliverer);
+    public void AddDelivererInternally(Deliverer deliverer) =>
+        _associatedDeliverers.Add(deliverer);
 
     public void RemoveDelivererInternally(Deliverer deliverer) {
         if (!_associatedDeliverers.Remove(deliverer))

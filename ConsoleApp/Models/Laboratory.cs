@@ -55,7 +55,8 @@ public class Laboratory : ICompositionAssociation<Equipment> {
         AddProduct(newProduct);
     }
 
-    public void AddProductInternally(Product product) => _associatedProducts.Add(product);
+    public void AddProductInternally(Product product) =>
+        _associatedProducts.Add(product);
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
@@ -78,7 +79,8 @@ public class Laboratory : ICompositionAssociation<Equipment> {
         AddIngredient(newIngredient);
     }
 
-    public void AddIngredientInternally(Ingredient ingredient) => _associatedIngredients.Add(ingredient);
+    public void AddIngredientInternally(Ingredient ingredient) =>
+        _associatedIngredients.Add(ingredient);
 
     public void RemoveIngredientInternally(Ingredient ingredient) {
         if (!_associatedIngredients.Remove(ingredient))

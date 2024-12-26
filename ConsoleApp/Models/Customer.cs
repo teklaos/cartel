@@ -9,7 +9,8 @@ public class Customer {
         private set => _customers = value;
     }
 
-    public Customer() => _customers.Add(this);
+    public Customer() =>
+        _customers.Add(this);
     
     public static void Serialize() {
         string fileName = "Customers.json";

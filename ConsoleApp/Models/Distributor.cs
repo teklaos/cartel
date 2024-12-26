@@ -47,7 +47,8 @@ public class Distributor : CartelMember {
         AddWarehouse(newWarehouse);
     }
 
-    public void AddWarehouseInternally(Warehouse warehouse) => _associatedWarehouses.Add(warehouse);
+    public void AddWarehouseInternally(Warehouse warehouse) =>
+        _associatedWarehouses.Add(warehouse);
 
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))
