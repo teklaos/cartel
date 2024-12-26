@@ -34,6 +34,26 @@ public class Deal {
         _deals.Add(this);
     }
 
+    public void AddDistributor(Distributor distributor, string customerId) {
+        distributor.AddDealInternally(this, customerId);
+        AssociatedDistributor = distributor;
+    }
+
+    public void RemoveDistributor(Distributor distributor, string customerId) {
+        distributor.RemoveDealInternally(this, customerId);
+        AssociatedDistributor = null;
+    }
+
+    public void EditDistributor(
+        Distributor oldDistributor,
+        Distributor newDistributor,
+        string oldCustomerId,
+        string newCustomerId
+    ) {
+        AddDistributor(oldDistributor, oldCustomerId);
+        RemoveDistributor(newDistributor, newCustomerId);
+    }
+
     public void AddDistributorInternally(Distributor distributor) =>
         AssociatedDistributor = distributor;
 

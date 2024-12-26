@@ -54,7 +54,7 @@ public class Distributor : CartelMember {
             throw new ArgumentException("Warehouse not found.");
     }
 
-    public void AddDeal(string customerId, Deal deal) {
+    public void AddDeal(Deal deal, string customerId) {
         if (customerId == null)
             throw new ArgumentException("Customer ID cannot be null.");
         if (!_associatedDeals.TryAdd(customerId, [deal]))
@@ -62,7 +62,7 @@ public class Distributor : CartelMember {
         deal.AddDistributorInternally(this);
     }
 
-    public void RemoveDeal(string customerId, Deal deal) {
+    public void RemoveDeal(Deal deal, string customerId) {
         if (customerId == null)
             throw new ArgumentException("Customer ID cannot be null.");
         if (!_associatedDeals.Keys.Contains(customerId))
@@ -76,9 +76,29 @@ public class Distributor : CartelMember {
         deal.RemoveDistributorInternally();
     }
 
-    public void EditDeal(string customerId, Deal oldDeal, Deal newDeal) {
-        RemoveDeal(customerId, oldDeal);
-        AddDeal(customerId, newDeal);
+    public void EditDeal(Deal oldDeal, Deal newDeal, string oldCustomerId, string newCustomerId) {
+        RemoveDeal(oldDeal, oldCustomerId);
+        AddDeal(newDeal, newCustomerId);
+    }
+
+    public void AddDealInternally(Deal deal, string customerId) {
+        if (customerId == null)
+            throw new ArgumentException("Customer ID cannot be null.");
+        if (!_associatedDeals.TryAdd(customerId, [deal]))
+            _associatedDeals[customerId].Add(deal);
+    }
+
+    public void RemoveDealInternally(Deal deal, string customerId) {
+        if (customerId == null)
+            throw new ArgumentException("Customer ID cannot be null.");
+        if (!_associatedDeals.Keys.Contains(customerId))
+            throw new ArgumentException("Customer not found.");
+        if (!_associatedDeals[customerId].Contains(deal))
+            throw new ArgumentException("Deal is not associated with this distributor.");
+        if (_associatedDeals[customerId].Count <= 1)
+            _associatedDeals.Remove(customerId);
+        else
+            _associatedDeals[customerId].Remove(deal);
     }
 
     public new static void Serialize() {
