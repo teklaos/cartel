@@ -4,10 +4,11 @@ namespace ConsoleApp;
 
 public class Program {
     public static void Main(string[] args) {
-        Test();
+        // TestChemistProduct();
+        TestDealDistributor();
     }
 
-    public static void Test() {
+    public static void TestChemistProduct() {
         // Initialization:
         Product Meth = new("Meth", 15, 10000, AddLevelAttribute.Strong);
         Product Cocaine = new("Cocaine", 15, 5000, AddLevelAttribute.Weak);
@@ -88,5 +89,39 @@ public class Program {
         Jesse.RemoveProduct(Cocaine);
         Console.Write(string.Join(", ", Cocaine.AssociatedChemists.Select(chem => chem.Name)));
         Console.WriteLine(".");
+    }
+
+    public static void TestDealDistributor() {
+        Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
+        Deal deal1 = new(new DateTime(2024, 12, 01, 04, 20, 01), 150, null);
+        Deal deal2 = new(new DateTime(2024, 12, 11, 16, 45, 24), 250, null);
+
+        try {
+            Console.Write("Adding deal to Customer with id \"null\": ");
+            distributor.AddDeal(null, deal1);
+        } catch (ArgumentException ex) {
+            Console.WriteLine(ex.Message);
+        }
+
+        Console.Write("Adding deal to Customer with id \"Black-Eagle\": ");
+        distributor.AddDeal("Black-Eagle", deal1);
+        Console.WriteLine(
+            string.Join(", ", distributor.AssociatedDeals["Black-Eagle"]
+                  .Select(deal => deal.StartDate.ToString("dd/MM/yyyy")))
+        );
+
+        Console.Write("Adding another deal to Customer with id \"Black-Eagle\": ");
+        distributor.AddDeal("Black-Eagle", deal2);
+        Console.WriteLine(
+            string.Join(", ", distributor.AssociatedDeals["Black-Eagle"]
+                  .Select(deal => deal.StartDate.ToString("dd/MM/yyyy")))
+        );
+
+        Console.Write("Removing first deal from Customer with id \"Black-Eagle\": ");
+        distributor.RemoveDeal("Black-Eagle", deal1);
+        Console.WriteLine(
+            string.Join(", ", distributor.AssociatedDeals["Black-Eagle"]
+                  .Select(deal => deal.StartDate.ToString("dd/MM/yyyy")))
+        );
     }
 }

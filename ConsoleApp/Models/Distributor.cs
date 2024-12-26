@@ -16,6 +16,12 @@ public class Distributor : CartelMember {
         private set => _associatedWarehouses = value;
     }
 
+    private IDictionary<string, List<Deal>> _associatedDeals = new Dictionary<string, List<Deal>>();
+    public IDictionary<string, List<Deal>> AssociatedDeals {
+        get => new Dictionary<string, List<Deal>>(_associatedDeals);
+        private set => _associatedDeals = value;
+    }
+
     public Distributor(string name, int trustLevel, IList<string> rulesToFollow, int dealsMade) :
     base(name, trustLevel, rulesToFollow) {
         if (dealsMade < 0)
@@ -46,6 +52,24 @@ public class Distributor : CartelMember {
     public void RemoveWarehouseInternally(Warehouse warehouse) {
         if (!_associatedWarehouses.Remove(warehouse))
             throw new ArgumentException("Warehouse not found.");
+    }
+
+    public void AddDeal(string CustomerId, Deal deal) {
+        if (CustomerId == null)
+            throw new ArgumentException("Customer ID cannot be null.");
+        if (!_associatedDeals.TryAdd(CustomerId, [deal]))
+            _associatedDeals[CustomerId].Add(deal);
+        deal.AddDistributorInternally(this);
+    }
+
+    public void RemoveDeal(string CustomerId, Deal deal) {
+        if (CustomerId == null)
+            throw new ArgumentException("Customer ID cannot be null.");
+        if (_associatedDeals[CustomerId].Count < 1)
+            _associatedDeals.Remove(CustomerId);
+        else
+            _associatedDeals[CustomerId].Remove(deal);
+        deal.RemoveDistributorInternally();
     }
 
     public new static void Serialize() {

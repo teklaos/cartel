@@ -12,6 +12,8 @@ public class Deal {
     public int PoundsOfProduct { get; private set; }
     public DateTime? EndDate { get; private set; }
 
+    public Distributor? AssociatedDistributor { get; private set; }
+
     public Deal(DateTime startDate, int poundsOfProduct, DateTime? endDate) {
         if (poundsOfProduct < 0)
             throw new ArgumentException("Pounds of product cannot be negative.");
@@ -31,7 +33,13 @@ public class Deal {
         EndDate = endDate;
         _deals.Add(this);
     }
-    
+
+    public void AddDistributorInternally(Distributor distributor) =>
+        AssociatedDistributor = distributor;
+
+    public void RemoveDistributorInternally() =>
+        AssociatedDistributor = null;
+
     public static void Serialize() {
         string fileName = "Deals.json";
         try {
@@ -46,7 +54,7 @@ public class Deal {
         string fileName = "Deals.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Deals = 
+            Deals =
                 JsonSerializer.Deserialize<List<Deal>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
