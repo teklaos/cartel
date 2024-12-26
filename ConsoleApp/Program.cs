@@ -92,55 +92,61 @@ public class Program {
     }
 
     public static void TestDealDistributor() {
-        Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
-        Deal deal1 = new(new DateTime(2024, 12, 01, 04, 20, 31), 150, null);
-        Deal deal2 = new(new DateTime(2024, 12, 11, 16, 45, 24), 250, null);
-        string customerId = "Black-Eagle";
+        Distributor Distributor = new("Mike", 10, ["Follow the rules."], 250);
+        Deal DealA = new(new DateTime(2024, 12, 01, 04, 20, 31), 150, null);
+        Deal DealB = new(new DateTime(2024, 12, 11, 16, 45, 24), 250, null);
+        string CustomerId = "Black-Eagle";
 
         try {
             Console.Write("Adding deal to customer with ID \"null\": ");
-            distributor.AddDeal(deal1, null);
+            Distributor.AddDeal(DealA, null!);
         } catch (ArgumentException ex) {
             Console.WriteLine(ex.Message);
         }
 
-        Console.Write("Adding deal to customer with ID \"" + customerId + "\": ");
-        distributor.AddDeal(deal1, customerId);
-        Console.WriteLine(CustomerDealDates(distributor.AssociatedDeals, customerId));
+        Console.Write("Adding deal to customer with ID \"" + CustomerId + "\": ");
+        Distributor.AddDeal(DealA, CustomerId);
+        Console.Write(CustomerDealDates(Distributor.AssociatedDeals, CustomerId));
+        Console.WriteLine(".");
 
-        Console.Write("Adding another deal to customer with ID \"" + customerId + "\": ");
-        distributor.AddDeal(deal2, customerId);
-        Console.WriteLine(CustomerDealDates(distributor.AssociatedDeals, customerId));
+        Console.Write("Adding another deal to customer with ID \"" + CustomerId + "\": ");
+        Distributor.AddDeal(DealB, CustomerId);
+        Console.Write(CustomerDealDates(Distributor.AssociatedDeals, CustomerId));
+        Console.WriteLine(".");
 
-        Console.Write("Removing first deal from customer with ID \"" + customerId + "\": ");
-        distributor.RemoveDeal(deal1, customerId);
-        Console.WriteLine(CustomerDealDates(distributor.AssociatedDeals, customerId));
+        Console.Write("Removing first deal from customer with ID \"" + CustomerId + "\": ");
+        Distributor.RemoveDeal(DealA, CustomerId);
+        Console.Write(CustomerDealDates(Distributor.AssociatedDeals, CustomerId));
+        Console.WriteLine(".");
 
         try {
-            Console.Write("Removing first deal from customer with ID \"" + customerId + "\": ");
-            distributor.RemoveDeal(deal1, customerId);
-            Console.WriteLine(CustomerDealDates(distributor.AssociatedDeals, customerId));
+            Console.Write("Removing first deal from customer with ID \"" + CustomerId + "\": ");
+            Distributor.RemoveDeal(DealA, CustomerId);
+            Console.WriteLine(CustomerDealDates(Distributor.AssociatedDeals, CustomerId));
         } catch (ArgumentException ex) {
             Console.WriteLine(ex.Message);
         }
 
         Console.Write("Associated customer IDs: ");
-        Console.WriteLine(string.Join(", ", distributor.AssociatedDeals.Keys));
+        Console.Write(string.Join(", ", Distributor.AssociatedDeals.Keys));
+        Console.WriteLine(".");
 
         try {
-            Console.Write("Removing last deal from customer with ID \"" + customerId + "\": ");
-            distributor.RemoveDeal(deal2, customerId);
-            Console.WriteLine(CustomerDealDates(distributor.AssociatedDeals, customerId));
+            Console.Write("Removing first deal from customer with ID \"" + CustomerId + "\": ");
+            Distributor.RemoveDeal(DealB, CustomerId);
+            Console.WriteLine(CustomerDealDates(Distributor.AssociatedDeals, CustomerId));
         } catch (KeyNotFoundException ex) {
             Console.WriteLine(ex.Message.Replace("'", "\""));
         }
 
         Console.Write("Associated customer IDs: ");
-        Console.WriteLine(string.Join(", ", distributor.AssociatedDeals.Keys));
+        Console.Write(string.Join(", ", Distributor.AssociatedDeals.Keys));
+        Console.WriteLine(".");
 
-        Console.Write("Adding distributor to a customer with ID \"" + customerId + "\": ");
-        deal1.AddDistributor(distributor, customerId);
-        Console.WriteLine(CustomerDealDates(distributor.AssociatedDeals, customerId));
+        Console.Write("Adding distributor to a customer with ID \"" + CustomerId + "\": ");
+        DealA.AddDistributor(Distributor, CustomerId);
+        Console.Write(CustomerDealDates(Distributor.AssociatedDeals, CustomerId));
+        Console.WriteLine(".");
     }
 
     public static string CustomerDealDates(IDictionary<string, List<Deal>> dictionary, string key) {
