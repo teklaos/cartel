@@ -54,22 +54,31 @@ public class Distributor : CartelMember {
             throw new ArgumentException("Warehouse not found.");
     }
 
-    public void AddDeal(string CustomerId, Deal deal) {
-        if (CustomerId == null)
+    public void AddDeal(string customerId, Deal deal) {
+        if (customerId == null)
             throw new ArgumentException("Customer ID cannot be null.");
-        if (!_associatedDeals.TryAdd(CustomerId, [deal]))
-            _associatedDeals[CustomerId].Add(deal);
+        if (!_associatedDeals.TryAdd(customerId, [deal]))
+            _associatedDeals[customerId].Add(deal);
         deal.AddDistributorInternally(this);
     }
 
-    public void RemoveDeal(string CustomerId, Deal deal) {
-        if (CustomerId == null)
+    public void RemoveDeal(string customerId, Deal deal) {
+        if (customerId == null)
             throw new ArgumentException("Customer ID cannot be null.");
-        if (_associatedDeals[CustomerId].Count < 1)
-            _associatedDeals.Remove(CustomerId);
+        if (!_associatedDeals.Keys.Contains(customerId))
+            throw new ArgumentException("Customer not found.");
+        if (!_associatedDeals[customerId].Contains(deal))
+            throw new ArgumentException("Deal is not associated with this distributor.");
+        if (_associatedDeals[customerId].Count <= 1)
+            _associatedDeals.Remove(customerId);
         else
-            _associatedDeals[CustomerId].Remove(deal);
+            _associatedDeals[customerId].Remove(deal);
         deal.RemoveDistributorInternally();
+    }
+
+    public void EditDeal(string customerId, Deal oldDeal, Deal newDeal) {
+        RemoveDeal(customerId, oldDeal);
+        AddDeal(customerId, newDeal);
     }
 
     public new static void Serialize() {
