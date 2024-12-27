@@ -9,9 +9,39 @@ public class Customer {
         private set => _customers = value;
     }
 
+    private IList<Deal> _associatedDeals = new List<Deal>();
+    public IList<Deal> AssociatedDeals {
+        get => new List<Deal>(_associatedDeals);
+        private set => _associatedDeals = value;
+    }
+
     public Customer() =>
         _customers.Add(this);
-    
+
+    public void AddDeal(Deal deal) {
+        _associatedDeals.Add(deal);
+        deal.AddCustomerInternally(this);
+    }
+
+    public void RemoveDeal(Deal deal) {
+        if (!_associatedDeals.Remove(deal))
+            throw new ArgumentException("Deal not found.");
+        deal.RemoveCustomerInternally();
+    }
+
+    public void EditDeal(Deal oldDeal, Deal newDeal) {
+        AddDeal(oldDeal);
+        RemoveDeal(newDeal);
+    }
+
+    public void AddDealInternally(Deal deal) =>
+        _associatedDeals.Add(deal);
+
+    public void RemoveDealInternally(Deal deal) {
+        if (!_associatedDeals.Remove(deal))
+            throw new ArgumentException("Deal not found.");
+    }
+
     public static void Serialize() {
         string fileName = "Customers.json";
         try {

@@ -13,6 +13,7 @@ public class Deal {
     public DateTime? EndDate { get; private set; }
 
     public Distributor? AssociatedDistributor { get; private set; }
+    public Customer? AssociatedCustomer { get; private set; }
 
     public Deal(DateTime startDate, int poundsOfProduct, DateTime? endDate) {
         if (poundsOfProduct < 0)
@@ -59,6 +60,27 @@ public class Deal {
 
     public void RemoveDistributorInternally() =>
         AssociatedDistributor = null;
+
+    public void AddCustomer(Customer customer) {
+        customer.AddDealInternally(this);
+        AssociatedCustomer = customer;
+    }
+
+    public void RemoveCustomer(Customer customer) {
+        customer.RemoveDealInternally(this);
+        AssociatedCustomer = null;
+    }
+
+    public void EditCustomer(Customer oldCustomer, Customer newCustomer) {
+        RemoveCustomer(oldCustomer);
+        AddCustomer(newCustomer);
+    }
+
+    public void AddCustomerInternally(Customer customer) =>
+        AssociatedCustomer = customer;
+
+    public void RemoveCustomerInternally() =>
+        AssociatedCustomer = null;
 
     public static void Serialize() {
         string fileName = "Deals.json";
