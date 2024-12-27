@@ -44,8 +44,10 @@ public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
     }
 
     public void RemoveSelfAssociation(Chemist chemist) {
-        if (!_supervisedChemists.Remove(chemist))
-            return; // throw new Exception(); <--- breaks unit tests
+        if (!_supervisedChemists.Remove(chemist)) {
+            throw new ArgumentException("Chemist not found."); // throw new Exception(); <--- breaks unit tests
+        }
+            
         chemist.Supervisor = null;
     }
 
@@ -103,7 +105,12 @@ public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
     }
 
     ~Chemist() {
-        RemoveSelfAssociation(this);
+        try {
+            if (Supervisor != null) {
+                Supervisor.RemoveSelfAssociation(this);
+            }
+        } catch (Exception ex) {
+            Console.WriteLine($"[Finalize Error] Failed to remove self-association: {ex.Message}");
+        }
     }
-
 }
