@@ -27,6 +27,12 @@ public class Ingredient {
 
     public SupplyChain? AssociatedSupplyChain { get; private set; }
 
+    private IList<Instruction> _associatedInstructions = new List<Instruction>();
+    public IList<Instruction> AssociatedInstructions {
+        get => new List<Instruction>(_associatedInstructions);
+        private set => _associatedInstructions = value;
+    }
+
     public Ingredient(string name, int pricePerPound, string chemicalFormula, StateAttribute state) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
@@ -78,6 +84,11 @@ public class Ingredient {
         AssociatedSupplyChain = null;
     }
 
+    public void EditSupplyChain(SupplyChain newSupplyChain) {
+        RemoveSupplyChain();
+        AddSupplyChain(newSupplyChain);
+    }
+
     public void AddSupplyChainInternally(SupplyChain supplyChain) =>
         AssociatedSupplyChain = supplyChain;
 
@@ -85,9 +96,29 @@ public class Ingredient {
         AssociatedSupplyChain = null;
     }
 
-    public void EditSupplyChain(SupplyChain newSupplyChain) {
-        RemoveSupplyChain();
-        AddSupplyChain(newSupplyChain);
+    public void AddInstruction(Instruction instruction) {
+        _associatedInstructions.Add(instruction);
+        instruction.AddIngredientInternally(this);
+    }
+
+    public void RemoveInstruction(Instruction instruction) {
+        if (!_associatedInstructions.Remove(instruction)) {
+            throw new ArgumentException("Instruction not found.");
+        }
+        instruction.RemoveIngredientInternally(this);
+    }
+
+    public void EditInstruction(Instruction oldInstruction, Instruction newInstruction) {
+        RemoveInstruction(oldInstruction);
+        AddInstruction(newInstruction);
+    }
+
+    public void AddInstructionInternally(Instruction instruction) =>
+        _associatedInstructions.Add(instruction);
+
+    public void RemoveInstructionInternally(Instruction instruction) {
+        if (!_associatedInstructions.Remove(instruction))
+            throw new ArgumentException("Instruction not found.");
     }
 
     public static void Serialize() {

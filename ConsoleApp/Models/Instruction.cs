@@ -11,6 +11,11 @@ public class Instruction {
     public string Action { get; private set; }
 
     public Recipe? AssociatedRecipe { get; private set; }
+    private IList<Ingredient> _associatedIngredients = new List<Ingredient>();
+    public IList<Ingredient> AssociatedIngredients {
+        get => new List<Ingredient>(_associatedIngredients);
+        private set => _associatedIngredients = value;
+    }
 
     public Instruction(string action) {
         Action = action;
@@ -23,6 +28,30 @@ public class Instruction {
 
     public void RemoveRecipe() {
         AssociatedRecipe = null;
+    }
+
+    public void AddIngredient(Ingredient ingredient) {
+        _associatedIngredients.Add(ingredient);
+        ingredient.AddInstructionInternally(this);
+    }
+
+    public void RemoveIngredient(Ingredient ingredient) {
+        if (!_associatedIngredients.Remove(ingredient))
+            throw new ArgumentException("Ingredient not found.");
+        ingredient.RemoveInstructionInternally(this);
+    }
+
+    public void EditIngredient(Ingredient oldIngredient, Ingredient newIngredient) {
+        RemoveIngredient(oldIngredient);
+        AddIngredient(newIngredient);
+    }
+
+    public void AddIngredientInternally(Ingredient ingredient) =>
+        _associatedIngredients.Add(ingredient);
+
+    public void RemoveIngredientInternally(Ingredient ingredient) {
+        if (!_associatedIngredients.Remove(ingredient))
+            throw new ArgumentException("Ingredient not found.");
     }
 
     public static void Serialize() {
