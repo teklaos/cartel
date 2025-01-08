@@ -35,7 +35,7 @@ public abstract class CartelMember {
     public static void Serialize() {
         string fileName = "CartelMembers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(CartelMembers, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(CartelMembers, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -46,7 +46,7 @@ public abstract class CartelMember {
         string fileName = "CartelMembers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            CartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString) ?? new List<CartelMember>();
+            CartelMembers = JsonSerializer.Deserialize<List<CartelMember>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

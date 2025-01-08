@@ -9,12 +9,43 @@ public class Customer {
         private set => _customers = value;
     }
 
-    public Customer() => _customers.Add(this);
-    
+    private IList<Deal> _associatedDeals = new List<Deal>();
+    public IList<Deal> AssociatedDeals {
+        get => new List<Deal>(_associatedDeals);
+        private set => _associatedDeals = value;
+    }
+
+    public Customer() =>
+        _customers.Add(this);
+
+    public void AddDeal(Deal deal) {
+        _associatedDeals.Add(deal);
+        deal.AddCustomerInternally(this);
+    }
+
+    public void RemoveDeal(Deal deal) {
+        if (!_associatedDeals.Remove(deal))
+            throw new ArgumentException("Deal not found.");
+        deal.RemoveCustomerInternally();
+    }
+
+    public void EditDeal(Deal oldDeal, Deal newDeal) {
+        RemoveDeal(oldDeal);
+        AddDeal(newDeal);
+    }
+
+    public void AddDealInternally(Deal deal) =>
+        _associatedDeals.Add(deal);
+
+    public void RemoveDealInternally(Deal deal) {
+        if (!_associatedDeals.Remove(deal))
+            throw new ArgumentException("Deal not found.");
+    }
+
     public static void Serialize() {
         string fileName = "Customers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Customers, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Customers, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -25,7 +56,7 @@ public class Customer {
         string fileName = "Customers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Customers = JsonSerializer.Deserialize<List<Customer>>(jsonString) ?? new List<Customer>();
+            Customers = JsonSerializer.Deserialize<List<Customer>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

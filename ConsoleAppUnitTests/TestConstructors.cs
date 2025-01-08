@@ -74,16 +74,16 @@ public class TestConstructors {
     }
 
     [Test]
-    public void TestDistributorCustomerConstructor() {
-        DateTime dealStartDate = new DateTime(2024, 5, 20);
-        DateTime dealEndDate = new DateTime(2024, 5, 21);
+    public void TestDealConstructor() {
+        DateTime startDate = new DateTime(2024, 5, 20);
+        DateTime endDate = new DateTime(2024, 5, 21);
 
-        DistributorCustomer distributorCustomer = new DistributorCustomer(dealStartDate, 15, dealEndDate);
+        Deal deal = new Deal(startDate, 15, endDate);
 
         Assert.Multiple(() => {
-            Assert.That(distributorCustomer.DealStartDate, Is.EqualTo(dealStartDate));
-            Assert.That(distributorCustomer.PoundsOfProduct, Is.EqualTo(15));
-            Assert.That(distributorCustomer.DealEndDate, Is.EqualTo(dealEndDate));
+            Assert.That(deal.StartDate, Is.EqualTo(startDate));
+            Assert.That(deal.PoundsOfProduct, Is.EqualTo(15));
+            Assert.That(deal.EndDate, Is.EqualTo(endDate));
         });
     }
 
@@ -142,13 +142,17 @@ public class TestConstructors {
     [Test]
     public void TestProductConstructor() {
         AddLevelAttribute addictivenessLevel = AddLevelAttribute.Strong;
-        Product product = new Product("Meth", 15, addictivenessLevel);
+        Product product = new Product("Meth", 15, 15000, addictivenessLevel);
+        Chemist chemist1 = new Chemist("Walter", 10, ["Follow the rules."], 10000);
+        Chemist chemist2 = new Chemist("Jesse", 10, ["Follow the rules."], 1500);
+
+        product.AddChemists(chemist1, chemist2);
 
         Assert.Multiple(() => {
             Assert.That(product.Name, Is.EqualTo("Meth"));
-            Assert.That(product.PricePerPound, Is.EqualTo(15));
-            // Assuming that ChemistPoundsCooked = 2000
-            Assert.That(product.PurityPercentage, Is.EqualTo(90).Within(5));
+            Assert.That(product.Weight, Is.EqualTo(15));
+            Assert.That(product.PricePerPound, Is.EqualTo(15000));
+            Assert.That(product.PurityPercentage, Is.EqualTo(97.5).Within(2.5));
             Assert.That(product.AddictivenessLevel, Is.EqualTo(addictivenessLevel));
         });
     }
@@ -156,9 +160,23 @@ public class TestConstructors {
     [Test]
     public void TestRecipeConstructor() {
         Recipe recipe = new Recipe();
+        List<Instruction> instructions = [
+            new Instruction("Combine"),
+            new Instruction("Stir for 5 minutes."),
+            new Instruction("Add"),
+            new Instruction("Stir for 15 minutes."),
+            new Instruction("Wait for 10 minutes."),
+            new Instruction("Combine"),
+            new Instruction("Stir for 15 minutes."),
+            new Instruction("Add"),
+            new Instruction("Stir for 30 minutes."),
+            new Instruction("Wait for 10 minutes.")
+        ];
 
-        // Assuming that AmountOfInstructions = 55
-        Assert.That(recipe.Complexity, Is.EqualTo(5));
+        foreach (var i in instructions)
+            recipe.AddCompositionAssociation(i);
+
+        Assert.That(recipe.Complexity, Is.EqualTo(1));
     }
 
     [Test]
@@ -189,5 +207,10 @@ public class TestConstructors {
             Assert.That(wholesaler.CommissionPercentage, Is.EqualTo(15));
             Assert.That(wholesaler.MonthlyCustomers, Is.EqualTo(55));
         });
+    }
+
+    [TearDown]
+    public void TearDown() {
+        Instruction.Clear();
     }
 }

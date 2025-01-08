@@ -32,7 +32,7 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         int poundsCooked = 75;
 
-        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules, poundsCooked),
+        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules!, poundsCooked),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -79,7 +79,7 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         string occupation = "test";
         int securityLevel = 5;
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
+        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules!, occupation, securityLevel),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -140,7 +140,7 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 10;
         IList<string>? rules = null;
 
-        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules),
+        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules!),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -173,7 +173,7 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         int dealsMade = 10;
 
-        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules, dealsMade),
+        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules!, dealsMade),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -189,35 +189,35 @@ public class TestConstructorsInvalidInput {
     }
 
     [Test]
-    public void DistributorCustomerConstructorInvalidDealStartDate() {
-        DateTime invalidDealStartDate = new DateTime(1800, 5, 20);
-        DateTime dealEndDate = new DateTime(2024, 5, 21);
+    public void DealConstructorInvalidDealStartDate() {
+        DateTime invalidStartDate = new DateTime(1800, 5, 20);
+        DateTime endDate = new DateTime(2024, 5, 21);
 
         int poundsOfProduct = 10;
 
-        Assert.Throws<ArgumentException>(() => new DistributorCustomer(invalidDealStartDate, poundsOfProduct, dealEndDate),
+        Assert.Throws<ArgumentException>(() => new Deal(invalidStartDate, poundsOfProduct, endDate),
             "Expected ArgumentException for deal start date earlier than year 1890.");
     }
 
     [Test]
-    public void DistributorCustomerConstructorInvalidDealEndDate() {
-        DateTime dealStartDate = new DateTime(2024, 5, 20);
-        DateTime invalidDealEndDate = new DateTime(2025, 5, 21);
+    public void DealConstructorInvalidDealEndDate() {
+        DateTime startDate = new DateTime(2024, 5, 20);
+        DateTime invalidEndDate = new DateTime(2025, 5, 21);
 
         int poundsOfProduct = 10;
 
-        Assert.Throws<ArgumentException>(() => new DistributorCustomer(dealStartDate, poundsOfProduct, invalidDealEndDate),
+        Assert.Throws<ArgumentException>(() => new Deal(startDate, poundsOfProduct, invalidEndDate),
             "Expected ArgumentException for deal end date in the future.");
     }
 
     [Test]
-    public void DistributorCustomerConstructorInvalidPoundsOfProduct() {
-        DateTime dealStartDate = new DateTime(2024, 5, 20);
-        DateTime dealEndDate = new DateTime(2024, 5, 21);
+    public void DealConstructorInvalidPoundsOfProduct() {
+        DateTime startDate = new DateTime(2024, 5, 20);
+        DateTime endDate = new DateTime(2024, 5, 21);
 
         int invalidPoundsOfProduct = -10;
 
-        Assert.Throws<ArgumentException>(() => new DistributorCustomer(dealStartDate, invalidPoundsOfProduct, dealEndDate),
+        Assert.Throws<ArgumentException>(() => new Deal(startDate, invalidPoundsOfProduct, endDate),
             "Expected ArgumentException for negative pounds of product.");
     }
 
@@ -324,7 +324,7 @@ public class TestConstructorsInvalidInput {
         string position = "Manager";
         string department = "Operations";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules, position, department),
+        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules!, position, department),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -355,20 +355,33 @@ public class TestConstructorsInvalidInput {
     [Test]
     public void ProductConstructorInvalidName() {
         string name = "   ";
+        double weight = 100;
         int pricePerPound = 1000;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, pricePerPound, addictivenessLevel),
+        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
             "Expected ArgumentException for an empty name.");
+    }
+
+    [Test]
+    public void ProductConstructorInvalidWeight() {
+        string name = "Cocaine";
+        double weight = -10;
+        int pricePerPound = 1000;
+        var addictivenessLevel = AddLevelAttribute.Strong;
+
+        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
+            "Expected ArgumentException for negative price per pound.");
     }
 
     [Test]
     public void ProductConstructorInvalidPricePerPound() {
         string name = "Cocaine";
+        double weight = 100;
         int pricePerPound = -100;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, pricePerPound, addictivenessLevel),
+        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
             "Expected ArgumentException for negative price per pound.");
     }
 

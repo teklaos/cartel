@@ -32,7 +32,7 @@ public class Dealer : Customer {
     public new static void Serialize() {
         string fileName = "Dealers.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Dealers, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Dealers, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -43,7 +43,7 @@ public class Dealer : Customer {
         string fileName = "Dealers.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Dealers = JsonSerializer.Deserialize<List<Dealer>>(jsonString) ?? new List<Dealer>();
+            Dealers = JsonSerializer.Deserialize<List<Dealer>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

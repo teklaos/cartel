@@ -19,6 +19,20 @@ public class Ingredient {
     public string ChemicalFormula { get; private set; }
     public StateAttribute State { get; private set; }
 
+    private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
+    public IList<Laboratory> AssociatedLaboratories {
+        get => new List<Laboratory>(_associatedLaboratories);
+        private set => _associatedLaboratories = value;
+    }
+
+    public SupplyChain? AssociatedSupplyChain { get; private set; }
+
+    private IList<Instruction> _associatedInstructions = new List<Instruction>();
+    public IList<Instruction> AssociatedInstructions {
+        get => new List<Instruction>(_associatedInstructions);
+        private set => _associatedInstructions = value;
+    }
+
     public Ingredient(string name, int pricePerPound, string chemicalFormula, StateAttribute state) {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.");
@@ -33,11 +47,84 @@ public class Ingredient {
         State = state;
         _ingredients.Add(this);
     }
-    
+
+    public void AddLaboratory(Laboratory laboratory) {
+        _associatedLaboratories.Add(laboratory);
+        laboratory.AddIngredientInternally(this);
+    }
+
+    public void RemoveLaboratory(Laboratory laboratory) {
+        if (!_associatedLaboratories.Remove(laboratory))
+            throw new ArgumentException("Laboratory not found.");
+        laboratory.RemoveIngredientInternally(this);
+    }
+
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        RemoveLaboratory(oldLaboratory);
+        AddLaboratory(newLaboratory);
+    }
+
+    public void AddLaboratoryInternally(Laboratory laboratory) =>
+        _associatedLaboratories.Add(laboratory);
+
+    public void RemoveLaboratoryInternally(Laboratory laboratory) {
+        if (!_associatedLaboratories.Remove(laboratory))
+            throw new ArgumentException("Laboratory not found.");
+    }
+
+    public void AddSupplyChain(SupplyChain supplyChain) {
+        AssociatedSupplyChain = supplyChain;
+        supplyChain.AddIngredientInternally(this);
+    }
+
+    public void RemoveSupplyChain() {
+        if (AssociatedSupplyChain == null)
+            throw new ArgumentException("No supply chain to remove.");
+        AssociatedSupplyChain.RemoveIngredientInternally(this);
+        AssociatedSupplyChain = null;
+    }
+
+    public void EditSupplyChain(SupplyChain newSupplyChain) {
+        RemoveSupplyChain();
+        AddSupplyChain(newSupplyChain);
+    }
+
+    public void AddSupplyChainInternally(SupplyChain supplyChain) =>
+        AssociatedSupplyChain = supplyChain;
+
+    public void RemoveSupplyChainInternally() {
+        AssociatedSupplyChain = null;
+    }
+
+    public void AddInstruction(Instruction instruction) {
+        _associatedInstructions.Add(instruction);
+        instruction.AddIngredientInternally(this);
+    }
+
+    public void RemoveInstruction(Instruction instruction) {
+        if (!_associatedInstructions.Remove(instruction)) {
+            throw new ArgumentException("Instruction not found.");
+        }
+        instruction.RemoveIngredientInternally(this);
+    }
+
+    public void EditInstruction(Instruction oldInstruction, Instruction newInstruction) {
+        RemoveInstruction(oldInstruction);
+        AddInstruction(newInstruction);
+    }
+
+    public void AddInstructionInternally(Instruction instruction) =>
+        _associatedInstructions.Add(instruction);
+
+    public void RemoveInstructionInternally(Instruction instruction) {
+        if (!_associatedInstructions.Remove(instruction))
+            throw new ArgumentException("Instruction not found.");
+    }
+
     public static void Serialize() {
         string fileName = "Ingredients.json";
         try {
-            string jsonString = JsonSerializer.Serialize(Ingredients, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(Ingredients, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -48,7 +135,7 @@ public class Ingredient {
         string fileName = "Ingredients.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString) ?? new List<Ingredient>();
+            Ingredients = JsonSerializer.Deserialize<List<Ingredient>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

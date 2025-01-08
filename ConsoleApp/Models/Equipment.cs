@@ -11,6 +11,7 @@ public class Equipment {
     public string Type { get; private set; }
     public string Name { get; private set; }
     public string Model { get; private set; }
+    public Laboratory? AssociatedLaboratory { get; private set; }
 
     public Equipment(string type, string name, string model) {
         if (string.IsNullOrWhiteSpace(type))
@@ -25,11 +26,34 @@ public class Equipment {
         Model = model;
         _equipmentList.Add(this);
     }
-    
+
+    public void AddLaboratory(Laboratory laboratory) {
+        laboratory.AddCompositionAssociationInternally(this);
+        AssociatedLaboratory = laboratory;
+    }
+
+    public void RemoveLaboratory(Laboratory laboratory) {
+        laboratory.RemoveCompositionAssociationInternally(this);
+        AssociatedLaboratory = null;
+    }
+
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        RemoveLaboratory(oldLaboratory);
+        AddLaboratory(newLaboratory);
+    }
+
+    public void AddLaboratoryInternally(Laboratory laboratory) {
+        AssociatedLaboratory = laboratory;
+    }
+
+    public void RemoveLaboratoryInternally() {
+        AssociatedLaboratory = null;
+    }
+
     public static void Serialize() {
         string fileName = "Equipment.json";
         try {
-            string jsonString = JsonSerializer.Serialize(EquipmentList, AppConfig.JsonSerializerOptions);
+            string jsonString = JsonSerializer.Serialize(EquipmentList, AppConfig.JsonOptions);
             File.WriteAllText(fileName, jsonString);
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
@@ -40,7 +64,7 @@ public class Equipment {
         string fileName = "Equipment.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            EquipmentList = JsonSerializer.Deserialize<List<Equipment>>(jsonString) ?? new List<Equipment>();
+            EquipmentList = JsonSerializer.Deserialize<List<Equipment>>(jsonString, AppConfig.JsonOptions) ?? [];
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }
