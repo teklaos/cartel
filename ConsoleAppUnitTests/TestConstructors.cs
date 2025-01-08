@@ -74,7 +74,7 @@ public class TestConstructors {
     }
 
     [Test]
-    public void TestDistributorCustomerConstructor() {
+    public void TestDealConstructor() {
         DateTime startDate = new DateTime(2024, 5, 20);
         DateTime endDate = new DateTime(2024, 5, 21);
 

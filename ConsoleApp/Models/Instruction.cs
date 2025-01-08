@@ -23,10 +23,25 @@ public class Instruction {
     }
 
     public void AddRecipe(Recipe recipe) {
+        recipe.AddCompositionAssociationInternally(this);
         AssociatedRecipe = recipe;
     }
 
-    public void RemoveRecipe() {
+    public void RemoveRecipe(Recipe recipe) {
+        recipe.RemoveCompositionAssociationInternally(this);
+        AssociatedRecipe = null;
+    }
+
+    public void EditRecipe(Recipe oldRecipe, Recipe newRecipe) {
+        RemoveRecipe(oldRecipe);
+        AddRecipe(newRecipe);
+    }
+
+    public void AddRecipeInternally(Recipe recipe) {
+        AssociatedRecipe = recipe;
+    }
+
+    public void RemoveRecipeInternally() {
         AssociatedRecipe = null;
     }
 

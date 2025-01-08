@@ -724,6 +724,473 @@ public class TestAssociations {
         });
     }
 
+    [Test]
+    public void TestLaboratoryAddEquipment() {
+        Laboratory laboratory = new("Madelyn");
+        Equipment equipment = new("Bottle", "Danny", "3000");
+
+        laboratory.AddCompositionAssociation(equipment);
+
+        Assert.Multiple(() => {
+            Assert.That(laboratory.AssociatedEquipment.Contains(equipment), Is.True);
+            Assert.That(equipment.AssociatedLaboratory, Is.EqualTo(laboratory));
+        });
+    }
+
+    [Test]
+    public void TestLaboratoryRemoveEquipment() {
+        Laboratory laboratory = new("Madelyn");
+        Equipment equipment = new("Bottle", "Danny", "3000");
+
+        laboratory.AddCompositionAssociation(equipment);
+        laboratory.RemoveCompositionAssociation(equipment);
+
+        Assert.Multiple(() => {
+            Assert.That(laboratory.AssociatedEquipment.Contains(equipment), Is.False);
+            Assert.That(equipment.AssociatedLaboratory, Is.Null);
+        });
+    }
+
+    [Test]
+    public void TestLaboratoryEditEquipment() {
+        Laboratory laboratory = new("Madelyn");
+        Equipment oldEquipment = new("Bottle", "Danny", "3000");
+        Equipment newEquipment = new("Bottle", "Danny", "3001");
+
+        laboratory.AddCompositionAssociation(oldEquipment);
+
+        Assert.That(laboratory.AssociatedEquipment.Contains(oldEquipment), Is.True);
+
+        laboratory.EditCompositionAssociation(oldEquipment, newEquipment);
+
+        Assert.Multiple(() => {
+            Assert.That(laboratory.AssociatedEquipment.Contains(oldEquipment), Is.False);
+            Assert.That(laboratory.AssociatedEquipment.Contains(newEquipment), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestEquipmentAddLaboratory() {
+        Equipment equipment = new("Bottle", "Danny", "3000");
+        Laboratory laboratory = new("Madelyn");
+
+        equipment.AddLaboratory(laboratory);
+
+        Assert.Multiple(() => {
+            Assert.That(equipment.AssociatedLaboratory, Is.EqualTo(laboratory));
+            Assert.That(laboratory.AssociatedEquipment.Contains(equipment), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestEquipmentRemoveLaboratory() {
+        Equipment equipment = new("Bottle", "Danny", "3000");
+        Laboratory laboratory = new("Madelyn");
+
+        equipment.AddLaboratory(laboratory);
+        equipment.RemoveLaboratory(laboratory);
+
+        Assert.Multiple(() => {
+            Assert.That(equipment.AssociatedLaboratory, Is.Null);
+            Assert.That(laboratory.AssociatedEquipment.Contains(equipment), Is.False);
+        });
+    }
+
+    [Test]
+    public void TestEquipmentEditLaboratory() {
+        Equipment equipment = new("Bottle", "Danny", "3000");
+        Laboratory newLaboratory = new("Madelyn");
+        Laboratory oldLaboratory = new("Drained");
+
+        equipment.AddLaboratory(oldLaboratory);
+
+        Assert.That(equipment.AssociatedLaboratory, Is.EqualTo(oldLaboratory));
+
+        equipment.EditLaboratory(oldLaboratory, newLaboratory);
+
+        Assert.Multiple(() => {
+            Assert.That(equipment.AssociatedLaboratory, Is.EqualTo(newLaboratory));
+            Assert.That(equipment.AssociatedLaboratory, Is.Not.EqualTo(oldLaboratory));
+        });
+    }
+
+    [Test]
+    public void TestIngredientAddInstructions() {
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Instruction instruction = new("Stir");
+
+        ingredient.AddInstruction(instruction);
+
+        Assert.That(ingredient.AssociatedInstructions, Has.Count.EqualTo(instruction.AssociatedIngredients.Count));
+    }
+
+    [Test]
+    public void TestIngredientRemoveInstructions() {
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Instruction instruction = new("Stir");
+
+        instruction.AddIngredient(ingredient);
+        ingredient.RemoveInstruction(instruction);
+
+        Assert.That(ingredient.AssociatedInstructions, Has.Count.EqualTo(instruction.AssociatedIngredients.Count));
+    }
+
+    [Test]
+    public void TestIngredientEditInstructions() {
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Instruction oldInstruction = new("Stir");
+        Instruction newInstruction = new("Combine");
+
+        ingredient.AddInstruction(oldInstruction);
+
+        Assert.That(ingredient.AssociatedInstructions.Contains(oldInstruction), Is.True);
+
+        ingredient.EditInstruction(oldInstruction, newInstruction);
+
+        Assert.Multiple(() => {
+            Assert.That(ingredient.AssociatedInstructions.Contains(oldInstruction), Is.False);
+            Assert.That(ingredient.AssociatedInstructions.Contains(newInstruction), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestInstructionAddIngredient() {
+        Instruction instruction = new("Stir");
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+
+        instruction.AddIngredient(ingredient);
+
+        Assert.That(instruction.AssociatedIngredients, Has.Count.EqualTo(ingredient.AssociatedInstructions.Count));
+    }
+
+    [Test]
+    public void TestInstructionRemoveIngredient() {
+        Instruction instruction = new("Stir");
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+
+        ingredient.AddInstruction(instruction);
+        instruction.RemoveIngredient(ingredient);
+
+        Assert.That(instruction.AssociatedIngredients, Has.Count.EqualTo(ingredient.AssociatedInstructions.Count));
+    }
+
+    [Test]
+    public void TestInstructionEditIngredient() {
+        Instruction instruction = new("Stir");
+        Ingredient newIngredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Ingredient oldIngredient = new("Crystal", 201, "C₁₀H₁₅N", StateAttribute.Solid);
+
+        instruction.AddIngredient(oldIngredient);
+
+        Assert.That(instruction.AssociatedIngredients.Contains(oldIngredient), Is.True);
+
+        instruction.EditIngredient(oldIngredient, newIngredient);
+
+        Assert.Multiple(() => {
+            Assert.That(instruction.AssociatedIngredients.Contains(oldIngredient), Is.False);
+            Assert.That(instruction.AssociatedIngredients.Contains(newIngredient), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestChemistAddSupervisedChemist() {
+        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist supervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120);
+
+        chemist.AddSelfAssociation(supervisedChemist);
+
+        Assert.Multiple(() => {
+            Assert.That(chemist.SupervisedChemists.Contains(supervisedChemist), Is.True);
+            Assert.That(supervisedChemist.Supervisor, Is.EqualTo(chemist));
+        });
+    }
+
+    [Test]
+    public void TestChemistRemoveSupervisedChemist() {
+        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist supervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120);
+
+        chemist.AddSelfAssociation(supervisedChemist);
+        chemist.RemoveSelfAssociation(supervisedChemist);
+
+        Assert.Multiple(() => {
+            Assert.That(chemist.SupervisedChemists.Contains(supervisedChemist), Is.False);
+            Assert.That(supervisedChemist.Supervisor, Is.Null);
+        });
+    }
+
+    [Test]
+    public void TestChemistEditSupervisedChemist() {
+        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000);
+        Chemist oldSupervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120);
+        Chemist newSupervisedChemist = new("Jesse", 9, ["Do not steal meth."], 120);
+
+        chemist.AddSelfAssociation(oldSupervisedChemist);
+
+        Assert.Multiple(() => {
+            Assert.That(chemist.SupervisedChemists.Contains(oldSupervisedChemist), Is.True);
+            Assert.That(oldSupervisedChemist.Supervisor, Is.EqualTo(chemist));
+        });
+
+        chemist.EditSelfAssociation(oldSupervisedChemist, newSupervisedChemist);
+
+        Assert.Multiple(() => {
+            Assert.That(chemist.SupervisedChemists.Contains(oldSupervisedChemist), Is.False);
+            Assert.That(chemist.SupervisedChemists.Contains(newSupervisedChemist), Is.True);
+            Assert.That(newSupervisedChemist.Supervisor, Is.EqualTo(chemist));
+        });
+    }
+
+    [Test]
+    public void TestRecipeAddInstruction() {
+        Recipe recipe = new();
+        Instruction instruction = new("Stir");
+
+        recipe.AddCompositionAssociation(instruction);
+
+        Assert.That(recipe.AssociatedInstructions.Contains(instruction), Is.True);
+        Assert.That(instruction.AssociatedRecipe, Is.EqualTo(recipe));
+    }
+
+    [Test]
+    public void TestRecipeRemoveInstruction() {
+        Recipe recipe = new();
+        Instruction instruction = new("Stir");
+
+        recipe.AddCompositionAssociation(instruction);
+        recipe.RemoveCompositionAssociation(instruction);
+
+        Assert.Multiple(() => {
+            Assert.That(recipe.AssociatedInstructions.Contains(instruction), Is.False);
+            Assert.That(instruction.AssociatedRecipe, Is.Null);
+        });
+    }
+
+    [Test]
+    public void TestRecipeEditInstruction() {
+        Recipe recipe = new();
+        Instruction oldInstruction = new("Stir");
+        Instruction newInstruction = new("Combine");
+
+        recipe.AddCompositionAssociation(oldInstruction);
+
+        Assert.That(recipe.AssociatedInstructions.Contains(oldInstruction), Is.True);
+
+        recipe.EditCompositionAssociation(oldInstruction, newInstruction);
+
+        Assert.Multiple(() => {
+            Assert.That(recipe.AssociatedInstructions.Contains(oldInstruction), Is.False);
+            Assert.That(recipe.AssociatedInstructions.Contains(newInstruction), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestInstructionAddRecipe() {
+        Instruction instruction = new("Stir");
+        Recipe recipe = new();
+
+        instruction.AddRecipe(recipe);
+
+        Assert.Multiple(() => {
+            Assert.That(instruction.AssociatedRecipe, Is.EqualTo(recipe));
+            Assert.That(recipe.AssociatedInstructions.Contains(instruction), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestInstructionRemoveRecipe() {
+        Instruction instruction = new("Stir");
+        Recipe recipe = new();
+
+        instruction.AddRecipe(recipe);
+        instruction.RemoveRecipe(recipe);
+
+        Assert.Multiple(() => {
+            Assert.That(instruction.AssociatedRecipe, Is.Null);
+            Assert.That(recipe.AssociatedInstructions.Contains(instruction), Is.False);
+        });
+    }
+
+    [Test]
+    public void TestInstructionEditRecipe() {
+        Instruction instruction = new("Stir");
+        Recipe newRecipe = new();
+        Recipe oldRecipe = new();
+
+        instruction.AddRecipe(oldRecipe);
+
+        Assert.That(instruction.AssociatedRecipe, Is.EqualTo(oldRecipe));
+
+        instruction.EditRecipe(oldRecipe, newRecipe);
+
+        Assert.Multiple(() => {
+            Assert.That(instruction.AssociatedRecipe, Is.EqualTo(newRecipe));
+            Assert.That(instruction.AssociatedRecipe, Is.Not.EqualTo(oldRecipe));
+        });
+    }
+
+    [Test]
+    public void TestDistributorAddDeal() {
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        string customerId = "001";
+
+        distributor.AddDeal(deal, customerId);
+
+        Assert.That(distributor.AssociatedDeals[customerId], Does.Contain(deal));
+    }
+
+    [Test]
+    public void TestDistributorRemoveCustomer() {
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        string customerId = "001";
+
+        distributor.AddDeal(deal, customerId);
+        distributor.RemoveDeal(deal, customerId);
+
+        Assert.That(distributor.AssociatedDeals.ContainsKey(customerId), Is.False);
+    }
+
+    [Test]
+    public void TestDistributorEditCustomer() {
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Deal oldDeal = new(new DateTime(2024, 12, 11), 500, null);
+        Deal newDeal = new(new DateTime(2024, 12, 11), 501, null);
+        string customerId = "001";
+
+        distributor.AddDeal(oldDeal, customerId);
+
+        Assert.That(distributor.AssociatedDeals[customerId], Does.Contain(oldDeal));
+
+        distributor.EditDeal(oldDeal, newDeal, customerId, customerId);
+
+        Assert.Multiple(() => {
+            Assert.That(distributor.AssociatedDeals[customerId], Does.Not.Contain(oldDeal));
+            Assert.That(distributor.AssociatedDeals[customerId], Does.Contain(newDeal));
+        });
+    }
+
+    [Test]
+    public void TestDealAddDistributor() {
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        string customerId = "001";
+
+        deal.AddDistributor(distributor, customerId);
+
+        Assert.That(deal.AssociatedDistributor, Is.EqualTo(distributor));
+    }
+
+    [Test]
+    public void TestDealRemoveDistributor() {
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        string customerId = "001";
+
+        deal.AddDistributor(distributor, customerId);
+        deal.RemoveDistributor(distributor, customerId);
+
+        Assert.That(deal.AssociatedDistributor, Is.Null);
+    }
+
+    [Test]
+    public void TestDealEditDistributor() {
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        Distributor newDistributor = new("Mike", 9, ["Be polite."], 15);
+        Distributor oldDistributor = new("Mike", 10, ["Be polite."], 15);
+        string customerId = "001";
+
+        deal.AddDistributor(oldDistributor, customerId);
+
+        Assert.That(deal.AssociatedDistributor, Is.EqualTo(oldDistributor));
+
+        deal.EditDistributor(oldDistributor, newDistributor, customerId, customerId);
+
+        Assert.Multiple(() => {
+            Assert.That(deal.AssociatedDistributor, Is.Not.EqualTo(oldDistributor));
+            Assert.That(deal.AssociatedDistributor, Is.EqualTo(newDistributor));
+        });
+    }
+
+    [Test]
+    public void TestCustomerAddDeal() {
+        Customer customer = new();
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+
+        customer.AddDeal(deal);
+
+        Assert.That(customer.AssociatedDeals.Contains(deal), Is.True);
+    }
+
+    [Test]
+    public void TestCustomerRemoveDeal() {
+        Customer customer = new();
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+
+        customer.AddDeal(deal);
+        customer.RemoveDeal(deal);
+
+        Assert.That(customer.AssociatedDeals.Contains(deal), Is.False);
+    }
+
+    [Test]
+    public void TestCustomerEditDeal() {
+        Customer customer = new();
+        Deal oldDeal = new(new DateTime(2024, 12, 11), 500, null);
+        Deal newDeal = new(new DateTime(2024, 12, 11), 501, null);
+
+        customer.AddDeal(oldDeal);
+
+        Assert.That(customer.AssociatedDeals.Contains(oldDeal), Is.True);
+
+        customer.EditDeal(oldDeal, newDeal);
+
+        Assert.Multiple(() => {
+            Assert.That(customer.AssociatedDeals.Contains(oldDeal), Is.False);
+            Assert.That(customer.AssociatedDeals.Contains(newDeal), Is.True);
+        });
+    }
+
+    [Test]
+    public void TestDealAddCustomer() {
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        Customer customer = new();
+
+        deal.AddCustomer(customer);
+
+        Assert.That(deal.AssociatedCustomer, Is.EqualTo(customer));
+    }
+
+    [Test]
+    public void TestDealRemoveCustomer() {
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        Customer customer = new();
+
+        deal.AddCustomer(customer);
+        deal.RemoveCustomer(customer);
+
+        Assert.That(deal.AssociatedCustomer, Is.Null);
+    }
+
+    [Test]
+    public void TestDealEditCustomer() {
+        Deal deal = new(new DateTime(2024, 12, 11), 500, null);
+        Customer newCustomer = new();
+        Customer oldCustomer = new();
+
+        deal.AddCustomer(oldCustomer);
+
+        Assert.That(deal.AssociatedCustomer, Is.EqualTo(oldCustomer));
+
+        deal.EditCustomer(oldCustomer, newCustomer);
+
+        Assert.Multiple(() => {
+            Assert.That(deal.AssociatedCustomer, Is.Not.EqualTo(oldCustomer));
+            Assert.That(deal.AssociatedCustomer, Is.EqualTo(newCustomer));
+        });
+    }
+
     [TearDown]
     public void TearDown() {
         Product.Clear();

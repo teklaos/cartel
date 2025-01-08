@@ -11,7 +11,7 @@ public class Equipment {
     public string Type { get; private set; }
     public string Name { get; private set; }
     public string Model { get; private set; }
-    public Laboratory? AssociatedLab { get; private set; }
+    public Laboratory? AssociatedLaboratory { get; private set; }
 
     public Equipment(string type, string name, string model) {
         if (string.IsNullOrWhiteSpace(type))
@@ -28,11 +28,26 @@ public class Equipment {
     }
 
     public void AddLaboratory(Laboratory laboratory) {
-        AssociatedLab = laboratory;
+        laboratory.AddCompositionAssociationInternally(this);
+        AssociatedLaboratory = laboratory;
     }
 
-    public void RemoveLaboratory() {
-        AssociatedLab = null;
+    public void RemoveLaboratory(Laboratory laboratory) {
+        laboratory.RemoveCompositionAssociationInternally(this);
+        AssociatedLaboratory = null;
+    }
+
+    public void EditLaboratory(Laboratory oldLaboratory, Laboratory newLaboratory) {
+        RemoveLaboratory(oldLaboratory);
+        AddLaboratory(newLaboratory);
+    }
+
+    public void AddLaboratoryInternally(Laboratory laboratory) {
+        AssociatedLaboratory = laboratory;
+    }
+
+    public void RemoveLaboratoryInternally() {
+        AssociatedLaboratory = null;
     }
 
     public static void Serialize() {

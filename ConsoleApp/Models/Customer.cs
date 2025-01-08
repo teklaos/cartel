@@ -30,8 +30,8 @@ public class Customer {
     }
 
     public void EditDeal(Deal oldDeal, Deal newDeal) {
-        AddDeal(oldDeal);
-        RemoveDeal(newDeal);
+        RemoveDeal(oldDeal);
+        AddDeal(newDeal);
     }
 
     public void AddDealInternally(Deal deal) =>

@@ -51,8 +51,8 @@ public class Deal {
         string oldCustomerId,
         string newCustomerId
     ) {
-        AddDistributor(oldDistributor, oldCustomerId);
-        RemoveDistributor(newDistributor, newCustomerId);
+        RemoveDistributor(oldDistributor, oldCustomerId);
+        AddDistributor(newDistributor, newCustomerId);
     }
 
     public void AddDistributorInternally(Distributor distributor) =>

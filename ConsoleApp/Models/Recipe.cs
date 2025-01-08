@@ -54,19 +54,31 @@ public class Recipe : ICompositionAssociation<Instruction> {
         if (instruction.AssociatedRecipe != null)
             throw new ArgumentException("Instruction is already associated with a recipe.");
         _associatedInstructions.Add(instruction);
-        instruction.AddRecipe(this);
+        instruction.AddRecipeInternally(this);
     }
 
     public void RemoveCompositionAssociation(Instruction instruction) {
         if (instruction.AssociatedRecipe == null)
             throw new ArgumentException("Instruction is not associated with a recipe.");
         _associatedInstructions.Remove(instruction);
-        instruction.RemoveRecipe();
+        instruction.RemoveRecipeInternally();
     }
 
     public void EditCompositionAssociation(Instruction oldInstruction, Instruction newInstruction) {
         RemoveCompositionAssociation(oldInstruction);
         AddCompositionAssociation(newInstruction);
+    }
+
+    public void AddCompositionAssociationInternally(Instruction instruction) {
+        if (instruction.AssociatedRecipe != null)
+            throw new ArgumentException("Instruction is already associated with a recipe.");
+        _associatedInstructions.Add(instruction);
+    }
+
+    public void RemoveCompositionAssociationInternally(Instruction instruction) {
+        if (instruction.AssociatedRecipe == null)
+            throw new ArgumentException("Instruction is not associated with a recipe.");
+        _associatedInstructions.Remove(instruction);
     }
 
     public static void Serialize() {

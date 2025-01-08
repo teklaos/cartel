@@ -88,22 +88,34 @@ public class Laboratory : ICompositionAssociation<Equipment> {
     }
 
     public void AddCompositionAssociation(Equipment equipment) {
-        if (equipment.AssociatedLab != null)
-            throw new Exception("Equipment already attached to the lab.");
+        if (equipment.AssociatedLaboratory != null)
+            throw new ArgumentException("Equipment is already attached to the lab.");
         _associatedEquipment.Add(equipment);
-        equipment.AddLaboratory(this);
+        equipment.AddLaboratoryInternally(this);
     }
 
     public void RemoveCompositionAssociation(Equipment equipment) {
-        if (equipment.AssociatedLab == null)
-            throw new Exception("Equipment has not been attached to the lab yet.");
+        if (equipment.AssociatedLaboratory == null)
+            throw new ArgumentException("Equipment has not been attached to the lab yet.");
         _associatedEquipment.Remove(equipment);
-        equipment.RemoveLaboratory();
+        equipment.RemoveLaboratoryInternally();
     }
 
     public void EditCompositionAssociation(Equipment oldEquipment, Equipment newEquipment) {
         RemoveCompositionAssociation(oldEquipment);
         AddCompositionAssociation(newEquipment);
+    }
+
+    public void AddCompositionAssociationInternally(Equipment equipment) {
+        if (equipment.AssociatedLaboratory != null)
+            throw new Exception("Equipment is already attached to the lab.");
+        _associatedEquipment.Add(equipment);
+    }
+
+    public void RemoveCompositionAssociationInternally(Equipment equipment) {
+        if (equipment.AssociatedLaboratory == null)
+            throw new Exception("Equipment has not been attached to the lab yet.");
+        _associatedEquipment.Remove(equipment);
     }
 
     public static void Serialize() {
