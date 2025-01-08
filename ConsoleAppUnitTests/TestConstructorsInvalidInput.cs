@@ -32,7 +32,7 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         int poundsCooked = 75;
 
-        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules, poundsCooked),
+        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules!, poundsCooked),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -79,7 +79,7 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         string occupation = "test";
         int securityLevel = 5;
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
+        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules!, occupation, securityLevel),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -140,7 +140,7 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 10;
         IList<string>? rules = null;
 
-        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules),
+        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules!),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -173,7 +173,7 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         int dealsMade = 10;
 
-        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules, dealsMade),
+        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules!, dealsMade),
             "Expected ArgumentException for null rules to follow collection.");
     }
 
@@ -324,7 +324,7 @@ public class TestConstructorsInvalidInput {
         string position = "Manager";
         string department = "Operations";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules, position, department),
+        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules!, position, department),
             "Expected ArgumentException for null rules to follow collection.");
     }
 

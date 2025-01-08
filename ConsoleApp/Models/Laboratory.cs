@@ -60,7 +60,7 @@ public class Laboratory : ICompositionAssociation<Equipment> {
 
     public void RemoveProductInternally(Product product) {
         if (!_associatedProducts.Remove(product))
-            throw new Exception("Product not found.");
+            throw new ArgumentException("Product not found.");
     }
 
     public void AddIngredient(Ingredient ingredient) {
