@@ -69,4 +69,12 @@ public class Equipment {
             Console.WriteLine(ex.Message);
         }
     }
+
+    ~Equipment() {
+        try {
+            _equipmentList?.Remove(this);
+        } catch (ArgumentException ex) {
+            Console.WriteLine($"Failed to remove equipment: {ex.Message}.");
+        }
+    }
 }

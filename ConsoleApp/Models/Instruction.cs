@@ -93,4 +93,12 @@ public class Instruction {
         _instructions.Clear();
         Serialize();
     }
+
+    ~Instruction() {
+        try {
+            _instructions?.Remove(this);
+        } catch (ArgumentException ex) {
+            Console.WriteLine($"Failed to remove instruction: {ex.Message}.");
+        }
+    }
 }
