@@ -9,6 +9,7 @@ public class Recipe : ICompositionAssociation<Instruction> {
         get => new List<Recipe>(_recipes);
         private set => _recipes = value;
     }
+    public string Name { get; private set; }
     public int Complexity { get => _associatedInstructions.Count / 10; }
 
     private IList<Product> _associatedProducts = new List<Product>();
@@ -23,8 +24,13 @@ public class Recipe : ICompositionAssociation<Instruction> {
         private set => _associatedInstructions = value;
     }
 
-    public Recipe() =>
+    public Recipe(string name) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+
+        Name = name;
         _recipes.Add(this);
+    }
 
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);

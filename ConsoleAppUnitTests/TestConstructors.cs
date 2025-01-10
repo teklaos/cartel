@@ -159,7 +159,7 @@ public class TestConstructors {
 
     [Test]
     public void TestRecipeConstructor() {
-        Recipe recipe = new Recipe();
+        Recipe recipe = new Recipe("Blue Methamphetamine");
         List<Instruction> instructions = [
             new Instruction("Combine"),
             new Instruction("Stir for 5 minutes."),
@@ -176,7 +176,10 @@ public class TestConstructors {
         foreach (var i in instructions)
             recipe.AddCompositionAssociation(i);
 
-        Assert.That(recipe.Complexity, Is.EqualTo(1));
+        Assert.Multiple(() => {
+            Assert.That(recipe.Name, Is.EqualTo("Blue Methamphetamine"));
+            Assert.That(recipe.Complexity, Is.EqualTo(1));
+        });
     }
 
     [Test]

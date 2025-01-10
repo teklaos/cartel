@@ -604,7 +604,7 @@ public class TestSerialization {
         Assert.That(deserializedProduct, Is.Not.Null);
         Assert.Multiple(() => {
             Assert.That(deserializedProduct.Name, Is.EqualTo(originalProduct.Name));
-            Assert.That(deserializedProduct.Weight, Is.EqualTo(originalProduct.Weight)); 
+            Assert.That(deserializedProduct.Weight, Is.EqualTo(originalProduct.Weight));
             Assert.That(deserializedProduct.PricePerPound, Is.EqualTo(originalProduct.PricePerPound));
             Assert.That(deserializedProduct.PurityPercentage, Is.EqualTo(originalProduct.PurityPercentage));
             Assert.That(deserializedProduct.AddictivenessLevel, Is.EqualTo(originalProduct.AddictivenessLevel));
@@ -613,15 +613,21 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteRecipeToFile() {
-        _ = new Recipe();
+        _ = new Recipe("Blue Methamphetamine");
 
         Recipe.Serialize();
         Assert.That(File.Exists("Recipes.json"), Is.True);
+
+        var jsonContent = File.ReadAllText("Recipes.json");
+        Assert.Multiple(() => {
+            Assert.That(jsonContent, Does.Contain("Blue Methamphetamine"));
+            Assert.That(jsonContent, Does.Contain("0"));
+        });
     }
 
     [Test]
     public void DeserializationLoadRecipeFromFile() {
-        _ = new Recipe();
+        _ = new Recipe("Blue Methamphetamine");
 
         Recipe.Serialize();
         Recipe.Deserialize();
@@ -629,17 +635,24 @@ public class TestSerialization {
 
         var deserializedRecipe = Recipe.Recipes.Last();
         Assert.That(deserializedRecipe, Is.Not.Null);
+        Assert.Multiple(() => {
+            Assert.That(deserializedRecipe.Name, Is.EqualTo("Blue Methamphetamine"));
+            Assert.That(deserializedRecipe.Complexity, Is.EqualTo(0));
+        });
     }
 
     [Test]
     public void SerializeAndDeserializeRecipeIntegrity() {
-        var originalRecipe = new Recipe();
+        var originalRecipe = new Recipe("Blue Methamphetamine");
         Recipe.Serialize();
         Recipe.Deserialize();
         var deserializedRecipe = Recipe.Recipes.Last();
 
         Assert.That(deserializedRecipe, Is.Not.Null);
-        Assert.That(deserializedRecipe.Complexity, Is.EqualTo(originalRecipe.Complexity));
+        Assert.Multiple(() => {
+            Assert.That(deserializedRecipe.Name, Is.EqualTo(originalRecipe.Name));
+            Assert.That(deserializedRecipe.Complexity, Is.EqualTo(originalRecipe.Complexity));
+        });
     }
 
     [Test]

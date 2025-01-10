@@ -113,7 +113,7 @@ public class TestExceptionCases {
 
     [Test]
     public void TestRemoveProductInternallyThrowsExceptionWhenProductNotFoundRecipe() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Product product = new("Meth", 1000, 500, AddLevelAttribute.Strong);
 
         var ex = Assert.Throws<ArgumentException>(() => recipe.RemoveProductInternally(product));
@@ -124,9 +124,9 @@ public class TestExceptionCases {
 
     [Test]
     public void TestAddCompositionAssociationThrowsExceptionWhenInstructionAlreadyHasRecipe() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Instruction instruction = new("Instruction 1");
-        instruction.AddRecipe(new Recipe());
+        instruction.AddRecipe(new Recipe("Crystal Methamphetamine"));
 
         var ex = Assert.Throws<ArgumentException>(() => recipe.AddCompositionAssociation(instruction));
         Assert.That(ex, Is.Not.Null);
@@ -136,7 +136,7 @@ public class TestExceptionCases {
 
     [Test]
     public void TestRemoveCompositionAssociationThrowsExceptionWhenInstructionNotAssociatedWithRecipe() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Instruction instruction = new("Instruction 1");
 
         var ex = Assert.Throws<ArgumentException>(() => recipe.RemoveCompositionAssociation(instruction));
