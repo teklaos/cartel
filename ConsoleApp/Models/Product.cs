@@ -107,7 +107,6 @@ public class Product {
             AssignedLaboratory = Laboratory.Laboratories.First(l => l.Location == laboratoryLocation),
             AssignedChemists = chemistNames.Select(ch => Chemist.Chemists.First(c => c.Name == ch)).ToArray()
         };
-        Serialize();
 
         Thread.Sleep(10000);
         return product;
@@ -117,7 +116,6 @@ public class Product {
         AddRecipe(AssignedRecipe);
         AddLaboratory(AssignedLaboratory);
         AddChemists(AssignedChemists);
-        Serialize();
     }
 
     public IDictionary<string, string> GetViewData() =>
