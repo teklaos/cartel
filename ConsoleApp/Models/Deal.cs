@@ -46,10 +46,8 @@ public class Deal {
     }
 
     public void EditDistributor(
-        Distributor oldDistributor,
-        Distributor newDistributor,
-        string oldCustomerId,
-        string newCustomerId
+        Distributor oldDistributor, Distributor newDistributor,
+        string oldCustomerId, string newCustomerId
     ) {
         RemoveDistributor(oldDistributor, oldCustomerId);
         AddDistributor(newDistributor, newCustomerId);

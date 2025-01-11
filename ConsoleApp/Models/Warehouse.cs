@@ -52,7 +52,7 @@ public class Warehouse {
         Location = location;
         MaxCapacity = maxCapacity;
     }
-    
+
     public void Remove() {
         foreach (var product in _associatedProducts)
             product.RemoveWarehouseInternally(this);
@@ -63,11 +63,11 @@ public class Warehouse {
         _warehouses.Remove(this);
     }
 
-    public string GetLocation() => Location;
-
     public void AssignDeliverer(Deliverer deliverer) {
         AddDeliverer(deliverer);
     }
+
+    public string GetLocation() => Location;
 
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);

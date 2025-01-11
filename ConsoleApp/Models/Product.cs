@@ -108,7 +108,10 @@ public class Product {
             AssignedChemists = chemistNames.Select(ch => Chemist.Chemists.First(c => c.Name == ch)).ToArray()
         };
 
+        Console.WriteLine("Cooking batch...");
         Thread.Sleep(10000);
+        Console.WriteLine("Batch cooked.");
+
         return product;
     }
 

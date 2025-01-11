@@ -65,7 +65,10 @@ public class Ingredient {
         Laboratory laboratory = Laboratory.Laboratories.First(l => l.Location == laboratoryLocation);
         SupplyChain supplyChain = SupplyChain.SupplyChains.First(sc => sc.Name == supplyChainName);
 
+        Console.WriteLine($"Ordering {name} from {supplyChainName}...");
         Thread.Sleep(supplyChain.TransitionTime * 1000);
+        Console.WriteLine("Order complete.");
+
         Ingredient ingredient = new(name, pricePerPound, chemicalFormula, state);
         ingredient.AddLaboratory(laboratory);
         ingredient.AddSupplyChain(supplyChain);
