@@ -32,6 +32,24 @@ public class Recipe : ICompositionAssociation<Instruction> {
         _recipes.Add(this);
     }
 
+    public static void Add(string name) =>
+        _ = new Recipe(name);
+
+    public void Edit(string name) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+
+        Name = name;
+    }
+
+    public void Remove() {
+        foreach (var product in _associatedProducts)
+            product.RemoveRecipeInternally(this);
+        foreach (var instruction in _associatedInstructions)
+            instruction.RemoveRecipeInternally();
+        _recipes.Remove(this);
+    }
+
     public static IList<string> GetNames() =>
         Recipes.Select(recipe => recipe.Name).ToList();
 
