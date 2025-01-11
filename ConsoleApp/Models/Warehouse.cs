@@ -40,6 +40,35 @@ public class Warehouse {
         _warehouses.Add(this);
     }
 
+    public static void Add(string location, int maxCapacity) =>
+        _ = new Warehouse(location, maxCapacity);
+
+    public void Edit(string location, int maxCapacity) {
+        if (string.IsNullOrWhiteSpace(location))
+            throw new ArgumentException("Location cannot be null or whitespace.");
+        if (maxCapacity < 0)
+            throw new ArgumentException("Maximum capacity cannot be negative.");
+
+        Location = location;
+        MaxCapacity = maxCapacity;
+    }
+    
+    public void Remove() {
+        foreach (var product in _associatedProducts)
+            product.RemoveWarehouseInternally(this);
+        foreach (var distributor in _associatedDistributors)
+            distributor.RemoveWarehouseInternally(this);
+        foreach (var deliverer in _associatedDeliverers)
+            deliverer.RemoveWarehouseInternally(this);
+        _warehouses.Remove(this);
+    }
+
+    public string GetLocation() => Location;
+
+    public void AssignDeliverer(Deliverer deliverer) {
+        AddDeliverer(deliverer);
+    }
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddWarehouseInternally(this);
