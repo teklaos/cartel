@@ -5,7 +5,19 @@ namespace ConsoleApp;
 public class Program {
     public static void Main(string[] args) {
         // TestChemistProduct();
-        TestDealDistributor();
+        // TestDealDistributor();
+
+        Recipe recipe = new("Cocaine");
+        Laboratory lab = new("Los Angeles");
+        Chemist walter = new("Walter", 5, ["Follow the leader"], 10000);
+        Chemist jesse = new("Jesse", 7, ["Follow the leader"], 5000);
+
+        Product product = Product.StartBatch(
+            "Cocaine", 15, 5000, AddLevelAttribute.Weak,
+            "Cocaine", "Los Angeles", "Walter", "Jesse"
+        );
+
+        product.FinishBatch();
     }
 
     public static void TestChemistProduct() {
