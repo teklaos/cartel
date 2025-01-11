@@ -32,6 +32,9 @@ public class Recipe : ICompositionAssociation<Instruction> {
         _recipes.Add(this);
     }
 
+    public static IList<string> GetNames() =>
+        Recipes.Select(recipe => recipe.Name).ToList();
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddRecipeInternally(this);

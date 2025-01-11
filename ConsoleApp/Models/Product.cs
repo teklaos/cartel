@@ -82,6 +82,14 @@ public class Product {
         _products.Add(this);
     }
 
+    public IDictionary<string, string> GetViewData() =>
+        new Dictionary<string, string> {
+            { "Name", Name },
+            { "Weight", Weight.ToString() },
+            { "Price Per Pound", PricePerPound.ToString() },
+            { "Purity Percentage", PurityPercentage.ToString() },
+        };
+
     public void AddWarehouse(Warehouse warehouse) {
         _associatedWarehouses.Add(warehouse);
         warehouse.AddProductInternally(this);
