@@ -32,8 +32,8 @@ public class Recipe : ICompositionAssociation<Instruction> {
         _recipes.Add(this);
     }
 
-    public static void Add(string name) =>
-        _ = new Recipe(name);
+    public static Recipe Add(string name) =>
+        new(name);
 
     public void Edit(string name) {
         if (string.IsNullOrWhiteSpace(name))

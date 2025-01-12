@@ -19,7 +19,7 @@ public class Customer {
         _customers.Add(this);
 
     public static Customer Add() =>
-        _ = new Customer();
+        new();
 
     public void Remove() {
         foreach (var deal in _associatedDeals)

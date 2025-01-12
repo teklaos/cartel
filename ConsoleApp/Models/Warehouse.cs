@@ -40,8 +40,8 @@ public class Warehouse {
         _warehouses.Add(this);
     }
 
-    public static void Add(string location, int maxCapacity) =>
-        _ = new Warehouse(location, maxCapacity);
+    public static Warehouse Add(string location, int maxCapacity) =>
+        new(location, maxCapacity);
 
     public void Edit(string location, int maxCapacity) {
         if (string.IsNullOrWhiteSpace(location))
