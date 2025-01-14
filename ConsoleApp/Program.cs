@@ -6,18 +6,12 @@ public class Program {
     public static void Main(string[] args) {
         // TestChemistProduct();
         // TestDealDistributor();
+        // TestStartBatch();
 
-        Recipe recipe = new("Cocaine");
-        Laboratory lab = new("Los Angeles");
-        Chemist walter = new("Walter", 5, ["Follow the leader"], 10000);
-        Chemist jesse = new("Jesse", 7, ["Follow the leader"], 5000);
-
-        Product product = Product.StartBatch(
-            "Cocaine", 15, 5000, AddLevelAttribute.Weak,
-            "Cocaine", "Los Angeles", "Walter", "Jesse"
-        );
-
-        product.FinishBatch();
+        Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
+        Customer customer = new();
+        var deal = Deal.StartDeal(new DateTime(2024, 12, 01), 150, distributor, customer, "Black-Eagle");
+        deal.FinishDeal();
     }
 
     public static void TestChemistProduct() {
@@ -163,5 +157,19 @@ public class Program {
 
     public static string CustomerDealDates(IDictionary<string, List<Deal>> dictionary, string key) {
         return string.Join(", ", dictionary[key].Select(deal => deal.StartDate.ToString("dd/MM/yyyy")));
+    }
+
+    public static void TestStartBatch() {
+        Recipe recipe = new("Cocaine");
+        Laboratory lab = new("Los Angeles");
+        Chemist walter = new("Walter", 5, ["Follow the leader"], 10000);
+        Chemist jesse = new("Jesse", 7, ["Follow the leader"], 5000);
+
+        Product product = Product.StartBatch(
+            "Cocaine", 15, 5000, AddLevelAttribute.Weak,
+            "Cocaine", "Los Angeles", "Walter", "Jesse"
+        );
+
+        product.FinishBatch();
     }
 }
