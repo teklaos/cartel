@@ -115,7 +115,7 @@ public class Product {
         return product;
     }
 
-    public void FinishBatch() {
+    public void CompleteBatch() {
         AddRecipe(AssignedRecipe);
         AddLaboratory(AssignedLaboratory);
         AddChemists(AssignedChemists);

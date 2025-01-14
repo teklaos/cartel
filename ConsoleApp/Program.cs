@@ -11,7 +11,7 @@ public class Program {
         Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
         Customer customer = new();
         var deal = Deal.StartDeal(new DateTime(2024, 12, 01), 150, distributor, customer, "Black-Eagle");
-        deal.FinishDeal();
+        deal.CloseDeal();
     }
 
     public static void TestChemistProduct() {
@@ -170,6 +170,6 @@ public class Program {
             "Cocaine", "Los Angeles", "Walter", "Jesse"
         );
 
-        product.FinishBatch();
+        product.CompleteBatch();
     }
 }

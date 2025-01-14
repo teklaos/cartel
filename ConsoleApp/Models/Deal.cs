@@ -57,7 +57,7 @@ public class Deal {
         return deal;
     }
 
-    public void FinishDeal() {
+    public void CloseDeal() {
         EndDate = DateTime.Now;
     }
 
