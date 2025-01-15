@@ -137,12 +137,7 @@ public class Customer : IDealer, IWholesaler
         if (!_associatedDeals.Remove(deal))
             throw new ArgumentException("Deal not found.");
     }
-
-    public void EditDealInternally(Deal oldDeal, Deal newDeal)
-    {
-        RemoveDeal(oldDeal);
-        AddDeal(newDeal);
-    }
+    
     public static void Serialize()
     {
         string fileName = "Customers.json";
