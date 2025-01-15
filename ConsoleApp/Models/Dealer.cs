@@ -4,4 +4,6 @@ public class Dealer : Customer
     {
         SetDealerInfo(territory, criminalRecord);
     }
+    public Dealer(Wholesaler wholesaler) : base(wholesaler) { }
+
 }

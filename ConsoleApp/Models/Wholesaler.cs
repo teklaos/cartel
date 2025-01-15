@@ -4,4 +4,6 @@ public class Wholesaler : Customer
     {
         SetWholesalerInfo(commissionPercentage, monthlyCustomers);
     }
+
+    public Wholesaler(Dealer dealer) : base(dealer) { }
 }
