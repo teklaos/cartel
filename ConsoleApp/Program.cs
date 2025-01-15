@@ -7,11 +7,7 @@ public class Program {
         // TestChemistProduct();
         // TestDealDistributor();
         // TestStartBatch();
-
-        Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
-        Customer customer = new();
-        var deal = Deal.StartDeal(new DateTime(2024, 12, 01), 150, distributor, customer, "Black-Eagle");
-        deal.CloseDeal();
+        // TestStartDeal();
     }
 
     public static void TestChemistProduct() {
@@ -171,5 +167,12 @@ public class Program {
         );
 
         product.CompleteBatch();
+    }
+
+    public static void TestStartDeal() {
+        Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
+        Customer customer = new();
+        var deal = Deal.StartDeal(new DateTime(2024, 12, 01), 150, distributor, customer, "Black-Eagle");
+        deal.CloseDeal();
     }
 }

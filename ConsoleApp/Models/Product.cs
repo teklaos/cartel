@@ -121,13 +121,14 @@ public class Product {
         AddChemists(AssignedChemists);
     }
 
-    public IDictionary<string, string> GetViewData() =>
-        new Dictionary<string, string> {
-            { "Name", Name },
-            { "Weight", Weight.ToString() },
-            { "Price Per Pound", PricePerPound.ToString() },
-            { "Purity Percentage", PurityPercentage.ToString() },
-        };
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Products.Select(product => new Dictionary<string, string> {
+            { "Name", product.Name },
+            { "Weight", product.Weight.ToString() },
+            { "Price Per Pound", product.PricePerPound.ToString() },
+            { "Purity Percentage", product.PurityPercentage.ToString() }
+        });
+    }
 
     public void AddWarehouse(Warehouse warehouse) {
         _associatedWarehouses.Add(warehouse);
