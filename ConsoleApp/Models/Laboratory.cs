@@ -39,6 +39,9 @@ public class Laboratory : ICompositionAssociation<Equipment> {
         _laboratories.Add(this);
     }
 
+    public static IList<string> GetLocations() =>
+        Laboratories.Select(l => l.Location).ToList();
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddLaboratoryInternally(this);

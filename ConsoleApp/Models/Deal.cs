@@ -16,16 +16,18 @@ public class Deal {
     public Customer? AssociatedCustomer { get; private set; }
 
     public Deal(DateTime startDate, int poundsOfProduct, DateTime? endDate) {
-        if (poundsOfProduct < 0)
-            throw new ArgumentException("Pounds of product cannot be negative.");
         if (startDate < new DateTime(1890, 1, 1))
             throw new ArgumentException("Deal start date cannot be earlier than year 1890.");
-        if (startDate > DateTime.Now)
+        else if (startDate > DateTime.Now)
             throw new ArgumentException("Deal start date cannot be in the future.");
+
+        if (poundsOfProduct < 0)
+            throw new ArgumentException("Pounds of product cannot be negative.");
+
         if (endDate.HasValue) {
             if (endDate.Value < startDate)
                 throw new ArgumentException("Deal end date cannot be earlier than the start date.");
-            if (endDate.Value > DateTime.Now)
+            else if (endDate.Value > DateTime.Now)
                 throw new ArgumentException("Deal end date cannot be in the future.");
         }
 
@@ -33,6 +35,38 @@ public class Deal {
         PoundsOfProduct = poundsOfProduct;
         EndDate = endDate;
         _deals.Add(this);
+    }
+
+    public static Deal StartDeal(
+        DateTime startDate, int poundsOfProduct,
+        Distributor distributor, Customer customer, string customerId
+    ) {
+        if (startDate < new DateTime(1890, 1, 1))
+            throw new ArgumentException("Deal start date cannot be earlier than year 1890.");
+        else if (startDate > DateTime.Now)
+            throw new ArgumentException("Deal start date cannot be in the future.");
+
+        if (poundsOfProduct < 0)
+            throw new ArgumentException("Pounds of product cannot be negative.");
+
+        Deal deal = new(startDate, poundsOfProduct, null);
+        deal.AddDistributor(distributor, customerId);
+        deal.AddCustomer(customer);
+
+        Console.WriteLine("Deal started.");
+        return deal;
+    }
+
+    public void CloseDeal() {
+        EndDate = DateTime.Now;
+    }
+
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Deals.Select(deal => new Dictionary<string, string> {
+            { "Start Date", deal.StartDate.ToString("dd/MM/yyyy") },
+            { "Pounds of Product", deal.PoundsOfProduct.ToString() },
+            { "End Date", deal.EndDate?.ToString("dd/MM/yyyy") ?? "-" }
+        });
     }
 
     public void AddDistributor(Distributor distributor, string customerId) {
@@ -46,10 +80,8 @@ public class Deal {
     }
 
     public void EditDistributor(
-        Distributor oldDistributor,
-        Distributor newDistributor,
-        string oldCustomerId,
-        string newCustomerId
+        Distributor oldDistributor, Distributor newDistributor,
+        string oldCustomerId, string newCustomerId
     ) {
         RemoveDistributor(oldDistributor, oldCustomerId);
         AddDistributor(newDistributor, newCustomerId);

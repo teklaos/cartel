@@ -258,7 +258,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeAddProduct() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         recipe.AddProduct(product);
@@ -268,7 +268,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeRemoveProduct() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddRecipe(recipe);
@@ -279,7 +279,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeEditProduct() {
-        Recipe recipe = new Recipe();
+        Recipe recipe = new Recipe("Blue Methamphetamine");
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
@@ -297,7 +297,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductAddRecipe() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddRecipe(recipe);
@@ -307,7 +307,7 @@ public class TestAssociations {
 
     [Test]
     public void TestProductRemoveRecipe() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         recipe.AddProduct(product);
@@ -320,8 +320,8 @@ public class TestAssociations {
     [Test]
     public void TestProductEditRecipe() {
         Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Recipe newRecipe = new Recipe();
-        Recipe oldRecipe = new Recipe();
+        Recipe newRecipe = new Recipe("Blue Methamphetamine");
+        Recipe oldRecipe = new Recipe("Crystal Methamphetamine");
 
         product.AddRecipe(oldRecipe);
 
@@ -943,7 +943,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeAddInstruction() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Instruction instruction = new("Stir");
 
         recipe.AddCompositionAssociation(instruction);
@@ -954,7 +954,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeRemoveInstruction() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Instruction instruction = new("Stir");
 
         recipe.AddCompositionAssociation(instruction);
@@ -968,7 +968,7 @@ public class TestAssociations {
 
     [Test]
     public void TestRecipeEditInstruction() {
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
         Instruction oldInstruction = new("Stir");
         Instruction newInstruction = new("Combine");
 
@@ -987,7 +987,7 @@ public class TestAssociations {
     [Test]
     public void TestInstructionAddRecipe() {
         Instruction instruction = new("Stir");
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
 
         instruction.AddRecipe(recipe);
 
@@ -1000,7 +1000,7 @@ public class TestAssociations {
     [Test]
     public void TestInstructionRemoveRecipe() {
         Instruction instruction = new("Stir");
-        Recipe recipe = new();
+        Recipe recipe = new("Blue Methamphetamine");
 
         instruction.AddRecipe(recipe);
         instruction.RemoveRecipe(recipe);
@@ -1014,8 +1014,8 @@ public class TestAssociations {
     [Test]
     public void TestInstructionEditRecipe() {
         Instruction instruction = new("Stir");
-        Recipe newRecipe = new();
-        Recipe oldRecipe = new();
+        Recipe newRecipe = new("Blue Methamphetamine");
+        Recipe oldRecipe = new("Blue Methamphetamine");
 
         instruction.AddRecipe(oldRecipe);
 

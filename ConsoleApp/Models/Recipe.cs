@@ -9,6 +9,7 @@ public class Recipe : ICompositionAssociation<Instruction> {
         get => new List<Recipe>(_recipes);
         private set => _recipes = value;
     }
+    public string Name { get; private set; }
     public int Complexity { get => _associatedInstructions.Count / 10; }
 
     private IList<Product> _associatedProducts = new List<Product>();
@@ -23,8 +24,41 @@ public class Recipe : ICompositionAssociation<Instruction> {
         private set => _associatedInstructions = value;
     }
 
-    public Recipe() =>
+    public Recipe(string name) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+
+        Name = name;
         _recipes.Add(this);
+    }
+
+    public static Recipe Add(string name) =>
+        new(name);
+
+    public void Edit(string name) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+
+        Name = name;
+    }
+
+    public void Remove() {
+        foreach (var product in _associatedProducts)
+            product.RemoveRecipeInternally(this);
+        foreach (var instruction in _associatedInstructions)
+            instruction.RemoveRecipeInternally();
+        _recipes.Remove(this);
+    }
+
+    public static IList<string> GetNames() =>
+        Recipes.Select(recipe => recipe.Name).ToList();
+
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Recipes.Select(recipe => new Dictionary<string, string> {
+            { "Name", recipe.Name },
+            { "Complexity", recipe.Complexity.ToString() }
+        });
+    }
 
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);

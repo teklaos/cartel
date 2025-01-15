@@ -48,6 +48,32 @@ public class Ingredient {
         _ingredients.Add(this);
     }
 
+    public static void OrderRequired(
+        string name, int pricePerPound, string chemicalFormula, StateAttribute state,
+        string laboratoryLocation, string supplyChainName
+    ) {
+        if (string.IsNullOrWhiteSpace(laboratoryLocation))
+            throw new ArgumentException("Laboratory location cannot be null or whitespace.");
+        else if (Laboratory.Laboratories.FirstOrDefault(l => l.Location == laboratoryLocation) == null)
+            throw new ArgumentException("Laboratory not found.");
+
+        if (string.IsNullOrWhiteSpace(supplyChainName))
+            throw new ArgumentException("Supply chain name cannot be null or whitespace.");
+        else if (SupplyChain.SupplyChains.FirstOrDefault(sc => sc.Name == supplyChainName) == null)
+            throw new ArgumentException("Supply chain not found.");
+
+        Laboratory laboratory = Laboratory.Laboratories.First(l => l.Location == laboratoryLocation);
+        SupplyChain supplyChain = SupplyChain.SupplyChains.First(sc => sc.Name == supplyChainName);
+
+        Console.WriteLine($"Ordering {name} from {supplyChainName}...");
+        Thread.Sleep(supplyChain.TransitionTime * 1000);
+        Console.WriteLine("Order complete.");
+
+        Ingredient ingredient = new(name, pricePerPound, chemicalFormula, state);
+        ingredient.AddLaboratory(laboratory);
+        ingredient.AddSupplyChain(supplyChain);
+    }
+
     public void AddLaboratory(Laboratory laboratory) {
         _associatedLaboratories.Add(laboratory);
         laboratory.AddIngredientInternally(this);

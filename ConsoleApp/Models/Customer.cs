@@ -18,6 +18,15 @@ public class Customer {
     public Customer() =>
         _customers.Add(this);
 
+    public static Customer Add() =>
+        new();
+
+    public void Remove() {
+        foreach (var deal in _associatedDeals)
+            deal.RemoveCustomerInternally();
+        _customers.Remove(this);
+    }
+
     public void AddDeal(Deal deal) {
         _associatedDeals.Add(deal);
         deal.AddCustomerInternally(this);

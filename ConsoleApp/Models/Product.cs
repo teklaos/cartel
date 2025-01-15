@@ -49,22 +49,25 @@ public class Product {
         private set => _associatedDeliverers = value;
     }
 
-    private IList<Chemist> _associatedChemists = new List<Chemist>();
-    public IList<Chemist> AssociatedChemists {
-        get => new List<Chemist>(_associatedChemists);
-        private set => _associatedChemists = value;
-    }
-
+    private Recipe AssignedRecipe { get; set; } = null!;
     private IList<Recipe> _associatedRecipes = new List<Recipe>();
     public IList<Recipe> AssociatedRecipes {
         get => new List<Recipe>(_associatedRecipes);
         private set => _associatedRecipes = value;
     }
 
+    private Laboratory AssignedLaboratory { get; set; } = null!;
     private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
     public IList<Laboratory> AssociatedLaboratories {
         get => new List<Laboratory>(_associatedLaboratories);
         private set => _associatedLaboratories = value;
+    }
+
+    private Chemist[] AssignedChemists { get; set; } = null!;
+    private IList<Chemist> _associatedChemists = new List<Chemist>();
+    public IList<Chemist> AssociatedChemists {
+        get => new List<Chemist>(_associatedChemists);
+        private set => _associatedChemists = value;
     }
 
     public Product(string name, double weight, int pricePerPound, AddLevelAttribute addictivenessLevel) {
@@ -80,6 +83,51 @@ public class Product {
         PricePerPound = pricePerPound;
         AddictivenessLevel = addictivenessLevel;
         _products.Add(this);
+    }
+
+    public static Product StartBatch(
+        string name, double weight, int pricePerPound, AddLevelAttribute addictivenessLevel,
+        string recipeName, string laboratoryLocation, params string[] chemistNames
+    ) {
+        if (string.IsNullOrWhiteSpace(recipeName))
+            throw new ArgumentException("Recipe name cannot be null or whitespace.");
+        else if (Recipe.Recipes.FirstOrDefault(r => r.Name == recipeName) == null)
+            throw new ArgumentException("Recipe not found.");
+
+        if (string.IsNullOrWhiteSpace(laboratoryLocation))
+            throw new ArgumentException("Laboratory location cannot be null or whitespace.");
+        else if (Laboratory.Laboratories.FirstOrDefault(l => l.Location == laboratoryLocation) == null)
+            throw new ArgumentException("Laboratory not found.");
+
+        if (chemistNames.Length < 2)
+            throw new ArgumentException("Not enough chemists.");
+
+        Product product = new(name, weight, pricePerPound, addictivenessLevel) {
+            AssignedRecipe = Recipe.Recipes.First(r => r.Name == recipeName),
+            AssignedLaboratory = Laboratory.Laboratories.First(l => l.Location == laboratoryLocation),
+            AssignedChemists = chemistNames.Select(ch => Chemist.Chemists.First(c => c.Name == ch)).ToArray()
+        };
+
+        Console.WriteLine("Cooking batch...");
+        Thread.Sleep(10000);
+        Console.WriteLine("Batch cooked.");
+
+        return product;
+    }
+
+    public void CompleteBatch() {
+        AddRecipe(AssignedRecipe);
+        AddLaboratory(AssignedLaboratory);
+        AddChemists(AssignedChemists);
+    }
+
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Products.Select(product => new Dictionary<string, string> {
+            { "Name", product.Name },
+            { "Weight", product.Weight.ToString() },
+            { "Price Per Pound", product.PricePerPound.ToString() },
+            { "Purity Percentage", product.PurityPercentage.ToString() }
+        });
     }
 
     public void AddWarehouse(Warehouse warehouse) {
@@ -130,38 +178,6 @@ public class Product {
             throw new ArgumentException("Deliverer not found.");
     }
 
-    public void AddChemists(params Chemist[] chemists) {
-        if (chemists.Distinct().Count() != chemists.Length)
-            throw new ArgumentException("Chemists should be unique.");
-        if (_associatedChemists.Count + chemists.Length < 2)
-            throw new ArgumentException("Not enough chemists.");
-        foreach (Chemist chemist in chemists) {
-            _associatedChemists.Add(chemist);
-            chemist.AddProductInternally(this);
-        }
-    }
-
-    public void RemoveChemist(Chemist chemist) {
-        if (_associatedChemists.Count - 1 < 2)
-            throw new ArgumentException("Chemist cannot be deleted.");
-        if (!_associatedChemists.Remove(chemist))
-            throw new ArgumentException("Chemist not found.");
-        chemist.RemoveProductInternally(this);
-    }
-
-    public void EditChemist(Chemist oldChemist, Chemist newChemist) {
-        RemoveChemist(oldChemist);
-        AddChemists(newChemist);
-    }
-
-    public void AddChemistInternally(Chemist chemist) =>
-        _associatedChemists.Add(chemist);
-
-    public void RemoveChemistInternally(Chemist chemist) {
-        if (!_associatedChemists.Remove(chemist))
-            throw new ArgumentException("Chemist not found.");
-    }
-
     public void AddRecipe(Recipe recipe) {
         _associatedRecipes.Add(recipe);
         recipe.AddProductInternally(this);
@@ -208,6 +224,38 @@ public class Product {
     public void RemoveLaboratoryInternally(Laboratory laboratory) {
         if (!_associatedLaboratories.Remove(laboratory))
             throw new ArgumentException("Laboratory not found.");
+    }
+
+    public void AddChemists(params Chemist[] chemists) {
+        if (chemists.Distinct().Count() != chemists.Length)
+            throw new ArgumentException("Chemists should be unique.");
+        if (_associatedChemists.Count + chemists.Length < 2)
+            throw new ArgumentException("Not enough chemists.");
+        foreach (Chemist chemist in chemists) {
+            _associatedChemists.Add(chemist);
+            chemist.AddProductInternally(this);
+        }
+    }
+
+    public void RemoveChemist(Chemist chemist) {
+        if (_associatedChemists.Count - 1 < 2)
+            throw new ArgumentException("Chemist cannot be deleted.");
+        if (!_associatedChemists.Remove(chemist))
+            throw new ArgumentException("Chemist not found.");
+        chemist.RemoveProductInternally(this);
+    }
+
+    public void EditChemist(Chemist oldChemist, Chemist newChemist) {
+        RemoveChemist(oldChemist);
+        AddChemists(newChemist);
+    }
+
+    public void AddChemistInternally(Chemist chemist) =>
+        _associatedChemists.Add(chemist);
+
+    public void RemoveChemistInternally(Chemist chemist) {
+        if (!_associatedChemists.Remove(chemist))
+            throw new ArgumentException("Chemist not found.");
     }
 
     public static void Serialize() {

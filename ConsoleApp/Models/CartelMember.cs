@@ -31,7 +31,30 @@ public abstract class CartelMember {
         RulesToFollow = rulesToFollow;
         _cartelMembers.Add(this);
     }
-    
+
+    public void Edit(string name, int trustLevel, params string[] rulesToFollow) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+        if (trustLevel < 0)
+            throw new ArgumentException("Trust level cannot be negative.");
+        if (rulesToFollow == null)
+            throw new ArgumentException("Rules to follow cannot be null.");
+
+        foreach (string rule in rulesToFollow) {
+            if (string.IsNullOrWhiteSpace(rule)) {
+                throw new ArgumentException("Each rule cannot be null or whitespace.");
+            }
+        }
+
+        Name = name;
+        TrustLevel = trustLevel;
+        RulesToFollow = rulesToFollow.ToList();
+    }
+
+    public void Remove() {
+        _cartelMembers.Remove(this);
+    }
+
     public static void Serialize() {
         string fileName = "CartelMembers.json";
         try {
