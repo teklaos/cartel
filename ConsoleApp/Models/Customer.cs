@@ -3,16 +3,16 @@ using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public enum CustomerRole {
+public enum CustomerRoleAttribute {
     Dealer,
     Wholesaler
 }
 
 public static class CustomerRoleExtensions {
-    public static string ToString(this CustomerRole role) {
+    public static string ToString(this CustomerRoleAttribute role) {
         return role switch {
-            CustomerRole.Dealer => "Dealers",
-            CustomerRole.Wholesaler => "Wholesalers",
+            CustomerRoleAttribute.Dealer => "Dealers",
+            CustomerRoleAttribute.Wholesaler => "Wholesalers",
             _ => throw new InvalidOperationException("Invalid role.")
         };
     }
@@ -25,9 +25,9 @@ public class Customer : IWholesaler, IDealer {
         private set => _customers = value;
     }
 
-    private IList<CustomerRole> _roles = new List<CustomerRole>();
-    public IList<CustomerRole> Roles {
-        get => new List<CustomerRole>(_roles);
+    private IList<CustomerRoleAttribute> _roles = new List<CustomerRoleAttribute>();
+    public IList<CustomerRoleAttribute> Roles {
+        get => new List<CustomerRoleAttribute>(_roles);
         private set => _roles = value;
     }
 
@@ -64,7 +64,7 @@ public class Customer : IWholesaler, IDealer {
         new();
 
     public void Edit(string territory, IList<string>? criminalRecord) {
-        if (!Roles.Contains(CustomerRole.Dealer))
+        if (!Roles.Contains(CustomerRoleAttribute.Dealer))
             throw new InvalidOperationException("Customer is not a dealer.");
 
         if (string.IsNullOrWhiteSpace(territory))
@@ -79,7 +79,7 @@ public class Customer : IWholesaler, IDealer {
     }
 
     public void Edit(double commissionPercentage, int monthlyCustomers) {
-        if (!Roles.Contains(CustomerRole.Wholesaler))
+        if (!Roles.Contains(CustomerRoleAttribute.Wholesaler))
             throw new InvalidOperationException("Customer is not a wholesaler.");
 
         if (commissionPercentage < 0)
@@ -95,9 +95,9 @@ public class Customer : IWholesaler, IDealer {
         string territory, IList<string>? criminalRecord,
         double commissionPercentage, int monthlyCustomers
     ) {
-        if (!Roles.Contains(CustomerRole.Dealer))
+        if (!Roles.Contains(CustomerRoleAttribute.Dealer))
             throw new InvalidOperationException("Customer is not a dealer.");
-        else if (!Roles.Contains(CustomerRole.Wholesaler))
+        else if (!Roles.Contains(CustomerRoleAttribute.Wholesaler))
             throw new InvalidOperationException("Customer is not a wholesaler.");
 
         Edit(territory, criminalRecord);
@@ -110,7 +110,7 @@ public class Customer : IWholesaler, IDealer {
         _customers.Remove(this);
     }
 
-    public void AddRole(CustomerRole role, string territory, params string[]? criminalRecord) {
+    public void AddRole(CustomerRoleAttribute role, string territory, params string[]? criminalRecord) {
         if (Roles.Contains(role))
             throw new ArgumentException($"Customer already has the {role} role.");
 
@@ -126,7 +126,7 @@ public class Customer : IWholesaler, IDealer {
         Roles.Add(role);
     }
 
-    public void AddRole(CustomerRole role, double commissionPercentage, int monthlyCustomers) {
+    public void AddRole(CustomerRoleAttribute role, double commissionPercentage, int monthlyCustomers) {
         if (Roles.Contains(role))
             throw new ArgumentException($"Customer already has the {role} role.");
 
@@ -140,7 +140,7 @@ public class Customer : IWholesaler, IDealer {
         Roles.Add(role);
     }
 
-    public void RemoveRole(CustomerRole role) {
+    public void RemoveRole(CustomerRoleAttribute role) {
         if (!Roles.Contains(role))
             throw new ArgumentException($"Customer does not have the {role} role to remove.");
 
@@ -171,14 +171,14 @@ public class Customer : IWholesaler, IDealer {
         MonthlyCustomers = monthlyCustomers;
     }
 
-    private void ClearRoleProperties(CustomerRole role) {
+    private void ClearRoleProperties(CustomerRoleAttribute role) {
         switch (role) {
-            case CustomerRole.Dealer:
+            case CustomerRoleAttribute.Dealer:
                 Territory = null;
                 CriminalRecord = null;
                 break;
 
-            case CustomerRole.Wholesaler:
+            case CustomerRoleAttribute.Wholesaler:
                 CommissionPercentage = null;
                 MonthlyCustomers = null;
                 break;
