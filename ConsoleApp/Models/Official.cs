@@ -22,7 +22,7 @@ public class Official : CartelMember {
         Department = department;
         _officials.Add(this);
     }
-    
+
     public new static void Serialize() {
         string fileName = "Officials.json";
         try {

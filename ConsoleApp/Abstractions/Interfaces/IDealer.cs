@@ -1,7 +1,6 @@
 namespace ConsoleApp.Abstractions.Interfaces;
 
-public interface IDealer
-{
-    string Territory { get; }
-    IList<string> CriminalRecord { get; }
+public interface IDealer {
+    public string? Territory { get; }
+    public IList<string>? CriminalRecord { get; }
 }

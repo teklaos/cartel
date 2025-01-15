@@ -1,7 +1,6 @@
 namespace ConsoleApp.Abstractions.Interfaces;
 
-public interface IWholesaler
-{
-    double CommissionPercentage { get; }
-    int MonthlyCustomers { get; }
+public interface IWholesaler {
+    public double? CommissionPercentage { get; }
+    public int? MonthlyCustomers { get; }
 }
