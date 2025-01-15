@@ -26,7 +26,7 @@ public static class CustomerRoleExtensions
     }
 }
 
-public class Customer
+public class Customer : IWholesaler, IDealer
 {
     private static IList<Customer> _customers = new List<Customer>();
 
