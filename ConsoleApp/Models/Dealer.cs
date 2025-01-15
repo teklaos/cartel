@@ -1,6 +1,6 @@
 public class Dealer : Customer
 {
-    public Dealer(string territory, IList<string> criminalRecord) : base(CustomerRole.Dealer)
+    public Dealer(string territory, IList<string> criminalRecord) : base()
     {
         SetDealerInfo(territory, criminalRecord);
     }

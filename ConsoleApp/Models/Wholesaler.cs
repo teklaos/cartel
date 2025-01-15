@@ -1,6 +1,6 @@
 public class Wholesaler : Customer
 {
-    public Wholesaler(double commissionPercentage, int monthlyCustomers) : base(CustomerRole.Wholesaler)
+    public Wholesaler(double commissionPercentage, int monthlyCustomers) : base()
     {
         SetWholesalerInfo(commissionPercentage, monthlyCustomers);
     }
