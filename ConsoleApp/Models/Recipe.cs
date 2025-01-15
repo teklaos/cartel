@@ -53,6 +53,13 @@ public class Recipe : ICompositionAssociation<Instruction> {
     public static IList<string> GetNames() =>
         Recipes.Select(recipe => recipe.Name).ToList();
 
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Recipes.Select(recipe => new Dictionary<string, string> {
+            { "Name", recipe.Name },
+            { "Complexity", recipe.Complexity.ToString() }
+        });
+    }
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddRecipeInternally(this);

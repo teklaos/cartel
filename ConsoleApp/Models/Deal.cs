@@ -61,6 +61,14 @@ public class Deal {
         EndDate = DateTime.Now;
     }
 
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Deals.Select(deal => new Dictionary<string, string> {
+            { "Start Date", deal.StartDate.ToString("dd/MM/yyyy") },
+            { "Pounds of Product", deal.PoundsOfProduct.ToString() },
+            { "End Date", deal.EndDate?.ToString("dd/MM/yyyy") ?? "-" }
+        });
+    }
+
     public void AddDistributor(Distributor distributor, string customerId) {
         distributor.AddDealInternally(this, customerId);
         AssociatedDistributor = distributor;

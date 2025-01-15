@@ -22,6 +22,9 @@ public class Instruction {
         _instructions.Add(this);
     }
 
+    public static IList<string> GetActions() =>
+        Instructions.Select(instruction => instruction.Action).ToList();
+
     public void AddRecipe(Recipe recipe) {
         recipe.AddCompositionAssociationInternally(this);
         AssociatedRecipe = recipe;

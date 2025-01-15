@@ -25,6 +25,9 @@ public class Deliverer : CartelMember {
     base(name, trustLevel, rulesToFollow) =>
         _deliverers.Add(this);
 
+    public static IList<string> GetNames() =>
+        Deliverers.Select(deliverer => deliverer.Name).ToList();
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddDelivererInternally(this);

@@ -69,6 +69,13 @@ public class Warehouse {
 
     public string GetLocation() => Location;
 
+    public static IList<Dictionary<string, string>> GetViewData() {
+        return (List<Dictionary<string, string>>)Warehouses.Select(warehouse => new Dictionary<string, string> {
+            { "Location", warehouse.Location },
+            { "MaxCapacity", warehouse.MaxCapacity.ToString() }
+        });
+    }
+
     public void AddProduct(Product product) {
         _associatedProducts.Add(product);
         product.AddWarehouseInternally(this);
