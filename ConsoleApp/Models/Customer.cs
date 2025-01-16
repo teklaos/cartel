@@ -120,6 +120,8 @@ public class Customer : IWholesaler, IDealer {
         foreach (Deal deal in AssociatedDeals)
             deal.RemoveCustomerInternally();
         _customers.Remove(this);
+        _dealers.Remove(this);
+        _wholesalers.Remove(this);
     }
 
     public void AddRole(CustomerRoleAttribute role, string territory, params string[]? criminalRecord) {
