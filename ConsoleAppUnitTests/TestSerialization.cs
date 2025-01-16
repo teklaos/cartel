@@ -126,48 +126,48 @@ public class TestSerialization {
         CollectionAssert.AreEqual(originalCitizen.RulesToFollow, deserializedCitizen.RulesToFollow);
     }
 
-    // [Test]
-    // public void SerializationWriteDealerToFile() {
-    //     _ = new Dealer("South Valley", new List<string> { "Possession of Controlled Substance (Cocaine)." });
+    [Test]
+    public void SerializationWriteDealerToFile() {
+        _ = new Dealer("South Valley", new List<string> { "Possession of Controlled Substance (Cocaine)." });
 
-    //     Dealer.Serialize();
-    //     Assert.That(File.Exists("Dealers.json"), Is.True);
+        Dealer.Serialize();
+        Assert.That(File.Exists("Dealers.json"), Is.True);
 
-    //     var jsonContent = File.ReadAllText("Dealers.json");
-    //     Assert.Multiple(() => {
-    //         Assert.That(jsonContent, Does.Contain("South Valley"));
-    //         Assert.That(jsonContent, Does.Contain("Possession of Controlled Substance (Cocaine)."));
-    //     });
-    // }
+        var jsonContent = File.ReadAllText("Dealers.json");
+        Assert.Multiple(() => {
+            Assert.That(jsonContent, Does.Contain("South Valley"));
+            Assert.That(jsonContent, Does.Contain("Possession of Controlled Substance (Cocaine)."));
+        });
+    }
 
-    // [Test]
-    // public void DeserializationLoadDealerFromFile() {
-    //     _ = new Dealer("North Valley", new List<string> { "Possession of Controlled Substance (Crystal Methamphetamine)." });
+    [Test]
+    public void DeserializationLoadDealerFromFile() {
+        _ = new Dealer("North Valley", new List<string> { "Possession of Controlled Substance (Crystal Methamphetamine)." });
 
-    //     Dealer.Serialize();
-    //     Dealer.Deserialize();
-    //     Assert.That(Dealer.Dealers, Is.Not.Null);
+        Dealer.Serialize();
+        Dealer.Deserialize();
+        Assert.That(Dealer.Dealers, Is.Not.Null);
 
-    //     var deserializedDealer = Dealer.Dealers.Last();
-    //     Assert.That(deserializedDealer, Is.Not.Null);
-    //     Assert.Multiple(() => {
-    //         Assert.That(deserializedDealer.Territory, Is.EqualTo("North Valley"));
-    //         Assert.That(deserializedDealer.CriminalRecord, Does.Contain("Possession of Controlled Substance (Crystal Methamphetamine)."));
-    //     });
-    // }
+        var deserializedDealer = Dealer.Dealers.Last();
+        Assert.That(deserializedDealer, Is.Not.Null);
+        Assert.Multiple(() => {
+            Assert.That(deserializedDealer.Territory, Is.EqualTo("North Valley"));
+            Assert.That(deserializedDealer.CriminalRecord, Does.Contain("Possession of Controlled Substance (Crystal Methamphetamine)."));
+        });
+    }
 
-    // [Test]
-    // public void SerializeAndDeserializeDealerIntegrity() {
-    //     var originalDealer = new Dealer("Rio Rancho", new List<string> { "Possession of Controlled Substance (Cannabis)." });
+    [Test]
+    public void SerializeAndDeserializeDealerIntegrity() {
+        var originalDealer = new Dealer("Rio Rancho", new List<string> { "Possession of Controlled Substance (Cannabis)." });
 
-    //     Dealer.Serialize();
-    //     Dealer.Deserialize();
-    //     var deserializedDealer = Dealer.Dealers.Last();
+        Dealer.Serialize();
+        Dealer.Deserialize();
+        var deserializedDealer = Dealer.Dealers.Last();
 
-    //     Assert.That(deserializedDealer, Is.Not.Null);
-    //     Assert.That(deserializedDealer.Territory, Is.EqualTo(originalDealer.Territory));
-    //     CollectionAssert.AreEqual(originalDealer.CriminalRecord, deserializedDealer.CriminalRecord);
-    // }
+        Assert.That(deserializedDealer, Is.Not.Null);
+        Assert.That(deserializedDealer.Territory, Is.EqualTo(originalDealer.Territory));
+        CollectionAssert.AreEqual(originalDealer.CriminalRecord, deserializedDealer.CriminalRecord);
+    }
 
     [Test]
     public void SerializationWriteDelivererToFile() {
@@ -744,47 +744,47 @@ public class TestSerialization {
     }
 
     [Test]
-    // public void SerializationWriteWholesalerToFile() {
-    //     _ = new Wholesaler(15.47, 55);
+    public void SerializationWriteWholesalerToFile() {
+        _ = new Wholesaler(15.47, 55);
 
-    //     Wholesaler.Serialize();
-    //     Assert.That(File.Exists("Wholesalers.json"), Is.True);
+        Wholesaler.Serialize();
+        Assert.That(File.Exists("Wholesalers.json"), Is.True);
 
-    //     var jsonContent = File.ReadAllText("Wholesalers.json");
-    //     Assert.Multiple(() => {
-    //         Assert.That(jsonContent, Does.Contain("15.47"));
-    //         Assert.That(jsonContent, Does.Contain("55"));
-    //     });
-    // }
+        var jsonContent = File.ReadAllText("Wholesalers.json");
+        Assert.Multiple(() => {
+            Assert.That(jsonContent, Does.Contain("15.47"));
+            Assert.That(jsonContent, Does.Contain("55"));
+        });
+    }
 
-    // [Test]
-    // public void DeserializationLoadWholesalerFromFile() {
-    //     _ = new Wholesaler(15.47, 55);
+    [Test]
+    public void DeserializationLoadWholesalerFromFile() {
+        _ = new Wholesaler(15.47, 55);
 
-    //     Wholesaler.Serialize();
-    //     Wholesaler.Deserialize();
-    //     Assert.That(Wholesaler.Wholesalers, Is.Not.Null);
+        Wholesaler.Serialize();
+        Wholesaler.Deserialize();
+        Assert.That(Wholesaler.Wholesalers, Is.Not.Null);
 
-    //     var deserializedWholesaler = Wholesaler.Wholesalers.Last();
-    //     Assert.That(deserializedWholesaler, Is.Not.Null);
-    //     Assert.Multiple(() => {
-    //         Assert.That(deserializedWholesaler.CommissionPercentage, Is.EqualTo(15.47));
-    //         Assert.That(deserializedWholesaler.MonthlyCustomers, Is.EqualTo(55));
-    //     });
-    // }
+        var deserializedWholesaler = Wholesaler.Wholesalers.Last();
+        Assert.That(deserializedWholesaler, Is.Not.Null);
+        Assert.Multiple(() => {
+            Assert.That(deserializedWholesaler.CommissionPercentage, Is.EqualTo(15.47));
+            Assert.That(deserializedWholesaler.MonthlyCustomers, Is.EqualTo(55));
+        });
+    }
 
-    // [Test]
-    // public void SerializeAndDeserializeWholesalerIntegrity() {
-    //     var originalWholesaler = new Wholesaler(15.47, 55);
+    [Test]
+    public void SerializeAndDeserializeWholesalerIntegrity() {
+        var originalWholesaler = new Wholesaler(15.47, 55);
 
-    //     Wholesaler.Serialize();
-    //     Wholesaler.Deserialize();
-    //     var deserializedWholesaler = Wholesaler.Wholesalers.Last();
+        Wholesaler.Serialize();
+        Wholesaler.Deserialize();
+        var deserializedWholesaler = Wholesaler.Wholesalers.Last();
 
-    //     Assert.That(deserializedWholesaler, Is.Not.Null);
-    //     Assert.That(deserializedWholesaler.CommissionPercentage, Is.EqualTo(originalWholesaler.CommissionPercentage));
-    //     Assert.That(deserializedWholesaler.MonthlyCustomers, Is.EqualTo(originalWholesaler.MonthlyCustomers));
-    // }
+        Assert.That(deserializedWholesaler, Is.Not.Null);
+        Assert.That(deserializedWholesaler.CommissionPercentage, Is.EqualTo(originalWholesaler.CommissionPercentage));
+        Assert.That(deserializedWholesaler.MonthlyCustomers, Is.EqualTo(originalWholesaler.MonthlyCustomers));
+    }
 
     [TearDown]
     public void TearDown() {

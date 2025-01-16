@@ -25,6 +25,18 @@ public class Customer : IWholesaler, IDealer {
         private set => _customers = value;
     }
 
+    private static IList<Customer> _dealers = new List<Customer>();
+    public static IList<Customer> Dealers {
+        get => new List<Customer>(_dealers);
+        private set => _dealers = value;
+    }
+
+    private static IList<Customer> _wholesalers = new List<Customer>();
+    public static IList<Customer> Wholesalers {
+        get => new List<Customer>(_wholesalers);
+        private set => _wholesalers = value;
+    }
+
     private IList<CustomerRoleAttribute> _roles = new List<CustomerRoleAttribute>();
     public IList<CustomerRoleAttribute> Roles {
         get => new List<CustomerRoleAttribute>(_roles);
@@ -123,7 +135,8 @@ public class Customer : IWholesaler, IDealer {
 
         Territory = territory;
         CriminalRecord = criminalRecord;
-        Roles.Add(role);
+        _roles.Add(role);
+        _dealers.Add(this);
     }
 
     public void AddRole(CustomerRoleAttribute role, double commissionPercentage, int monthlyCustomers) {
@@ -137,7 +150,8 @@ public class Customer : IWholesaler, IDealer {
 
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
-        Roles.Add(role);
+        _roles.Add(role);
+        _wholesalers.Add(this);
     }
 
     public void RemoveRole(CustomerRoleAttribute role) {
@@ -145,7 +159,20 @@ public class Customer : IWholesaler, IDealer {
             throw new ArgumentException($"Customer does not have the {role} role to remove.");
 
         ClearRoleProperties(role);
-        Roles.Remove(role);
+        _roles.Remove(role);
+
+        switch (role) {
+            case CustomerRoleAttribute.Dealer:
+                _dealers.Remove(this);
+                break;
+
+            case CustomerRoleAttribute.Wholesaler:
+                _wholesalers.Remove(this);
+                break;
+
+            default:
+                throw new ArgumentException("Invalid role.");
+        }
     }
 
     protected void SetDealerProperties(string territory, IList<string>? criminalRecord) {
@@ -159,6 +186,7 @@ public class Customer : IWholesaler, IDealer {
 
         Territory = territory;
         CriminalRecord = criminalRecord;
+        _dealers.Add(this);
     }
 
     protected void SetWholesalerProperties(double commissionPercentage, int monthlyCustomers) {
@@ -169,6 +197,7 @@ public class Customer : IWholesaler, IDealer {
 
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
+        _wholesalers.Add(this);
     }
 
     private void ClearRoleProperties(CustomerRoleAttribute role) {
@@ -213,23 +242,28 @@ public class Customer : IWholesaler, IDealer {
     }
 
     public static void Serialize() {
-        string fileName = "Customers.json";
-        try {
-            string jsonString = JsonSerializer.Serialize(Customers, AppConfig.JsonOptions);
-            File.WriteAllText(fileName, jsonString);
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
+        IList<string> fileNames = ["Customers.json", "Dealers.json", "Wholesalers.json"];
+        IList<object> lists = [Customers, Dealers, Wholesalers];
+        for (int i = 0; i < fileNames.Count; i++) {
+            try {
+                string jsonString = JsonSerializer.Serialize(lists[i], AppConfig.JsonOptions);
+                File.WriteAllText(fileNames[i], jsonString);
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 
     public static void Deserialize() {
-        string fileName = "Customers.json";
-        try {
-            string jsonString = File.ReadAllText(fileName);
-            Customers = JsonSerializer.Deserialize<List<Customer>>(jsonString, AppConfig.JsonOptions) ??
-                        new List<Customer>();
-        } catch (Exception ex) {
-            Console.WriteLine(ex.Message);
+        IList<string> fileNames = ["Customers.json", "Dealers.json", "Wholesalers.json"];
+        IList<object> lists = [Customers, Dealers, Wholesalers];
+        for (int i = 0; i < fileNames.Count; i++) {
+            try {
+                string jsonString = File.ReadAllText(fileNames[i]);
+                lists[i] = JsonSerializer.Deserialize<List<Customer>>(jsonString, AppConfig.JsonOptions) ?? [];
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
