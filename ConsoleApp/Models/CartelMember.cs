@@ -1,16 +1,34 @@
 using System.Text.Json;
+using ConsoleApp.Abstractions.Interfaces;
 
 namespace ConsoleApp.models;
 
-public abstract class CartelMember {
+public abstract class CartelMember : ICitizen, IOfficial {
     private static IList<CartelMember> _cartelMembers = new List<CartelMember>();
     public static IList<CartelMember> CartelMembers {
         get => new List<CartelMember>(_cartelMembers);
         private set => _cartelMembers = value;
     }
+
+    protected static IList<CartelMember> _citizens = new List<CartelMember>();
+    public static IList<CartelMember> Citizens {
+        get => new List<CartelMember>(_citizens);
+        private set => _citizens = value;
+    }
+
+    protected static IList<CartelMember> _officials = new List<CartelMember>();
+    public static IList<CartelMember> Officials {
+        get => new List<CartelMember>(_officials);
+        private set => _officials = value;
+    }
+
     public string Name { get; private set; }
     public int TrustLevel { get; private set; }
     public IList<string> RulesToFollow { get; private set; }
+    public string? Occupation { get; private set; } = null!;
+    public int? SecurityLevel { get; private set; } = null!;
+    public string? Position { get; private set; } = null!;
+    public string? Department { get; private set; } = null!;
 
     public CartelMember(string name, int trustLevel, IList<string> rulesToFollow) {
         if (string.IsNullOrWhiteSpace(name))
@@ -53,6 +71,8 @@ public abstract class CartelMember {
 
     public void Remove() {
         _cartelMembers.Remove(this);
+        _citizens.Remove(this);
+        _officials.Remove(this);
     }
 
     public static void Serialize() {
