@@ -178,7 +178,6 @@ public class Customer : IWholesaler, IDealer {
     }
 
     protected void SetDealerProperties(string territory, IList<string>? criminalRecord) {
-        Console.WriteLine($"{territory} -- string.");
         if (string.IsNullOrWhiteSpace(territory))
             throw new ArgumentException("Territory cannot be null or empty.");
         foreach (string record in criminalRecord ?? []) {
