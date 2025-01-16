@@ -8,6 +8,7 @@ public class Deal {
         get => new List<Deal>(_deals);
         private set => _deals = value;
     }
+
     public DateTime StartDate { get; private set; }
     public int PoundsOfProduct { get; private set; }
     public DateTime? EndDate { get; private set; }
@@ -37,10 +38,7 @@ public class Deal {
         _deals.Add(this);
     }
 
-    public static Deal StartDeal(
-        DateTime startDate, int poundsOfProduct,
-        Distributor distributor, Customer customer, string customerId
-    ) {
+    public static Deal StartDeal(DateTime startDate, int poundsOfProduct, Distributor distributor, Customer customer, string customerId) {
         if (startDate < new DateTime(1890, 1, 1))
             throw new ArgumentException("Deal start date cannot be earlier than year 1890.");
         else if (startDate > DateTime.Now)
@@ -63,10 +61,10 @@ public class Deal {
 
     public static IList<Dictionary<string, string>> GetViewData() {
         return (List<Dictionary<string, string>>)Deals.Select(deal => new Dictionary<string, string> {
-            { "Start Date", deal.StartDate.ToString("dd/MM/yyyy") },
-            { "Pounds of Product", deal.PoundsOfProduct.ToString() },
-            { "End Date", deal.EndDate?.ToString("dd/MM/yyyy") ?? "-" }
-        });
+                { "Start Date", deal.StartDate.ToString("dd/MM/yyyy") },
+                { "Pounds of Product", deal.PoundsOfProduct.ToString() },
+                { "End Date", deal.EndDate?.ToString("dd/MM/yyyy") ?? "-" }
+            });
     }
 
     public void AddDistributor(Distributor distributor, string customerId) {
@@ -79,10 +77,7 @@ public class Deal {
         AssociatedDistributor = null;
     }
 
-    public void EditDistributor(
-        Distributor oldDistributor, Distributor newDistributor,
-        string oldCustomerId, string newCustomerId
-    ) {
+    public void EditDistributor(Distributor oldDistributor, Distributor newDistributor, string oldCustomerId, string newCustomerId) {
         RemoveDistributor(oldDistributor, oldCustomerId);
         AddDistributor(newDistributor, newCustomerId);
     }
@@ -128,8 +123,7 @@ public class Deal {
         string fileName = "Deals.json";
         try {
             string jsonString = File.ReadAllText(fileName);
-            Deals =
-                JsonSerializer.Deserialize<List<Deal>>(jsonString, AppConfig.JsonOptions) ?? [];
+            Deals = JsonSerializer.Deserialize<List<Deal>>(jsonString, AppConfig.JsonOptions) ?? new List<Deal>(); // Use new List<Deal>() instead of []
         } catch (Exception ex) {
             Console.WriteLine(ex.Message);
         }

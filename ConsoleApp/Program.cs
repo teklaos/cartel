@@ -12,6 +12,7 @@ public class Program {
 
     public static void TestChemistProduct() {
         // Initialization:
+
         Product Meth = new("Meth", 15, 10000, AddLevelAttribute.Strong);
         Product Cocaine = new("Cocaine", 15, 5000, AddLevelAttribute.Weak);
 

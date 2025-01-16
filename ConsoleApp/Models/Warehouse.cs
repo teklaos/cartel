@@ -63,9 +63,8 @@ public class Warehouse {
         _warehouses.Remove(this);
     }
 
-    public void AssignDeliverer(Deliverer deliverer) {
+    public void AssignDeliverer(Deliverer deliverer) =>
         AddDeliverer(deliverer);
-    }
 
     public string GetLocation() => Location;
 
