@@ -25,16 +25,16 @@ public class Customer : IWholesaler, IDealer {
         private set => _customers = value;
     }
 
-    private static IList<Customer> _dealers = new List<Customer>();
+    protected static IList<Customer> _dealers = new List<Customer>();
     public static IList<Customer> Dealers {
         get => new List<Customer>(_dealers);
-        private set => _dealers = value;
+        protected set => _dealers = value;
     }
 
-    private static IList<Customer> _wholesalers = new List<Customer>();
+    protected static IList<Customer> _wholesalers = new List<Customer>();
     public static IList<Customer> Wholesalers {
         get => new List<Customer>(_wholesalers);
-        private set => _wholesalers = value;
+        protected set => _wholesalers = value;
     }
 
     private IList<CustomerRoleAttribute> _roles = new List<CustomerRoleAttribute>();
@@ -43,14 +43,14 @@ public class Customer : IWholesaler, IDealer {
         private set => _roles = value;
     }
 
-    public string? Territory { get; private set; } = null!;
-    private IList<string>? _criminalRecord { get; set; } = null!;
+    public string? Territory { get; protected set; } = null!;
+    private IList<string>? _criminalRecord = null!;
     public IList<string>? CriminalRecord {
         get => _criminalRecord == null ? null : new List<string>(_criminalRecord);
-        private set => _criminalRecord = value;
+        protected set => _criminalRecord = value;
     }
-    public double? CommissionPercentage { get; private set; } = null!;
-    public int? MonthlyCustomers { get; private set; } = null!;
+    public double? CommissionPercentage { get; protected set; } = null!;
+    public int? MonthlyCustomers { get; protected set; } = null!;
 
     private IList<Deal> _associatedDeals = new List<Deal>();
 

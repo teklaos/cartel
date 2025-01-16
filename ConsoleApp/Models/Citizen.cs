@@ -1,5 +1,3 @@
-using System.Text.Json;
-
 namespace ConsoleApp.models;
 
 public class Citizen : CartelMember {
