@@ -1,44 +1,38 @@
-
 name: .NET Core Cartel Workflow
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ['main']
   pull_request:
-    branches: [ "main" ]
+    branches: ['main']
 
 jobs:
-
   build:
-
     strategy:
       matrix:
         configuration: [Debug]
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on: windows-latest
 
     env:
-      Solution_Name: ConsoleApp.sln                         # Replace with your solution name, i.e. MyWpfApp.sln.
-      Test_Project_Path: ConsoleAppUnitTests/ConsoleAppUnitTests.csproj                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
+      Solution_Name: ConsoleApp.sln
+      Test_Project_Path: ConsoleAppUnitTests/ConsoleAppUnitTests.csproj
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    # Execute all unit tests in the solution
-    - name: Execute unit tests
-      run: dotnet test
+      - name: Execute unit tests
+        run: dotnet test
 
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v3
-      with:
-        name: MSIX Package
-        path: ${{ env.Wap_Project_Directory }}\AppPackages
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MSIX Package
+          path: ${{ env.Wap_Project_Directory }}\AppPackages
