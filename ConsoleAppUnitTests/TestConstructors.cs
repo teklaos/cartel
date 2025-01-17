@@ -6,13 +6,15 @@ public class TestConstructors {
     [Test]
     public void TestChemistConstructor() {
         string[] rulesToFollow = ["Do not talk about the cartel."];
-        Chemist chemist = new Chemist("Gale", 10, rulesToFollow, 72);
+        Chemist chemist = new Chemist("Gale", 10, rulesToFollow, 72, "Laboratory Assistant", 5);
 
         Assert.Multiple(() => {
             Assert.That(chemist.Name, Is.EqualTo("Gale"));
             Assert.That(chemist.TrustLevel, Is.EqualTo(10));
             Assert.That(chemist.RulesToFollow, Is.EqualTo(rulesToFollow));
             Assert.That(chemist.PoundsCooked, Is.EqualTo(72));
+            Assert.That(chemist.Occupation, Is.EqualTo("Laboratory Assistant"));
+            Assert.That(chemist.SecurityLevel, Is.EqualTo(5));
         });
     }
 
@@ -51,25 +53,29 @@ public class TestConstructors {
     [Test]
     public void TestDelivererConstructor() {
         string[] rulesToFollow = ["Do not talk about the cartel."];
-        Deliverer deliverer = new Deliverer("Mike", 9, rulesToFollow);
+        Deliverer deliverer = new Deliverer("Mike", 9, rulesToFollow, "Deliverer", 10);
 
         Assert.Multiple(() => {
             Assert.That(deliverer.Name, Is.EqualTo("Mike"));
             Assert.That(deliverer.TrustLevel, Is.EqualTo(9));
             Assert.That(deliverer.RulesToFollow, Is.EqualTo(rulesToFollow));
+            Assert.That(deliverer.Occupation, Is.EqualTo("Deliverer"));
+            Assert.That(deliverer.SecurityLevel, Is.EqualTo(10));
         });
     }
 
     [Test]
     public void TestDistributorConstructor() {
         string[] rulesToFollow = ["Do not kill anyone (optional)."];
-        Distributor distributor = new Distributor("Danny", 9, rulesToFollow, 100);
+        Distributor distributor = new Distributor("Danny", 9, rulesToFollow, 100, "Distributor", 10);
 
         Assert.Multiple(() => {
             Assert.That(distributor.Name, Is.EqualTo("Danny"));
             Assert.That(distributor.TrustLevel, Is.EqualTo(9));
             Assert.That(distributor.RulesToFollow, Is.EqualTo(rulesToFollow));
             Assert.That(distributor.DealsMade, Is.EqualTo(100));
+            Assert.That(distributor.Occupation, Is.EqualTo("Distributor"));
+            Assert.That(distributor.SecurityLevel, Is.EqualTo(10));
         });
     }
 
@@ -143,8 +149,8 @@ public class TestConstructors {
     public void TestProductConstructor() {
         AddLevelAttribute addictivenessLevel = AddLevelAttribute.Strong;
         Product product = new Product("Meth", 15, 15000, addictivenessLevel);
-        Chemist chemist1 = new Chemist("Walter", 10, ["Follow the rules."], 10000);
-        Chemist chemist2 = new Chemist("Jesse", 10, ["Follow the rules."], 1500);
+        Chemist chemist1 = new Chemist("Walter", 10, ["Follow the rules."], 10000, "Teacher", 2);
+        Chemist chemist2 = new Chemist("Jesse", 10, ["Follow the rules."], 1500, "N/A", 0);
 
         product.AddChemists(chemist1, chemist2);
 

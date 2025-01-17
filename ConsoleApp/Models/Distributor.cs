@@ -22,8 +22,21 @@ public class Distributor : CartelMember {
         private set => _associatedDeals = value;
     }
 
-    public Distributor(string name, int trustLevel, IList<string> rulesToFollow, int dealsMade) :
-    base(name, trustLevel, rulesToFollow) {
+    public Distributor(
+        string name, int trustLevel, IList<string> rulesToFollow, int dealsMade,
+        string occupation, int securityLevel
+    ) : base(name, trustLevel, rulesToFollow, occupation, securityLevel) {
+        if (dealsMade < 0)
+            throw new ArgumentException("Made deals cannot be negative.");
+
+        DealsMade = dealsMade;
+        _distributors.Add(this);
+    }
+
+    public Distributor(
+        string name, int trustLevel, IList<string> rulesToFollow, int dealsMade,
+        string position, string department
+    ) : base(name, trustLevel, rulesToFollow, position, department) {
         if (dealsMade < 0)
             throw new ArgumentException("Made deals cannot be negative.");
 

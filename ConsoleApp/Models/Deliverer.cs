@@ -21,8 +21,12 @@ public class Deliverer : CartelMember {
         private set => _associatedWarehouses = value;
     }
 
-    public Deliverer(string name, int trustLevel, IList<string> rulesToFollow) :
-    base(name, trustLevel, rulesToFollow) =>
+    public Deliverer(string name, int trustLevel, IList<string> rulesToFollow, string occupation, int securityLevel) :
+ base(name, trustLevel, rulesToFollow, occupation, securityLevel) =>
+     _deliverers.Add(this);
+
+    public Deliverer(string name, int trustLevel, IList<string> rulesToFollow, string position, string department) :
+    base(name, trustLevel, rulesToFollow, position, department) =>
         _deliverers.Add(this);
 
     public static IList<string> GetNames() =>

@@ -9,9 +9,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 8;
         var rules = new List<string> { "Maintain secrecy.", "Protect the lab." };
         int poundsCooked = 50;
+        string occupation = "Teacher";
+        int securityLevel = 2;
 
-        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules, poundsCooked),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Chemist(name, trustLevel, rules, poundsCooked, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -20,9 +23,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = -1;
         var rules = new List<string> { "Loyalty to the crew.", "Avoid police attention." };
         int poundsCooked = 150;
+        string occupation = "N/A";
+        int securityLevel = 0;
 
-        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules, poundsCooked),
-            "Expected ArgumentException for negative trust level.");
+        Assert.Throws<ArgumentException>(() =>
+            new Chemist(name, trustLevel, rules, poundsCooked, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -31,9 +37,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 9;
         IList<string>? rules = null;
         int poundsCooked = 75;
+        string occupation = "Laboratory Assistant";
+        int securityLevel = 5;
 
-        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules!, poundsCooked),
-            "Expected ArgumentException for null rules to follow collection.");
+        Assert.Throws<ArgumentException>(() =>
+            new Chemist(name, trustLevel, rules!, poundsCooked, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -42,9 +51,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 2;
         var rules = new List<string> { "Do not die.", "Do not kill Walter White with a glass shard." };
         int poundsCooked = -1;
+        string occupation = "Distributor";
+        int securityLevel = 3;
 
-        Assert.Throws<ArgumentException>(() => new Chemist(name, trustLevel, rules, poundsCooked),
-            "Expected ArgumentException for negative cooked pounds.");
+        Assert.Throws<ArgumentException>(() =>
+            new Chemist(name, trustLevel, rules, poundsCooked, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -52,11 +64,12 @@ public class TestConstructorsInvalidInput {
         string name = "   ";
         int trustLevel = 10;
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
-        string occupation = "test";
-        int securityLevel = 5;
+        string occupation = "Cashier";
+        int securityLevel = 0;
 
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Citizen(name, trustLevel, rules, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -67,9 +80,9 @@ public class TestConstructorsInvalidInput {
         string occupation = "test";
         int securityLevel = 5;
 
-
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
-            "Expected ArgumentException for negative trust level.");
+        Assert.Throws<ArgumentException>(() =>
+            new Citizen(name, trustLevel, rules, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -79,8 +92,10 @@ public class TestConstructorsInvalidInput {
         IList<string>? rules = null;
         string occupation = "test";
         int securityLevel = 5;
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules!, occupation, securityLevel),
-            "Expected ArgumentException for null rules to follow collection.");
+
+        Assert.Throws<ArgumentException>(() =>
+            new Citizen(name, trustLevel, rules!, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -90,8 +105,10 @@ public class TestConstructorsInvalidInput {
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
         string occupation = "   ";
         int securityLevel = 5;
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
-            "Expected ArgumentException for an empty occupation.");
+
+        Assert.Throws<ArgumentException>(() =>
+            new Citizen(name, trustLevel, rules, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -101,8 +118,10 @@ public class TestConstructorsInvalidInput {
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
         string occupation = "test";
         int securityLevel = -1;
-        Assert.Throws<ArgumentException>(() => new Citizen(name, trustLevel, rules, occupation, securityLevel),
-            "Expected ArgumentException for negative security level.");
+
+        Assert.Throws<ArgumentException>(() =>
+            new Citizen(name, trustLevel, rules, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -110,8 +129,9 @@ public class TestConstructorsInvalidInput {
         string territory = "   ";
         var criminalRecord = new List<string> { "Convicted of murder.", "Convicted of robbery" };
 
-        Assert.Throws<ArgumentException>(() => new Dealer(territory, criminalRecord),
-            "Expected ArgumentException for an empty territory.");
+        Assert.Throws<ArgumentException>(() =>
+            new Dealer(territory, criminalRecord)
+        );
     }
 
     [Test]
@@ -119,9 +139,12 @@ public class TestConstructorsInvalidInput {
         string name = "   ";
         int trustLevel = 10;
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
+        string occupation = "Deliverer";
+        int securityLevel = 0;
 
-        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Deliverer(name, trustLevel, rules, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -129,9 +152,12 @@ public class TestConstructorsInvalidInput {
         string name = "Danny";
         int trustLevel = -1;
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
+        string occupation = "Deliverer";
+        int securityLevel = 0;
 
-        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules),
-            "Expected ArgumentException for negative trust level.");
+        Assert.Throws<ArgumentException>(() =>
+            new Deliverer(name, trustLevel, rules, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -139,9 +165,12 @@ public class TestConstructorsInvalidInput {
         string name = "Danny";
         int trustLevel = 10;
         IList<string>? rules = null;
+        string occupation = "Deliverer";
+        int securityLevel = 0;
 
-        Assert.Throws<ArgumentException>(() => new Deliverer(name, trustLevel, rules!),
-            "Expected ArgumentException for null rules to follow collection.");
+        Assert.Throws<ArgumentException>(() =>
+            new Deliverer(name, trustLevel, rules!, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -150,9 +179,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 10;
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
         int dealsMade = 10;
+        string occupation = "Distributor";
+        int securityLevel = 10;
 
-        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules, dealsMade),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Distributor(name, trustLevel, rules, dealsMade, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -161,9 +193,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = -1;
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
         int dealsMade = 10;
+        string occupation = "Distributor";
+        int securityLevel = 10;
 
-        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules, dealsMade),
-            "Expected ArgumentException for negative trust level.");
+        Assert.Throws<ArgumentException>(() =>
+            new Distributor(name, trustLevel, rules, dealsMade, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -172,9 +207,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 10;
         IList<string>? rules = null;
         int dealsMade = 10;
+        string occupation = "Distributor";
+        int securityLevel = 10;
 
-        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules!, dealsMade),
-            "Expected ArgumentException for null rules to follow collection.");
+        Assert.Throws<ArgumentException>(() =>
+            new Distributor(name, trustLevel, rules!, dealsMade, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -183,9 +221,12 @@ public class TestConstructorsInvalidInput {
         int trustLevel = 10;
         var rules = new List<string> { "No half-measures.", "Protect the formula." };
         int dealsMade = -1;
+        string occupation = "Distributor";
+        int securityLevel = 10;
 
-        Assert.Throws<ArgumentException>(() => new Distributor(name, trustLevel, rules, dealsMade),
-            "Expected ArgumentException for negative deals made.");
+        Assert.Throws<ArgumentException>(() =>
+            new Distributor(name, trustLevel, rules, dealsMade, occupation, securityLevel)
+        );
     }
 
     [Test]
@@ -195,8 +236,9 @@ public class TestConstructorsInvalidInput {
 
         int poundsOfProduct = 10;
 
-        Assert.Throws<ArgumentException>(() => new Deal(invalidStartDate, poundsOfProduct, endDate),
-            "Expected ArgumentException for deal start date earlier than year 1890.");
+        Assert.Throws<ArgumentException>(() =>
+            new Deal(invalidStartDate, poundsOfProduct, endDate)
+        );
     }
 
     [Test]
@@ -206,8 +248,9 @@ public class TestConstructorsInvalidInput {
 
         int poundsOfProduct = 10;
 
-        Assert.Throws<ArgumentException>(() => new Deal(startDate, poundsOfProduct, invalidEndDate),
-            "Expected ArgumentException for deal end date in the future.");
+        Assert.Throws<ArgumentException>(() =>
+            new Deal(startDate, poundsOfProduct, invalidEndDate)
+        );
     }
 
     [Test]
@@ -217,8 +260,9 @@ public class TestConstructorsInvalidInput {
 
         int invalidPoundsOfProduct = -10;
 
-        Assert.Throws<ArgumentException>(() => new Deal(startDate, invalidPoundsOfProduct, endDate),
-            "Expected ArgumentException for negative pounds of product.");
+        Assert.Throws<ArgumentException>(() =>
+            new Deal(startDate, invalidPoundsOfProduct, endDate)
+        );
     }
 
     [Test]
@@ -227,8 +271,9 @@ public class TestConstructorsInvalidInput {
         string name = "CAT320";
         string model = "2021";
 
-        Assert.Throws<ArgumentException>(() => new Equipment(type, name, model),
-            "Expected ArgumentException for an empty type.");
+        Assert.Throws<ArgumentException>(() =>
+            new Equipment(type, name, model)
+        );
     }
 
     [Test]
@@ -237,8 +282,9 @@ public class TestConstructorsInvalidInput {
         string name = "   ";
         string model = "2021";
 
-        Assert.Throws<ArgumentException>(() => new Equipment(type, name, model),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Equipment(type, name, model)
+        );
     }
 
     [Test]
@@ -247,8 +293,9 @@ public class TestConstructorsInvalidInput {
         string name = "CAT320";
         string model = "   ";
 
-        Assert.Throws<ArgumentException>(() => new Equipment(type, name, model),
-            "Expected ArgumentException for an empty model.");
+        Assert.Throws<ArgumentException>(() =>
+            new Equipment(type, name, model)
+        );
     }
 
     [Test]
@@ -258,8 +305,9 @@ public class TestConstructorsInvalidInput {
         string chemicalFormula = "H₂O";
         StateAttribute state = StateAttribute.Liquid;
 
-        Assert.Throws<ArgumentException>(() => new Ingredient(name, pricePerPound, chemicalFormula, state),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Ingredient(name, pricePerPound, chemicalFormula, state)
+        );
     }
 
     [Test]
@@ -269,8 +317,9 @@ public class TestConstructorsInvalidInput {
         string chemicalFormula = "H₂O";
         StateAttribute state = StateAttribute.Liquid;
 
-        Assert.Throws<ArgumentException>(() => new Ingredient(name, pricePerPound, chemicalFormula, state),
-            "Expected ArgumentException for negative price per pound.");
+        Assert.Throws<ArgumentException>(() =>
+            new Ingredient(name, pricePerPound, chemicalFormula, state)
+        );
     }
 
     [Test]
@@ -280,16 +329,18 @@ public class TestConstructorsInvalidInput {
         string chemicalFormula = "   ";
         StateAttribute state = StateAttribute.Liquid;
 
-        Assert.Throws<ArgumentException>(() => new Ingredient(name, pricePerPound, chemicalFormula, state),
-            "Expected ArgumentException for an empty chemical formula.");
+        Assert.Throws<ArgumentException>(() =>
+            new Ingredient(name, pricePerPound, chemicalFormula, state)
+        );
     }
 
     [Test]
     public void LaboratoryConstructorInvalidLocation() {
         string location = "   ";
 
-        Assert.Throws<ArgumentException>(() => new Laboratory(location),
-            "Expected ArgumentException for an empty location.");
+        Assert.Throws<ArgumentException>(() =>
+            new Laboratory(location)
+        );
     }
 
     [Test]
@@ -300,8 +351,9 @@ public class TestConstructorsInvalidInput {
         string position = "Manager";
         string department = "Operations";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules, position, department),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Official(name, trustLevel, rules, position, department)
+        );
     }
 
     [Test]
@@ -312,8 +364,9 @@ public class TestConstructorsInvalidInput {
         string position = "Manager";
         string department = "Operations";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules, position, department),
-            "Expected ArgumentException for negative trust level.");
+        Assert.Throws<ArgumentException>(() =>
+            new Official(name, trustLevel, rules, position, department)
+        );
     }
 
     [Test]
@@ -324,8 +377,9 @@ public class TestConstructorsInvalidInput {
         string position = "Manager";
         string department = "Operations";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules!, position, department),
-            "Expected ArgumentException for null rules to follow collection.");
+        Assert.Throws<ArgumentException>(() =>
+            new Official(name, trustLevel, rules!, position, department)
+        );
     }
 
     [Test]
@@ -336,8 +390,9 @@ public class TestConstructorsInvalidInput {
         string position = "   ";
         string department = "Operations";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules, position, department),
-            "Expected ArgumentException for an empty position.");
+        Assert.Throws<ArgumentException>(() =>
+            new Official(name, trustLevel, rules, position, department)
+        );
     }
 
     [Test]
@@ -348,8 +403,9 @@ public class TestConstructorsInvalidInput {
         string position = "Manager";
         string department = "   ";
 
-        Assert.Throws<ArgumentException>(() => new Official(name, trustLevel, rules, position, department),
-            "Expected ArgumentException for an empty department.");
+        Assert.Throws<ArgumentException>(() =>
+            new Official(name, trustLevel, rules, position, department)
+        );
     }
 
     [Test]
@@ -359,8 +415,9 @@ public class TestConstructorsInvalidInput {
         int pricePerPound = 1000;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new Product(name, weight, pricePerPound, addictivenessLevel)
+        );
     }
 
     [Test]
@@ -370,8 +427,9 @@ public class TestConstructorsInvalidInput {
         int pricePerPound = 1000;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
-            "Expected ArgumentException for negative price per pound.");
+        Assert.Throws<ArgumentException>(() =>
+            new Product(name, weight, pricePerPound, addictivenessLevel)
+        );
     }
 
     [Test]
@@ -381,8 +439,9 @@ public class TestConstructorsInvalidInput {
         int pricePerPound = -100;
         var addictivenessLevel = AddLevelAttribute.Strong;
 
-        Assert.Throws<ArgumentException>(() => new Product(name, weight, pricePerPound, addictivenessLevel),
-            "Expected ArgumentException for negative price per pound.");
+        Assert.Throws<ArgumentException>(() =>
+            new Product(name, weight, pricePerPound, addictivenessLevel)
+        );
     }
 
     [Test]
@@ -390,8 +449,9 @@ public class TestConstructorsInvalidInput {
         string name = "   ";
         int transitionTime = 10;
 
-        Assert.Throws<ArgumentException>(() => new SupplyChain(name, transitionTime),
-            "Expected ArgumentException for an empty name.");
+        Assert.Throws<ArgumentException>(() =>
+            new SupplyChain(name, transitionTime)
+        );
     }
 
     [Test]
@@ -399,8 +459,9 @@ public class TestConstructorsInvalidInput {
         string name = "Global Supply Chain";
         int transitionTime = -5;
 
-        Assert.Throws<ArgumentException>(() => new SupplyChain(name, transitionTime),
-            "Expected ArgumentException for negative transition time.");
+        Assert.Throws<ArgumentException>(() =>
+            new SupplyChain(name, transitionTime)
+        );
     }
 
     [Test]
@@ -408,8 +469,9 @@ public class TestConstructorsInvalidInput {
         string location = "   ";
         int maxCapacity = 1000;
 
-        Assert.Throws<ArgumentException>(() => new Warehouse(location, maxCapacity),
-            "Expected ArgumentException for an empty location.");
+        Assert.Throws<ArgumentException>(() =>
+            new Warehouse(location, maxCapacity)
+        );
     }
 
     [Test]
@@ -417,8 +479,9 @@ public class TestConstructorsInvalidInput {
         string location = "New York";
         int maxCapacity = -500;
 
-        Assert.Throws<ArgumentException>(() => new Warehouse(location, maxCapacity),
-            "Expected ArgumentException for negative maximum capacity.");
+        Assert.Throws<ArgumentException>(() =>
+            new Warehouse(location, maxCapacity)
+        );
     }
 
     [Test]
@@ -426,8 +489,9 @@ public class TestConstructorsInvalidInput {
         double commissionPercentage = -10;
         int monthlyCustomers = 100;
 
-        Assert.Throws<ArgumentException>(() => new Wholesaler(commissionPercentage, monthlyCustomers),
-            "Expected ArgumentException for negative commission percentage.");
+        Assert.Throws<ArgumentException>(() =>
+            new Wholesaler(commissionPercentage, monthlyCustomers)
+        );
     }
 
     [Test]
@@ -435,7 +499,8 @@ public class TestConstructorsInvalidInput {
         double commissionPercentage = 15.5;
         int monthlyCustomers = -5;
 
-        Assert.Throws<ArgumentException>(() => new Wholesaler(commissionPercentage, monthlyCustomers),
-            "Expected ArgumentException for negative monthly customers.");
+        Assert.Throws<ArgumentException>(() =>
+            new Wholesaler(commissionPercentage, monthlyCustomers)
+        );
     }
 }

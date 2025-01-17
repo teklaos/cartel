@@ -25,8 +25,21 @@ public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
         private set => _associatedProducts = value;
     }
 
-    public Chemist(string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked) :
-    base(name, trustLevel, rulesToFollow) {
+    public Chemist(
+        string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked,
+        string occupation, int securityLevel
+    ) : base(name, trustLevel, rulesToFollow, occupation, securityLevel) {
+        if (poundsCooked < 0)
+            throw new ArgumentException("Cooked pounds cannot be negative.");
+
+        PoundsCooked = poundsCooked;
+        _chemists.Add(this);
+    }
+
+    public Chemist(
+        string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked,
+        string position, string department
+    ) : base(name, trustLevel, rulesToFollow, position, department) {
         if (poundsCooked < 0)
             throw new ArgumentException("Cooked pounds cannot be negative.");
 

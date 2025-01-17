@@ -55,7 +55,7 @@ public class TestExceptionCases {
     [Test]
     public void TestRemoveDistributorInternallyThrowsExceptionWhenDistributorNotFound() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Distributor distributor = new("John", 1000, new List<string> { "Rule1" }, 10);
+        Distributor distributor = new("John", 1000, new List<string> { "Rule" }, 10, "Distributor", 10);
 
         var ex = Assert.Throws<ArgumentException>(() => warehouse.RemoveDistributorInternally(distributor));
         Assert.That(ex, Is.Not.Null);
@@ -65,7 +65,7 @@ public class TestExceptionCases {
     [Test]
     public void TestRemoveDelivererInternallyThrowsExceptionWhenDelivererNotFound() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Deliverer deliverer = new("Alice", 1000, new List<string> { "Rule1" });
+        Deliverer deliverer = new("Alice", 1000, new List<string> { "Rule" }, "Distributor", 10);
 
         var ex = Assert.Throws<ArgumentException>(() => warehouse.RemoveDelivererInternally(deliverer));
         Assert.That(ex, Is.Not.Null);
@@ -75,7 +75,7 @@ public class TestExceptionCases {
     [Test]
     public void TestRemoveDelivererThrowsExceptionWhenDelivererNotFound() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Deliverer deliverer = new("Alice", 1000, new List<string> { "Rule1" });
+        Deliverer deliverer = new("Alice", 1000, new List<string> { "Rule" }, "Distributor", 10);
 
         var ex = Assert.Throws<ArgumentException>(() => warehouse.RemoveDeliverer(deliverer));
         Assert.That(ex, Is.Not.Null);
@@ -84,7 +84,7 @@ public class TestExceptionCases {
     [Test]
     public void TestRemoveDistributorThrowsExceptionWhenDistributorNotFound() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Distributor distributor = new("John", 1000, new List<string> { "Rule1" }, 10);
+        Distributor distributor = new("John", 1000, new List<string> { "Rule" }, 10, "Distributor", 10);
 
         var ex = Assert.Throws<ArgumentException>(() => warehouse.RemoveDistributor(distributor));
         Assert.That(ex, Is.Not.Null);
@@ -147,7 +147,7 @@ public class TestExceptionCases {
     [Test]
     public void TestRemoveDelivererInternallyThrowsExceptionWhenDelivererNotFoundProduct() {
         Product product = new("Product 1", 10.0, 100, AddLevelAttribute.Strong);
-        Deliverer deliverer = new("Alice", 1000, new List<string> { "Rule1" });
+        Deliverer deliverer = new("Alice", 1000, new List<string> { "Rule" }, "Deliverer", 10);
 
         var ex = Assert.Throws<ArgumentException>(() => product.RemoveDelivererInternally(deliverer));
         Assert.That(ex, Is.Not.Null);

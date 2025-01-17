@@ -5,7 +5,8 @@ namespace ConsoleAppUnitTests;
 public class TestSerialization {
     [Test]
     public void SerializationWriteChemistToFile() {
-        _ = new Chemist("Heisenberg", 10, new List<string> { "No half measures.", "Respect the lab.", "Say my name." }, 50000);
+        var rules = new List<string> { "No half measures.", "Respect the lab.", "Say my name." };
+        _ = new Chemist("Heisenberg", 10, rules, 50000, "Teacher", 2);
 
         Chemist.Serialize();
         Assert.That(File.Exists("Chemists.json"), Is.True);
@@ -31,7 +32,8 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadChemistFromFile() {
-        _ = new Chemist("Gus Fring", 9, new List<string> { "Don’t get high on your own supply.", "Always be professional." }, 0);
+        var rules = new List<string> { "Don’t get high on your own supply.", "Always be professional." };
+        _ = new Chemist("Gus Fring", 9, rules, 0, "Manager", 10);
 
         Chemist.Serialize();
         Chemist.Deserialize();
@@ -49,7 +51,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializeAndDeserializeChemistIntegrity() {
-        var originalChemist = new Chemist("Saul Goodman", 6, new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." }, 0);
+        var rules = new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." };
+        var originalChemist = new Chemist("Saul Goodman", 6, rules, 0, "Lawyer", 8);
         Chemist.Serialize();
         Chemist.Deserialize();
         var deserializedChemist = Chemist.Chemists.Last();
@@ -65,7 +68,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteCitizenToFile() {
-        _ = new Citizen("Heisenberg", 10, new List<string> { "No half measures.", "Respect the lab.", "Say my name." }, "Cook", 2);
+        var rules = new List<string> { "No half measures.", "Respect the lab.", "Say my name." };
+        _ = new Citizen("Heisenberg", 10, rules, "Cook", 2);
 
         Citizen.Serialize();
         Assert.That(File.Exists("Citizens.json"), Is.True);
@@ -92,7 +96,8 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadCitizenFromFile() {
-        _ = new Citizen("Gus Fring", 9, new List<string> { "Don’t get high on your own supply.", "Always be professional." }, "Manager", 10);
+        var rules = new List<string> { "Don’t get high on your own supply.", "Always be professional." };
+        _ = new Citizen("Gus Fring", 9, rules, "Manager", 10);
 
         Citizen.Serialize();
         Citizen.Deserialize();
@@ -111,7 +116,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializeAndDeserializeCitizenIntegrity() {
-        var originalCitizen = new Citizen("Saul Goodman", 6, new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." }, "Lawyer", 8);
+        var rules = new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." };
+        var originalCitizen = new Citizen("Saul Goodman", 6, rules, "Lawyer", 8);
         Citizen.Serialize();
         Citizen.Deserialize();
         var deserializedCitizen = Citizen.Citizens.Last();
@@ -128,7 +134,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteDealerToFile() {
-        _ = new Dealer("South Valley", new List<string> { "Possession of Controlled Substance (Cocaine)." });
+        var criminalRecord = new List<string> { "Possession of Controlled Substance (Cocaine)." };
+        _ = new Dealer("South Valley", criminalRecord);
 
         Dealer.Serialize();
         Assert.That(File.Exists("Dealers.json"), Is.True);
@@ -142,7 +149,8 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadDealerFromFile() {
-        _ = new Dealer("North Valley", new List<string> { "Possession of Controlled Substance (Crystal Methamphetamine)." });
+        var criminalRecord = new List<string> { "Possession of Controlled Substance (Cannabis)." };
+        _ = new Dealer("North Valley", criminalRecord);
 
         Dealer.Serialize();
         Dealer.Deserialize();
@@ -150,15 +158,20 @@ public class TestSerialization {
 
         var deserializedDealer = Dealer.Dealers.Last();
         Assert.That(deserializedDealer, Is.Not.Null);
+        Console.WriteLine(deserializedDealer.CriminalRecord);
         Assert.Multiple(() => {
             Assert.That(deserializedDealer.Territory, Is.EqualTo("North Valley"));
-            Assert.That(deserializedDealer.CriminalRecord, Does.Contain("Possession of Controlled Substance (Crystal Methamphetamine)."));
+            Assert.That(
+                deserializedDealer.CriminalRecord,
+                Does.Contain("Possession of Controlled Substance (Cannabis).")
+            );
         });
     }
 
     [Test]
     public void SerializeAndDeserializeDealerIntegrity() {
-        var originalDealer = new Dealer("Rio Rancho", new List<string> { "Possession of Controlled Substance (Cannabis)." });
+        var criminalRecord = new List<string> { "Possession of Controlled Substance (Cannabis)." };
+        var originalDealer = new Dealer("Rio Rancho", criminalRecord);
 
         Dealer.Serialize();
         Dealer.Deserialize();
@@ -171,7 +184,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteDelivererToFile() {
-        _ = new Deliverer("Heisenberg", 10, new List<string> { "No half measures.", "Respect the lab.", "Say my name." });
+        var rules = new List<string> { "No half measures.", "Respect the lab.", "Say my name." };
+        _ = new Deliverer("Heisenberg", 10, rules, "Deliverer", 10);
 
         Deliverer.Serialize();
         Assert.That(File.Exists("Deliverers.json"), Is.True);
@@ -196,7 +210,8 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadDelivererFromFile() {
-        _ = new Deliverer("Gus Fring", 9, new List<string> { "Don’t get high on your own supply.", "Always be professional." });
+        var rules = new List<string> { "Don’t get high on your own supply.", "Always be professional." };
+        _ = new Deliverer("Gus Fring", 9, rules, "Manager", 10);
 
         Deliverer.Serialize();
         Deliverer.Deserialize();
@@ -213,7 +228,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializeAndDeserializeDelivererIntegrity() {
-        var originalDeliverer = new Deliverer("Saul Goodman", 6, new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." });
+        var rules = new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." };
+        var originalDeliverer = new Deliverer("Saul Goodman", 6, rules, "Lawyer", 8);
         Deliverer.Serialize();
         Deliverer.Deserialize();
         var deserializedDeliverer = Deliverer.Deliverers.Last();
@@ -228,7 +244,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteDistributorToFile() {
-        _ = new Distributor("Heisenberg", 10, new List<string> { "No half measures.", "Respect the lab.", "Say my name." }, 20);
+        var rules = new List<string> { "No half measures.", "Respect the lab.", "Say my name." };
+        _ = new Distributor("Heisenberg", 10, rules, 20, "Distributor", 10);
 
         Distributor.Serialize();
         Assert.That(File.Exists("Distributors.json"), Is.True);
@@ -254,7 +271,8 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadDistributorFromFile() {
-        _ = new Distributor("Gus Fring", 9, new List<string> { "Don’t get high on your own supply.", "Always be professional." }, 70000);
+        var rules = new List<string> { "Don’t get high on your own supply.", "Always be professional." };
+        _ = new Distributor("Gus Fring", 9, rules, 70000, "Manager", 10);
 
         Distributor.Serialize();
         Distributor.Deserialize();
@@ -272,7 +290,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializeAndDeserializeDistributorIntegrity() {
-        var originalDistributor = new Distributor("Saul Goodman", 6, new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." }, 0);
+        var rules = new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." };
+        var originalDistributor = new Distributor("Saul Goodman", 6, rules, 0, "Lawyer", 8);
         Distributor.Serialize();
         Distributor.Deserialize();
         var deserializedDistributor = Distributor.Distributors.Last();
@@ -501,7 +520,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteOfficialToFile() {
-        _ = new Official("Heisenberg", 10, new List<string> { "No half measures.", "Respect the lab.", "Say my name." }, "Cook", "Meth Lab");
+        var rules = new List<string> { "No half measures.", "Respect the lab.", "Say my name." };
+        _ = new Official("Heisenberg", 10, rules, "Cook", "Meth Lab");
 
         Official.Serialize();
         Assert.That(File.Exists("Officials.json"), Is.True);
@@ -526,7 +546,8 @@ public class TestSerialization {
 
     [Test]
     public void DeserializationLoadOfficialFromFile() {
-        _ = new Official("Gus Fring", 9, new List<string> { "Don’t get high on your own supply.", "Always be professional." }, "Manager", "Los Pollos Hermanos");
+        var rules = new List<string> { "Don’t get high on your own supply.", "Always be professional." };
+        _ = new Official("Gus Fring", 9, rules, "Manager", "Los Pollos Hermanos");
 
         Official.Serialize();
         Official.Deserialize();
@@ -545,7 +566,8 @@ public class TestSerialization {
 
     [Test]
     public void SerializeAndDeserializeOfficialIntegrity() {
-        var originalOfficial = new Official("Saul Goodman", 6, new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." }, "Lawyer", "Criminal Law");
+        var rules = new List<string> { "Don’t go to jail.", "Always lawyer up.", "Better call Saul." };
+        var originalOfficial = new Official("Saul Goodman", 6, rules, "Lawyer", "Criminal Law");
         Official.Serialize();
         Official.Deserialize();
         var deserializedOfficial = Official.Officials.Last();
@@ -791,9 +813,10 @@ public class TestSerialization {
         var directory = Directory.GetCurrentDirectory();
         var files = Directory.GetFiles(directory, "*.json");
         var whitelistedFilenames = new List<string>() {
-            "CartelMembers.json", "Chemists.json", "Citizens.json", "Dealers.json", "Deliverers.json", "Distributors.json",
-            "DistributorsCustomers.json", "Equipment.json", "Ingredients.json", "Instructions.json", "Laboratories.json",
-            "Officials.json", "Products.json", "Recipes.json", "SupplyChains.json", "Warehouses.json", "Wholesalers.json"
+            "CartelMembers.json", "Chemists.json", "Citizens.json", "Dealers.json", "Deliverers.json",
+            "Distributors.json", "DistributorsCustomers.json", "Equipment.json", "Ingredients.json",
+            "Instructions.json", "Laboratories.json", "Officials.json", "Products.json", "Recipes.json",
+            "SupplyChains.json", "Warehouses.json", "Wholesalers.json"
         };
         foreach (var file in files) {
             if (whitelistedFilenames.Contains(Path.GetFileName(file))) {

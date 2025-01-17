@@ -1,7 +1,7 @@
 namespace ConsoleApp.models;
 
 public class Dealer : Customer {
-    public Dealer(string territory, IList<string> criminalRecord) : base() {
+    public Dealer(string territory, IList<string>? criminalRecord) : base() {
         SetDealerProperties(territory, criminalRecord);
     }
     

@@ -25,16 +25,16 @@ public class Customer : IWholesaler, IDealer {
         private set => _customers = value;
     }
 
-    protected static IList<Customer> _dealers = new List<Customer>();
+    private static IList<Customer> _dealers = new List<Customer>();
     public static IList<Customer> Dealers {
         get => new List<Customer>(_dealers);
-        protected set => _dealers = value;
+        private set => _dealers = value;
     }
 
-    protected static IList<Customer> _wholesalers = new List<Customer>();
+    private static IList<Customer> _wholesalers = new List<Customer>();
     public static IList<Customer> Wholesalers {
         get => new List<Customer>(_wholesalers);
-        protected set => _wholesalers = value;
+        private set => _wholesalers = value;
     }
 
     private IList<CustomerRoleAttribute> _roles = new List<CustomerRoleAttribute>();
@@ -43,14 +43,14 @@ public class Customer : IWholesaler, IDealer {
         private set => _roles = value;
     }
 
-    public string? Territory { get; protected set; } = null!;
+    public string? Territory { get; private set; } = null!;
     private IList<string>? _criminalRecord = null!;
     public IList<string>? CriminalRecord {
         get => _criminalRecord == null ? null : new List<string>(_criminalRecord);
-        protected set => _criminalRecord = value;
+        private set => _criminalRecord = value;
     }
-    public double? CommissionPercentage { get; protected set; } = null!;
-    public int? MonthlyCustomers { get; protected set; } = null!;
+    public double? CommissionPercentage { get; private set; } = null!;
+    public int? MonthlyCustomers { get; private set; } = null!;
 
     private IList<Deal> _associatedDeals = new List<Deal>();
 
@@ -79,13 +79,7 @@ public class Customer : IWholesaler, IDealer {
         if (!Roles.Contains(CustomerRoleAttribute.Dealer))
             throw new InvalidOperationException("Customer is not a dealer.");
 
-        if (string.IsNullOrWhiteSpace(territory))
-            throw new ArgumentException("Territory cannot be null or whitespace.");
-        foreach (string record in criminalRecord ?? []) {
-            if (string.IsNullOrWhiteSpace(record))
-                throw new ArgumentException("Each record cannot be null or whitespace.");
-        }
-
+        ValidateDealerProperties(territory, criminalRecord);
         Territory = territory;
         CriminalRecord = criminalRecord;
     }
@@ -94,11 +88,7 @@ public class Customer : IWholesaler, IDealer {
         if (!Roles.Contains(CustomerRoleAttribute.Wholesaler))
             throw new InvalidOperationException("Customer is not a wholesaler.");
 
-        if (commissionPercentage < 0)
-            throw new ArgumentException("Commission percentage cannot be negative.");
-        if (monthlyCustomers < 0)
-            throw new ArgumentException("Amount of monthly customers cannot be negative.");
-
+        ValidateWholesalerProperties(commissionPercentage, monthlyCustomers);
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
     }
@@ -128,32 +118,16 @@ public class Customer : IWholesaler, IDealer {
         if (Roles.Contains(role))
             throw new ArgumentException($"Customer already has the {role} role.");
 
-        if (string.IsNullOrWhiteSpace(territory))
-            throw new ArgumentException("Territory cannot be null or empty.");
-        foreach (string record in criminalRecord ?? []) {
-            if (string.IsNullOrWhiteSpace(record))
-                throw new ArgumentException("Criminal record cannot be null or empty.");
-        }
-
-        Territory = territory;
-        CriminalRecord = criminalRecord;
+        SetDealerProperties(territory, criminalRecord);
         _roles.Add(role);
-        _dealers.Add(this);
     }
 
     public void AddRole(CustomerRoleAttribute role, double commissionPercentage, int monthlyCustomers) {
         if (Roles.Contains(role))
             throw new ArgumentException($"Customer already has the {role} role.");
 
-        if (commissionPercentage < 0)
-            throw new ArgumentException("Commission percentage cannot be negative.");
-        if (monthlyCustomers < 0)
-            throw new ArgumentException("Monthly customers cannot be negative.");
-
-        CommissionPercentage = commissionPercentage;
-        MonthlyCustomers = monthlyCustomers;
+        SetWholesalerProperties(commissionPercentage, monthlyCustomers);
         _roles.Add(role);
-        _wholesalers.Add(this);
     }
 
     public void RemoveRole(CustomerRoleAttribute role) {
@@ -178,30 +152,20 @@ public class Customer : IWholesaler, IDealer {
     }
 
     protected void SetDealerProperties(string territory, IList<string>? criminalRecord) {
-        if (string.IsNullOrWhiteSpace(territory))
-            throw new ArgumentException("Territory cannot be null or empty.");
-        foreach (string record in criminalRecord ?? []) {
-            if (string.IsNullOrWhiteSpace(record))
-                throw new ArgumentException("Criminal record cannot be null or empty.");
-        }
-
+        ValidateDealerProperties(territory, criminalRecord);
         Territory = territory;
         CriminalRecord = criminalRecord;
         _dealers.Add(this);
     }
 
     protected void SetWholesalerProperties(double commissionPercentage, int monthlyCustomers) {
-        if (commissionPercentage < 0)
-            throw new ArgumentException("Commission percentage cannot be negative.");
-        if (monthlyCustomers < 0)
-            throw new ArgumentException("Monthly customers cannot be negative.");
-
+        ValidateWholesalerProperties(commissionPercentage, monthlyCustomers);
         CommissionPercentage = commissionPercentage;
         MonthlyCustomers = monthlyCustomers;
         _wholesalers.Add(this);
     }
 
-    private void ClearRoleProperties(CustomerRoleAttribute role) {
+    protected void ClearRoleProperties(CustomerRoleAttribute role) {
         switch (role) {
             case CustomerRoleAttribute.Dealer:
                 Territory = null;
@@ -216,6 +180,22 @@ public class Customer : IWholesaler, IDealer {
             default:
                 throw new ArgumentException("Invalid role.");
         }
+    }
+
+    private static void ValidateDealerProperties(string territory, IList<string>? criminalRecord) {
+        if (string.IsNullOrWhiteSpace(territory))
+            throw new ArgumentException("Territory cannot be null or empty.");
+        foreach (string record in criminalRecord ?? []) {
+            if (string.IsNullOrWhiteSpace(record))
+                throw new ArgumentException("Criminal record cannot be null or empty.");
+        }
+    }
+
+    private static void ValidateWholesalerProperties(double commissionPercentage, int monthlyCustomers) {
+        if (commissionPercentage < 0)
+            throw new ArgumentException("Commission percentage cannot be negative.");
+        if (monthlyCustomers < 0)
+            throw new ArgumentException("Monthly customers cannot be negative.");
     }
 
     public void AddDeal(Deal deal) {
@@ -244,7 +224,7 @@ public class Customer : IWholesaler, IDealer {
 
     public static void Serialize() {
         IList<string> fileNames = ["Customers.json", "Dealers.json", "Wholesalers.json"];
-        IList<object> lists = [Customers, Dealers, Wholesalers];
+        IList<IList<Customer>> lists = [Customers, Dealers, Wholesalers];
         for (int i = 0; i < fileNames.Count; i++) {
             try {
                 string jsonString = JsonSerializer.Serialize(lists[i], AppConfig.JsonOptions);
@@ -257,7 +237,7 @@ public class Customer : IWholesaler, IDealer {
 
     public static void Deserialize() {
         IList<string> fileNames = ["Customers.json", "Dealers.json", "Wholesalers.json"];
-        IList<object> lists = [Customers, Dealers, Wholesalers];
+        IList<IList<Customer>> lists = [Customers, Dealers, Wholesalers];
         for (int i = 0; i < fileNames.Count; i++) {
             try {
                 string jsonString = File.ReadAllText(fileNames[i]);
