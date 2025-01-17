@@ -22,6 +22,16 @@ public class Instruction {
         _instructions.Add(this);
     }
 
+    public Instruction(string action, Ingredient? ingredient) {
+        Action = action;
+        _instructions.Add(this);
+
+        if (ingredient != null)
+            AddIngredient(ingredient);
+        else
+            AddIngredient(new Ingredient("Ammonia", 10, "NH3", StateAttribute.Liquid));
+    }
+
     public static IList<string> GetActions() =>
         Instructions.Select(instruction => instruction.Action).ToList();
 

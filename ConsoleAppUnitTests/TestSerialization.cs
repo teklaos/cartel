@@ -384,18 +384,18 @@ public class TestSerialization {
 
     [Test]
     public void SerializationWriteInstructionToFile() {
-        _ = new Instruction("Stir");
+        _ = new Instruction("Stir.");
 
         Instruction.Serialize();
         Assert.That(File.Exists("Instructions.json"), Is.True);
 
         var jsonContent = File.ReadAllText("Instructions.json");
-        Assert.That(jsonContent, Does.Contain("Stir"));
+        Assert.That(jsonContent, Does.Contain("Stir."));
     }
 
     [Test]
     public void DeserializationLoadInstructionFromFile() {
-        _ = new Instruction("Stir");
+        _ = new Instruction("Stir.");
 
         Instruction.Serialize();
         Instruction.Deserialize();
@@ -403,12 +403,12 @@ public class TestSerialization {
 
         var deserializedInstruction = Instruction.Instructions.Last();
         Assert.That(deserializedInstruction, Is.Not.Null);
-        Assert.That(deserializedInstruction.Action, Is.EqualTo("Stir"));
+        Assert.That(deserializedInstruction.Action, Is.EqualTo("Stir."));
     }
 
     [Test]
     public void SerializeAndDeserializeInstructionIntegrity() {
-        var originalInstruction = new Instruction("Stir");
+        var originalInstruction = new Instruction("Stir.");
         Instruction.Serialize();
         Instruction.Deserialize();
         var deserializedInstruction = Instruction.Instructions.Last();
