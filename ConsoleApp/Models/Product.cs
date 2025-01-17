@@ -11,7 +11,7 @@ public enum AddLevelAttribute {
 public class Product {
     private static IList<Product> _products = new List<Product>();
     public static IList<Product> Products {
-        get => new List<Product>(_products);
+        get => _products.ToList();
         private set => _products = value;
     }
 
