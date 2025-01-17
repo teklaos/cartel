@@ -5,13 +5,15 @@ namespace ConsoleApp.models;
 public class Equipment {
     private static IList<Equipment> _equipmentList = new List<Equipment>();
     public static IList<Equipment> EquipmentList {
-        get => new List<Equipment>(_equipmentList);
+        get => _equipmentList.ToList();
         private set => _equipmentList = value;
     }
+
+    public Laboratory? AssociatedLaboratory { get; private set; }
+
     public string Type { get; private set; }
     public string Name { get; private set; }
     public string Model { get; private set; }
-    public Laboratory? AssociatedLaboratory { get; private set; }
 
     public Equipment(string type, string name, string model) {
         if (string.IsNullOrWhiteSpace(type))

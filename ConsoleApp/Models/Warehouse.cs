@@ -5,29 +5,30 @@ namespace ConsoleApp.models;
 public class Warehouse {
     private static IList<Warehouse> _warehouses = new List<Warehouse>();
     public static IList<Warehouse> Warehouses {
-        get => new List<Warehouse>(_warehouses);
+        get => _warehouses.ToList();
         private set => _warehouses = value;
     }
-    public string Location { get; private set; }
-    public int MaxCapacity { get; private set; }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
-        get => new List<Product>(_associatedProducts);
+        get => _associatedProducts.ToList();
         private set => _associatedProducts = value;
     }
 
     public IList<Distributor> _associatedDistributors = new List<Distributor>();
     public IList<Distributor> AssociatedDistributors {
-        get => new List<Distributor>(_associatedDistributors);
+        get => _associatedDistributors.ToList();
         private set => _associatedDistributors = value;
     }
 
     private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
     public IList<Deliverer> AssociatedDeliverers {
-        get => new List<Deliverer>(_associatedDeliverers);
+        get => _associatedDeliverers.ToList();
         private set => _associatedDeliverers = value;
     }
+
+    public string Location { get; private set; }
+    public int MaxCapacity { get; private set; }
 
     public Warehouse(string location, int maxCapacity) {
         if (string.IsNullOrWhiteSpace(location))

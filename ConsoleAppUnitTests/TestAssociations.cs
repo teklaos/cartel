@@ -83,7 +83,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDelivererAddProduct() {
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         deliverer.AddProduct(product);
@@ -93,7 +93,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDelivererRemoveProduct() {
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddDeliverer(deliverer);
@@ -104,7 +104,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDelivererEditProduct() {
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
         Product oldProduct = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new Product("Meth", 101, 1000, AddLevelAttribute.Strong);
 
@@ -123,7 +123,7 @@ public class TestAssociations {
     [Test]
     public void TestProductAddDeliverer() {
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
 
         product.AddDeliverer(deliverer);
 
@@ -133,7 +133,7 @@ public class TestAssociations {
     [Test]
     public void TestProductRemoveDeliverer() {
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
 
         deliverer.AddProduct(product);
         product.RemoveDeliverer(deliverer);
@@ -144,8 +144,8 @@ public class TestAssociations {
     [Test]
     public void TestProductEditDeliverer() {
         Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."]);
-        Deliverer oldDeliverer = new("Mike", 11, ["Do not kill customers."]);
+        Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
+        Deliverer oldDeliverer = new("Mike", 11, ["Do not kill customers."], "Deliverer", 10);
 
         product.AddDeliverer(oldDeliverer);
 
@@ -161,9 +161,9 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistAddProduct() {
-        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
-        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
+        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddChemists(ch1, ch2);
@@ -174,9 +174,9 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistRemoveProduct() {
-        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
-        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
+        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddChemists(ch1, ch2, chemist);
@@ -187,9 +187,9 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistEditProduct() {
-        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
-        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
+        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
         Product oldProduct = new("Meth", 100, 1000, AddLevelAttribute.Strong);
         Product newProduct = new("Meth", 101, 1000, AddLevelAttribute.Strong);
 
@@ -209,8 +209,8 @@ public class TestAssociations {
 
     [Test]
     public void TestProductAddChemist() {
-        Chemist chemist1 = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist chemist2 = new("Danny", 10, ["Do not steal meth."], 90);
+        Chemist chemist1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist chemist2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddChemists(chemist1, chemist2);
@@ -223,9 +223,9 @@ public class TestAssociations {
 
     [Test]
     public void TestProductRemoveChemist() {
-        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
-        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90);
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
+        Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
         Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
 
         product.AddChemists(ch1, ch2);
@@ -238,11 +238,10 @@ public class TestAssociations {
     [Test]
     public void TestProductEditChemist() {
         Product product = new Product("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120);
-        Chemist newChemist = new("Danny", 10, ["Do not steal meth."], 90);
-        Chemist oldChemist = new("Danny", 11, ["Do not steal meth."], 90);
-
+        Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
+        Chemist newChemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
+        Chemist oldChemist = new("Danny", 9, ["Do not steal meth."], 90, "Chemist", 5);
         product.AddChemists(ch1, ch2);
         product.AddChemists(oldChemist);
 
@@ -416,7 +415,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDistributorAddWarehouse() {
-        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15, "Distributor", 10);
         Warehouse warehouse = new("Madelyn", 500);
 
         distributor.AddWarehouse(warehouse);
@@ -426,7 +425,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDistributorRemoveWarehouse() {
-        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15, "Distributor", 10);
         Warehouse warehouse = new("Madelyn", 500);
 
         warehouse.AddDistributor(distributor);
@@ -437,7 +436,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDistributorEditWarehouse() {
-        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15, "Distributor", 10);
         Warehouse newWarehouse = new("Madelyn", 500);
         Warehouse oldWarehouse = new("Madelyn", 501);
 
@@ -455,7 +454,7 @@ public class TestAssociations {
 
     [Test]
     public void TestWarehouseAddDistributor() {
-        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15, "Distributor", 10);
         Warehouse warehouse = new("Madelyn", 500);
 
         warehouse.AddDistributor(distributor);
@@ -465,7 +464,7 @@ public class TestAssociations {
 
     [Test]
     public void TestWarehouseRemoveDistributor() {
-        Distributor distributor = new("Danny", 10, ["Don't steal"], 15);
+        Distributor distributor = new("Danny", 10, ["Don't steal"], 15, "Distributor", 10);
         Warehouse warehouse = new("Madelyn", 500);
 
         distributor.AddWarehouse(warehouse);
@@ -477,8 +476,8 @@ public class TestAssociations {
     [Test]
     public void TestWarehouseEditDistributor() {
         Warehouse warehouse = new("Madelyn", 500);
-        Distributor oldDistributor = new("Danny", 10, ["Don't steal"], 15);
-        Distributor newDistributor = new("Danny", 11, ["Don't steal"], 15);
+        Distributor oldDistributor = new("Danny", 10, ["Don't steal"], 15, "Distributor", 10);
+        Distributor newDistributor = new("Danny", 9, ["Don't steal"], 15, "Distributor", 10);
 
         warehouse.AddDistributor(oldDistributor);
 
@@ -649,7 +648,7 @@ public class TestAssociations {
     [Test]
     public void TestWarehouseAddDeliverer() {
         Warehouse warehouse = new("Madelyn", 500);
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
 
         warehouse.AddDeliverer(deliverer);
 
@@ -659,7 +658,7 @@ public class TestAssociations {
     [Test]
     public void TestWarehouseRemoveDeliverer() {
         Warehouse warehouse = new("Madelyn", 500);
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
 
         deliverer.AddWarehouse(warehouse);
         warehouse.RemoveDeliverer(deliverer);
@@ -670,8 +669,8 @@ public class TestAssociations {
     [Test]
     public void TestWarehouseEditDeliverer() {
         Warehouse warehouse = new("Warsaw, Praga", 1000);
-        Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."]);
-        Deliverer oldDeliverer = new("Mike", 11, ["Do not kill customers."]);
+        Deliverer newDeliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
+        Deliverer oldDeliverer = new("Mike", 9, ["Do not kill customers."], "Deliverer", 10);
 
         warehouse.AddDeliverer(oldDeliverer);
 
@@ -688,7 +687,7 @@ public class TestAssociations {
     [Test]
     public void TestDelivererAddWarehouse() {
         Warehouse warehouse = new("Madelyn", 500);
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
 
         deliverer.AddWarehouse(warehouse);
 
@@ -698,7 +697,7 @@ public class TestAssociations {
     [Test]
     public void TestDelivererRemoveWarehouse() {
         Warehouse warehouse = new("Madelyn", 500);
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
 
         warehouse.AddDeliverer(deliverer);
         deliverer.RemoveWarehouse(warehouse);
@@ -708,7 +707,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDelivererEditWarehouse() {
-        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."]);
+        Deliverer deliverer = new("Mike", 10, ["Do not kill customers."], "Deliverer", 10);
         Warehouse newWarehouse = new("Warsaw, Praga", 1000);
         Warehouse oldWarehouse = new("Warsaw, Praga", 1001);
 
@@ -894,8 +893,8 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistAddSupervisedChemist() {
-        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist supervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120);
+        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist supervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
 
         chemist.AddSelfAssociation(supervisedChemist);
 
@@ -907,8 +906,8 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistRemoveSupervisedChemist() {
-        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist supervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120);
+        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist supervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
 
         chemist.AddSelfAssociation(supervisedChemist);
         chemist.RemoveSelfAssociation(supervisedChemist);
@@ -921,9 +920,9 @@ public class TestAssociations {
 
     [Test]
     public void TestChemistEditSupervisedChemist() {
-        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000);
-        Chemist oldSupervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120);
-        Chemist newSupervisedChemist = new("Jesse", 9, ["Do not steal meth."], 120);
+        Chemist chemist = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
+        Chemist oldSupervisedChemist = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
+        Chemist newSupervisedChemist = new("Jesse", 9, ["Do not steal meth."], 120, "N/A", 0);
 
         chemist.AddSelfAssociation(oldSupervisedChemist);
 
@@ -1031,7 +1030,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDistributorAddDeal() {
-        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15, "Distributor", 10);
         Deal deal = new(new DateTime(2024, 12, 11), 500, null);
         string customerId = "001";
 
@@ -1042,7 +1041,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDistributorRemoveCustomer() {
-        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15, "Distributor", 10);
         Deal deal = new(new DateTime(2024, 12, 11), 500, null);
         string customerId = "001";
 
@@ -1054,7 +1053,7 @@ public class TestAssociations {
 
     [Test]
     public void TestDistributorEditCustomer() {
-        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15, "Distributor", 10);
         Deal oldDeal = new(new DateTime(2024, 12, 11), 500, null);
         Deal newDeal = new(new DateTime(2024, 12, 11), 501, null);
         string customerId = "001";
@@ -1074,7 +1073,7 @@ public class TestAssociations {
     [Test]
     public void TestDealAddDistributor() {
         Deal deal = new(new DateTime(2024, 12, 11), 500, null);
-        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15, "Distributor", 10);
         string customerId = "001";
 
         deal.AddDistributor(distributor, customerId);
@@ -1085,7 +1084,7 @@ public class TestAssociations {
     [Test]
     public void TestDealRemoveDistributor() {
         Deal deal = new(new DateTime(2024, 12, 11), 500, null);
-        Distributor distributor = new("Mike", 10, ["Be polite."], 15);
+        Distributor distributor = new("Mike", 10, ["Be polite."], 15, "Distributor", 10);
         string customerId = "001";
 
         deal.AddDistributor(distributor, customerId);
@@ -1097,8 +1096,8 @@ public class TestAssociations {
     [Test]
     public void TestDealEditDistributor() {
         Deal deal = new(new DateTime(2024, 12, 11), 500, null);
-        Distributor newDistributor = new("Mike", 9, ["Be polite."], 15);
-        Distributor oldDistributor = new("Mike", 10, ["Be polite."], 15);
+        Distributor newDistributor = new("Mike", 9, ["Be polite."], 15, "Distributor", 10);
+        Distributor oldDistributor = new("Mike", 10, ["Be polite."], 15, "Distributor", 10);
         string customerId = "001";
 
         deal.AddDistributor(oldDistributor, customerId);

@@ -6,25 +6,25 @@ namespace ConsoleApp.models;
 public class Laboratory : ICompositionAssociation<Equipment> {
     private static IList<Laboratory> _laboratories = new List<Laboratory>();
     public static IList<Laboratory> Laboratories {
-        get => new List<Laboratory>(_laboratories);
+        get => _laboratories.ToList();
         private set => _laboratories = value;
     }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
-        get => new List<Product>(_associatedProducts);
+        get => _associatedProducts.ToList();
         private set => _associatedProducts = value;
     }
 
     private IList<Ingredient> _associatedIngredients = new List<Ingredient>();
     public IList<Ingredient> AssociatedIngredients {
-        get => new List<Ingredient>(_associatedIngredients);
+        get => _associatedIngredients.ToList();
         private set => _associatedIngredients = value;
     }
 
     private IList<Equipment> _associatedEquipment = new List<Equipment>();
     public IList<Equipment> AssociatedEquipment {
-        get => new List<Equipment>(_associatedEquipment);
+        get => _associatedEquipment.ToList();
         private set => _associatedEquipment = value;
     }
 

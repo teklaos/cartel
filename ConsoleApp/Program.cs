@@ -16,9 +16,9 @@ public class Program {
         Product Meth = new("Meth", 15, 10000, AddLevelAttribute.Strong);
         Product Cocaine = new("Cocaine", 15, 5000, AddLevelAttribute.Weak);
 
-        Chemist Walter = new("Walter", 5, ["Follow the leader."], 10000);
-        Chemist Jesse = new("Jesse", 7, ["Follow the leader."], 5000);
-        Chemist Gale = new("Gale", 9, ["Follow the leader"], 2500);
+        Chemist Walter = new("Walter", 5, ["Follow the leader."], 10000, "Teacher", 2);
+        Chemist Jesse = new("Jesse", 7, ["Follow the leader."], 5000, "N/A", 0);
+        Chemist Gale = new("Gale", 9, ["Follow the leader"], 2500, "Chemist", 5);
 
 
 
@@ -95,7 +95,7 @@ public class Program {
     }
 
     public static void TestDealDistributor() {
-        Distributor Distributor = new("Mike", 10, ["Follow the rules."], 250);
+        Distributor Distributor = new("Mike", 10, ["Follow the rules."], 250, "Distributor", 10);
         Deal DealA = new(new DateTime(2024, 12, 01, 04, 20, 31), 150, null);
         Deal DealB = new(new DateTime(2024, 12, 11, 16, 45, 24), 250, null);
         string CustomerId = "Black-Eagle";
@@ -154,26 +154,5 @@ public class Program {
 
     public static string CustomerDealDates(IDictionary<string, List<Deal>> dictionary, string key) {
         return string.Join(", ", dictionary[key].Select(deal => deal.StartDate.ToString("dd/MM/yyyy")));
-    }
-
-    public static void TestStartBatch() {
-        Recipe recipe = new("Cocaine");
-        Laboratory lab = new("Los Angeles");
-        Chemist walter = new("Walter", 5, ["Follow the leader"], 10000);
-        Chemist jesse = new("Jesse", 7, ["Follow the leader"], 5000);
-
-        Product product = Product.StartBatch(
-            "Cocaine", 15, 5000, AddLevelAttribute.Weak,
-            "Cocaine", "Los Angeles", "Walter", "Jesse"
-        );
-
-        product.CompleteBatch();
-    }
-
-    public static void TestStartDeal() {
-        Distributor distributor = new("Mike", 10, ["Follow the rules."], 250);
-        Customer customer = new();
-        var deal = Deal.StartDeal(new DateTime(2024, 12, 01), 150, distributor, customer, "Black-Eagle");
-        deal.CloseDeal();
     }
 }

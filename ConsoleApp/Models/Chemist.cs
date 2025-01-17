@@ -6,27 +6,41 @@ namespace ConsoleApp.models;
 public class Chemist : CartelMember, IReflexiveAssociation<Chemist> {
     private static IList<Chemist> _chemists = new List<Chemist>();
     public static IList<Chemist> Chemists {
-        get => new List<Chemist>(_chemists);
+        get => _chemists.ToList();
         private set => _chemists = value;
     }
-    public int PoundsCooked { get; private set; }
 
     public Chemist? Supervisor { get; private set; }
 
     private IList<Chemist> _supervisedChemists = new List<Chemist>();
     public IList<Chemist> SupervisedChemists {
-        get => new List<Chemist>(_supervisedChemists);
+        get => _supervisedChemists.ToList();
         private set => _supervisedChemists = value;
     }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
-        get => new List<Product>(_associatedProducts);
+        get => _associatedProducts.ToList();
         private set => _associatedProducts = value;
     }
 
-    public Chemist(string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked) :
-    base(name, trustLevel, rulesToFollow) {
+    public int PoundsCooked { get; private set; }
+
+    public Chemist(
+        string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked,
+        string occupation, int securityLevel
+    ) : base(name, trustLevel, rulesToFollow, occupation, securityLevel) {
+        if (poundsCooked < 0)
+            throw new ArgumentException("Cooked pounds cannot be negative.");
+
+        PoundsCooked = poundsCooked;
+        _chemists.Add(this);
+    }
+
+    public Chemist(
+        string name, int trustLevel, IList<string> rulesToFollow, int poundsCooked,
+        string position, string department
+    ) : base(name, trustLevel, rulesToFollow, position, department) {
         if (poundsCooked < 0)
             throw new ArgumentException("Cooked pounds cannot be negative.");
 

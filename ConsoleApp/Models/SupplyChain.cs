@@ -5,17 +5,18 @@ namespace ConsoleApp.models;
 public class SupplyChain {
     private static IList<SupplyChain> _supplyChains = new List<SupplyChain>();
     public static IList<SupplyChain> SupplyChains {
-        get => new List<SupplyChain>(_supplyChains);
+        get => _supplyChains.ToList();
         private set => _supplyChains = value;
     }
-    public string Name { get; private set; }
-    public int TransitionTime { get; private set; }
 
     private IList<Ingredient> _associatedIngredients = new List<Ingredient>();
     public IList<Ingredient> AssociatedIngredients {
-        get => new List<Ingredient>(_associatedIngredients);
+        get => _associatedIngredients.ToList();
         private set => _associatedIngredients = value;
     }
+
+    public string Name { get; private set; }
+    public int TransitionTime { get; private set; }
 
     public SupplyChain(string name, int transitionTime) {
         if (string.IsNullOrWhiteSpace(name))

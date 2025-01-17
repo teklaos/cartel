@@ -5,14 +5,13 @@ namespace ConsoleApp.models;
 public class Distributor : CartelMember {
     private static IList<Distributor> _distributors = new List<Distributor>();
     public static IList<Distributor> Distributors {
-        get => new List<Distributor>(_distributors);
+        get => _distributors.ToList();
         private set => _distributors = value;
     }
-    public int DealsMade { get; private set; }
 
     private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
     public IList<Warehouse> AssociatedWarehouses {
-        get => new List<Warehouse>(_associatedWarehouses);
+        get => _associatedWarehouses.ToList();
         private set => _associatedWarehouses = value;
     }
 
@@ -22,8 +21,23 @@ public class Distributor : CartelMember {
         private set => _associatedDeals = value;
     }
 
-    public Distributor(string name, int trustLevel, IList<string> rulesToFollow, int dealsMade) :
-    base(name, trustLevel, rulesToFollow) {
+    public int DealsMade { get; private set; }
+
+    public Distributor(
+        string name, int trustLevel, IList<string> rulesToFollow, int dealsMade,
+        string occupation, int securityLevel
+    ) : base(name, trustLevel, rulesToFollow, occupation, securityLevel) {
+        if (dealsMade < 0)
+            throw new ArgumentException("Made deals cannot be negative.");
+
+        DealsMade = dealsMade;
+        _distributors.Add(this);
+    }
+
+    public Distributor(
+        string name, int trustLevel, IList<string> rulesToFollow, int dealsMade,
+        string position, string department
+    ) : base(name, trustLevel, rulesToFollow, position, department) {
         if (dealsMade < 0)
             throw new ArgumentException("Made deals cannot be negative.");
 
