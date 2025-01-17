@@ -21,26 +21,33 @@ public static class CustomerRoleExtensions {
 public class Customer : IWholesaler, IDealer {
     private static IList<Customer> _customers = new List<Customer>();
     public static IList<Customer> Customers {
-        get => new List<Customer>(_customers);
+        get => _customers.ToList();
         private set => _customers = value;
     }
 
     private static IList<Customer> _dealers = new List<Customer>();
     public static IList<Customer> Dealers {
-        get => new List<Customer>(_dealers);
+        get => _dealers.ToList();
         private set => _dealers = value;
     }
 
     private static IList<Customer> _wholesalers = new List<Customer>();
     public static IList<Customer> Wholesalers {
-        get => new List<Customer>(_wholesalers);
+        get => _wholesalers.ToList();
         private set => _wholesalers = value;
     }
 
     private IList<CustomerRoleAttribute> _roles = new List<CustomerRoleAttribute>();
     public IList<CustomerRoleAttribute> Roles {
-        get => new List<CustomerRoleAttribute>(_roles);
+        get => _roles.ToList();
         private set => _roles = value;
+    }
+
+    private IList<Deal> _associatedDeals = new List<Deal>();
+
+    public IList<Deal> AssociatedDeals {
+        get => _associatedDeals.ToList();
+        private set => _associatedDeals = value;
     }
 
     public string? Territory { get; private set; } = null!;
@@ -51,13 +58,6 @@ public class Customer : IWholesaler, IDealer {
     }
     public double? CommissionPercentage { get; private set; } = null!;
     public int? MonthlyCustomers { get; private set; } = null!;
-
-    private IList<Deal> _associatedDeals = new List<Deal>();
-
-    public IList<Deal> AssociatedDeals {
-        get => new List<Deal>(_associatedDeals);
-        private set => _associatedDeals = value;
-    }
 
     public Customer() =>
         _customers.Add(this);

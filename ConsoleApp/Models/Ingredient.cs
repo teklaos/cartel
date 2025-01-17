@@ -11,17 +11,13 @@ public enum StateAttribute {
 public class Ingredient {
     private static IList<Ingredient> _ingredients = new List<Ingredient>();
     public static IList<Ingredient> Ingredients {
-        get => new List<Ingredient>(_ingredients);
+        get => _ingredients.ToList();
         private set => _ingredients = value;
     }
-    public string Name { get; private set; }
-    public int PricePerPound { get; private set; }
-    public string ChemicalFormula { get; private set; }
-    public StateAttribute State { get; private set; }
 
     private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
     public IList<Laboratory> AssociatedLaboratories {
-        get => new List<Laboratory>(_associatedLaboratories);
+        get => _associatedLaboratories.ToList();
         private set => _associatedLaboratories = value;
     }
 
@@ -29,9 +25,14 @@ public class Ingredient {
 
     private IList<Instruction> _associatedInstructions = new List<Instruction>();
     public IList<Instruction> AssociatedInstructions {
-        get => new List<Instruction>(_associatedInstructions);
+        get => _associatedInstructions.ToList();
         private set => _associatedInstructions = value;
     }
+
+    public string Name { get; private set; }
+    public int PricePerPound { get; private set; }
+    public string ChemicalFormula { get; private set; }
+    public StateAttribute State { get; private set; }
 
     public Ingredient(string name, int pricePerPound, string chemicalFormula, StateAttribute state) {
         if (string.IsNullOrWhiteSpace(name))

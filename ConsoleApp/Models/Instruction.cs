@@ -5,7 +5,7 @@ namespace ConsoleApp.models;
 public class Instruction {
     private static IList<Instruction> _instructions = new List<Instruction>();
     public static IList<Instruction> Instructions {
-        get => new List<Instruction>(_instructions);
+        get => _instructions.ToList();
         private set => _instructions = value;
     }
     public string Action { get; private set; }
@@ -13,7 +13,7 @@ public class Instruction {
     public Recipe? AssociatedRecipe { get; private set; }
     private IList<Ingredient> _associatedIngredients = new List<Ingredient>();
     public IList<Ingredient> AssociatedIngredients {
-        get => new List<Ingredient>(_associatedIngredients);
+        get => _associatedIngredients.ToList();
         private set => _associatedIngredients = value;
     }
 

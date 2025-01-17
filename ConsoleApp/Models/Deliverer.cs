@@ -5,25 +5,25 @@ namespace ConsoleApp.models;
 public class Deliverer : CartelMember {
     private static IList<Deliverer> _deliverers = new List<Deliverer>();
     public static IList<Deliverer> Deliverers {
-        get => new List<Deliverer>(_deliverers);
+        get => _deliverers.ToList();
         private set => _deliverers = value;
     }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
-        get => new List<Product>(_associatedProducts);
+        get => _associatedProducts.ToList();
         private set => _associatedProducts = value;
     }
 
     private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
     public IList<Warehouse> AssociatedWarehouses {
-        get => new List<Warehouse>(_associatedWarehouses);
+        get => _associatedWarehouses.ToList();
         private set => _associatedWarehouses = value;
     }
 
     public Deliverer(string name, int trustLevel, IList<string> rulesToFollow, string occupation, int securityLevel) :
- base(name, trustLevel, rulesToFollow, occupation, securityLevel) =>
-     _deliverers.Add(this);
+    base(name, trustLevel, rulesToFollow, occupation, securityLevel) =>
+        _deliverers.Add(this);
 
     public Deliverer(string name, int trustLevel, IList<string> rulesToFollow, string position, string department) :
     base(name, trustLevel, rulesToFollow, position, department) =>

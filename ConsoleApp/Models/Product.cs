@@ -14,6 +14,40 @@ public class Product {
         get => new List<Product>(_products);
         private set => _products = value;
     }
+
+    private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
+    public IList<Warehouse> AssociatedWarehouses {
+        get => _associatedWarehouses.ToList();
+        private set => _associatedWarehouses = value;
+    }
+
+    private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
+    public IList<Deliverer> AssociatedDeliverers {
+        get => _associatedDeliverers.ToList();
+        private set => _associatedDeliverers = value;
+    }
+
+    private Recipe AssignedRecipe { get; set; } = null!;
+    private IList<Recipe> _associatedRecipes = new List<Recipe>();
+    public IList<Recipe> AssociatedRecipes {
+        get => _associatedRecipes.ToList();
+        private set => _associatedRecipes = value;
+    }
+
+    private Laboratory AssignedLaboratory { get; set; } = null!;
+    private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
+    public IList<Laboratory> AssociatedLaboratories {
+        get => _associatedLaboratories.ToList();
+        private set => _associatedLaboratories = value;
+    }
+
+    private Chemist[] AssignedChemists { get; set; } = null!;
+    private IList<Chemist> _associatedChemists = new List<Chemist>();
+    public IList<Chemist> AssociatedChemists {
+        get => _associatedChemists.ToList();
+        private set => _associatedChemists = value;
+    }
+
     public string Name { get; private set; }
     public double Weight { get; private set; }
     public int PricePerPound { get; private set; }
@@ -36,39 +70,6 @@ public class Product {
         }
     }
     public AddLevelAttribute AddictivenessLevel { get; private set; }
-
-    private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
-    public IList<Warehouse> AssociatedWarehouses {
-        get => new List<Warehouse>(_associatedWarehouses);
-        private set => _associatedWarehouses = value;
-    }
-
-    private IList<Deliverer> _associatedDeliverers = new List<Deliverer>();
-    public IList<Deliverer> AssociatedDeliverers {
-        get => new List<Deliverer>(_associatedDeliverers);
-        private set => _associatedDeliverers = value;
-    }
-
-    private Recipe AssignedRecipe { get; set; } = null!;
-    private IList<Recipe> _associatedRecipes = new List<Recipe>();
-    public IList<Recipe> AssociatedRecipes {
-        get => new List<Recipe>(_associatedRecipes);
-        private set => _associatedRecipes = value;
-    }
-
-    private Laboratory AssignedLaboratory { get; set; } = null!;
-    private IList<Laboratory> _associatedLaboratories = new List<Laboratory>();
-    public IList<Laboratory> AssociatedLaboratories {
-        get => new List<Laboratory>(_associatedLaboratories);
-        private set => _associatedLaboratories = value;
-    }
-
-    private Chemist[] AssignedChemists { get; set; } = null!;
-    private IList<Chemist> _associatedChemists = new List<Chemist>();
-    public IList<Chemist> AssociatedChemists {
-        get => new List<Chemist>(_associatedChemists);
-        private set => _associatedChemists = value;
-    }
 
     public Product(string name, double weight, int pricePerPound, AddLevelAttribute addictivenessLevel) {
         if (string.IsNullOrWhiteSpace(name))

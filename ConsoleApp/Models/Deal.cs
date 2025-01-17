@@ -5,16 +5,16 @@ namespace ConsoleApp.models;
 public class Deal {
     private static IList<Deal> _deals = new List<Deal>();
     public static IList<Deal> Deals {
-        get => new List<Deal>(_deals);
+        get => _deals.ToList();
         private set => _deals = value;
     }
+
+    public Distributor? AssociatedDistributor { get; private set; }
+    public Customer? AssociatedCustomer { get; private set; }
 
     public DateTime StartDate { get; private set; }
     public int PoundsOfProduct { get; private set; }
     public DateTime? EndDate { get; private set; }
-
-    public Distributor? AssociatedDistributor { get; private set; }
-    public Customer? AssociatedCustomer { get; private set; }
 
     public Deal(DateTime startDate, int poundsOfProduct, DateTime? endDate) {
         if (startDate < new DateTime(1890, 1, 1))
@@ -39,14 +39,6 @@ public class Deal {
     }
 
     public static Deal StartDeal(DateTime startDate, int poundsOfProduct, Distributor distributor, Customer customer, string customerId) {
-        if (startDate < new DateTime(1890, 1, 1))
-            throw new ArgumentException("Deal start date cannot be earlier than year 1890.");
-        else if (startDate > DateTime.Now)
-            throw new ArgumentException("Deal start date cannot be in the future.");
-
-        if (poundsOfProduct < 0)
-            throw new ArgumentException("Pounds of product cannot be negative.");
-
         Deal deal = new(startDate, poundsOfProduct, null);
         deal.AddDistributor(distributor, customerId);
         deal.AddCustomer(customer);

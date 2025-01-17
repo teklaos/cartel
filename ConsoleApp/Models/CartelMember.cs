@@ -6,19 +6,19 @@ namespace ConsoleApp.models;
 public abstract class CartelMember : ICitizen, IOfficial {
     private static IList<CartelMember> _cartelMembers = new List<CartelMember>();
     public static IList<CartelMember> CartelMembers {
-        get => new List<CartelMember>(_cartelMembers);
+        get => _cartelMembers.ToList();
         private set => _cartelMembers = value;
     }
 
     private static IList<CartelMember> _citizens = new List<CartelMember>();
     public static IList<CartelMember> Citizens {
-        get => new List<CartelMember>(_citizens);
+        get => _citizens.ToList();
         private set => _citizens = value;
     }
 
     private static IList<CartelMember> _officials = new List<CartelMember>();
     public static IList<CartelMember> Officials {
-        get => new List<CartelMember>(_officials);
+        get => _officials.ToList();
         private set => _officials = value;
     }
 
@@ -34,19 +34,7 @@ public abstract class CartelMember : ICitizen, IOfficial {
         string name, int trustLevel, IList<string> rulesToFollow,
         string occupation, int securityLevel
     ) {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace.");
-        if (trustLevel < 0)
-            throw new ArgumentException("Trust level cannot be negative.");
-        if (rulesToFollow == null)
-            throw new ArgumentException("Rules to follow cannot be null.");
-
-        foreach (string rule in rulesToFollow) {
-            if (string.IsNullOrWhiteSpace(rule)) {
-                throw new ArgumentException("Each rule cannot be null or whitespace.");
-            }
-        }
-
+        ValidateCartelMemberProperties(name, trustLevel, rulesToFollow);
         ValidateCitizenProperties(occupation, securityLevel);
 
         Name = name;
@@ -62,19 +50,7 @@ public abstract class CartelMember : ICitizen, IOfficial {
             string name, int trustLevel, IList<string> rulesToFollow,
             string position, string department
         ) {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace.");
-        if (trustLevel < 0)
-            throw new ArgumentException("Trust level cannot be negative.");
-        if (rulesToFollow == null)
-            throw new ArgumentException("Rules to follow cannot be null.");
-
-        foreach (string rule in rulesToFollow) {
-            if (string.IsNullOrWhiteSpace(rule)) {
-                throw new ArgumentException("Each rule cannot be null or whitespace.");
-            }
-        }
-
+        ValidateCartelMemberProperties(name, trustLevel, rulesToFollow);
         ValidateOfficialProperties(position, department);
 
         Name = name;
@@ -87,22 +63,10 @@ public abstract class CartelMember : ICitizen, IOfficial {
     }
 
     public void Edit(string name, int trustLevel, params string[] rulesToFollow) {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Name cannot be null or whitespace.");
-        if (trustLevel < 0)
-            throw new ArgumentException("Trust level cannot be negative.");
-        if (rulesToFollow == null)
-            throw new ArgumentException("Rules to follow cannot be null.");
-
-        foreach (string rule in rulesToFollow) {
-            if (string.IsNullOrWhiteSpace(rule)) {
-                throw new ArgumentException("Each rule cannot be null or whitespace.");
-            }
-        }
-
+        ValidateCartelMemberProperties(name, trustLevel, rulesToFollow);
         Name = name;
         TrustLevel = trustLevel;
-        RulesToFollow = new List<string>(rulesToFollow);
+        RulesToFollow = rulesToFollow.ToList();
     }
 
     public void Edit(string occupation, int securityLevel) {
@@ -135,6 +99,21 @@ public abstract class CartelMember : ICitizen, IOfficial {
         Position = position;
         Department = department;
         _officials.Add(this);
+    }
+
+    private static void ValidateCartelMemberProperties(string name, int trustLevel, IList<string> rulesToFollow) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+        if (trustLevel < 0)
+            throw new ArgumentException("Trust level cannot be negative.");
+
+        if (rulesToFollow == null)
+            throw new ArgumentException("Rules to follow cannot be null.");
+        foreach (string rule in rulesToFollow) {
+            if (string.IsNullOrWhiteSpace(rule)) {
+                throw new ArgumentException("Each rule cannot be null or whitespace.");
+            }
+        }
     }
 
     private static void ValidateCitizenProperties(string occupation, int securityLevel) {

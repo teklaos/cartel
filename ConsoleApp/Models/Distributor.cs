@@ -5,14 +5,13 @@ namespace ConsoleApp.models;
 public class Distributor : CartelMember {
     private static IList<Distributor> _distributors = new List<Distributor>();
     public static IList<Distributor> Distributors {
-        get => new List<Distributor>(_distributors);
+        get => _distributors.ToList();
         private set => _distributors = value;
     }
-    public int DealsMade { get; private set; }
 
     private IList<Warehouse> _associatedWarehouses = new List<Warehouse>();
     public IList<Warehouse> AssociatedWarehouses {
-        get => new List<Warehouse>(_associatedWarehouses);
+        get => _associatedWarehouses.ToList();
         private set => _associatedWarehouses = value;
     }
 
@@ -21,6 +20,8 @@ public class Distributor : CartelMember {
         get => new Dictionary<string, List<Deal>>(_associatedDeals);
         private set => _associatedDeals = value;
     }
+
+    public int DealsMade { get; private set; }
 
     public Distributor(
         string name, int trustLevel, IList<string> rulesToFollow, int dealsMade,

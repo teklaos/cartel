@@ -6,23 +6,24 @@ namespace ConsoleApp.models;
 public class Recipe : ICompositionAssociation<Instruction> {
     private static IList<Recipe> _recipes = new List<Recipe>();
     public static IList<Recipe> Recipes {
-        get => new List<Recipe>(_recipes);
+        get => _recipes.ToList();
         private set => _recipes = value;
     }
-    public string Name { get; private set; }
-    public int Complexity { get => _associatedInstructions.Count / 10; }
 
     private IList<Product> _associatedProducts = new List<Product>();
     public IList<Product> AssociatedProducts {
-        get => new List<Product>(_associatedProducts);
+        get => _associatedProducts.ToList();
         private set => _associatedProducts = value;
     }
 
     private IList<Instruction> _associatedInstructions = new List<Instruction>();
     public IList<Instruction> AssociatedInstructions {
-        get => new List<Instruction>(_associatedInstructions);
+        get => _associatedInstructions.ToList();
         private set => _associatedInstructions = value;
     }
+
+    public string Name { get; private set; }
+    public int Complexity { get => _associatedInstructions.Count / 10; }
 
     public Recipe(string name) {
         if (string.IsNullOrWhiteSpace(name))
