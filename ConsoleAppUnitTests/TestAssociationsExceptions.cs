@@ -205,7 +205,7 @@ public class TestExceptionCases {
 
     [Test]
     public void TestRemoveIngredientInternallyThrowsExceptionWhenIngredientNotFoundInstruction() {
-        var instruction = new Instruction("Stir the mixture");
+        var instruction = new Instruction("Stir the mixture.");
         var ingredient = new Ingredient("Salt", 5, "NaCl", StateAttribute.Liquid);
 
         var ex = Assert.Throws<ArgumentException>(() => instruction.RemoveIngredientInternally(ingredient));

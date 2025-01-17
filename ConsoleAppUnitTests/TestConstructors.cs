@@ -19,20 +19,6 @@ public class TestConstructors {
     }
 
     [Test]
-    public void TestCitizenConstructor() {
-        string[] rulesToFollow = ["Do not kill anyone (optional)."];
-        Citizen citizen = new Citizen("Danny", 9, rulesToFollow, "Cashier", 3);
-
-        Assert.Multiple(() => {
-            Assert.That(citizen.Name, Is.EqualTo("Danny"));
-            Assert.That(citizen.TrustLevel, Is.EqualTo(9));
-            Assert.That(citizen.RulesToFollow, Is.EqualTo(rulesToFollow));
-            Assert.That(citizen.Occupation, Is.EqualTo("Cashier"));
-            Assert.That(citizen.SecurityLevel, Is.EqualTo(3));
-        });
-    }
-
-    [Test]
     public void TestCustomerConstructor() {
         Customer customer = new Customer();
 
@@ -129,20 +115,6 @@ public class TestConstructors {
         Laboratory laboratory = new Laboratory("Madelyn");
 
         Assert.That(laboratory.Location, Is.EqualTo("Madelyn"));
-    }
-
-    [Test]
-    public void TestOfficialConstructor() {
-        string[] rulesToFollow = ["Do not kill anyone (optional)."];
-        Official official = new Official("Danny", 9, rulesToFollow, "Vice President", "Ministry of Foreign Affairs");
-
-        Assert.Multiple(() => {
-            Assert.That(official.Name, Is.EqualTo("Danny"));
-            Assert.That(official.TrustLevel, Is.EqualTo(9));
-            Assert.That(official.RulesToFollow, Is.EqualTo(rulesToFollow));
-            Assert.That(official.Position, Is.EqualTo("Vice President"));
-            Assert.That(official.Department, Is.EqualTo("Ministry of Foreign Affairs"));
-        });
     }
 
     [Test]

@@ -49,6 +49,29 @@ public class Ingredient {
         _ingredients.Add(this);
     }
 
+    public Ingredient(
+        string name, int pricePerPound, string chemicalFormula, StateAttribute state,
+        Instruction? instruction
+    ) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+        if (pricePerPound < 0)
+            throw new ArgumentException("Price per pound cannot be negative.");
+        if (string.IsNullOrWhiteSpace(chemicalFormula))
+            throw new ArgumentException("Chemical formula cannot be null or whitespace.");
+
+        Name = name;
+        PricePerPound = pricePerPound;
+        ChemicalFormula = chemicalFormula;
+        State = state;
+        _ingredients.Add(this);
+
+        if (instruction != null)
+            AddInstruction(instruction);
+        else
+            AddInstruction(new Instruction("Wait for 10 minutes."));
+    }
+
     public static void OrderRequired(
         string name, int pricePerPound, string chemicalFormula, StateAttribute state,
         string laboratoryLocation, string supplyChainName

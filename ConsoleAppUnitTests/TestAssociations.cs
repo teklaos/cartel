@@ -164,9 +164,8 @@ public class TestAssociations {
         Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
         Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
-        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong, ch1, ch2);
 
-        product.AddChemists(ch1, ch2);
         chemist.AddProduct(product);
 
         Assert.That(product.AssociatedChemists.Contains(chemist), Is.True);
@@ -177,9 +176,9 @@ public class TestAssociations {
         Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
         Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
-        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong);
+        Product product = new("Meth", 100, 1000, AddLevelAttribute.Strong, ch1, ch2);
 
-        product.AddChemists(ch1, ch2, chemist);
+        product.AddChemists(chemist);
         chemist.RemoveProduct(product);
 
         Assert.That(product.AssociatedChemists.Contains(chemist), Is.False);
@@ -190,15 +189,13 @@ public class TestAssociations {
         Chemist ch1 = new("Walter", 10, ["Do not steal meth."], 1000, "Teacher", 2);
         Chemist ch2 = new("Jesse", 10, ["Do not steal meth."], 120, "N/A", 0);
         Chemist chemist = new("Danny", 10, ["Do not steal meth."], 90, "Chemist", 5);
-        Product oldProduct = new("Meth", 100, 1000, AddLevelAttribute.Strong);
-        Product newProduct = new("Meth", 101, 1000, AddLevelAttribute.Strong);
+        Product oldProduct = new("Meth", 100, 1000, AddLevelAttribute.Strong, ch1, ch2);
+        Product newProduct = new("Meth", 101, 1000, AddLevelAttribute.Strong, ch1, ch2);
 
-        oldProduct.AddChemists(ch1, ch2);
         chemist.AddProduct(oldProduct);
 
         Assert.That(chemist.AssociatedProducts.Contains(oldProduct), Is.True);
 
-        newProduct.AddChemists(ch1, ch2);
         chemist.EditProduct(oldProduct, newProduct);
 
         Assert.Multiple(() => {
@@ -815,10 +812,8 @@ public class TestAssociations {
 
     [Test]
     public void TestIngredientAddInstructions() {
-        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
-        Instruction instruction = new("Stir");
-
-        ingredient.AddInstruction(instruction);
+        Instruction instruction = new("Stir for 10 minutes.");
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid, instruction);
 
         Assert.That(ingredient.AssociatedInstructions, Has.Count.EqualTo(instruction.AssociatedIngredients.Count));
     }
@@ -826,9 +821,8 @@ public class TestAssociations {
     [Test]
     public void TestIngredientRemoveInstructions() {
         Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
-        Instruction instruction = new("Stir");
+        Instruction instruction = new("Stir for 10 minutes.", ingredient);
 
-        instruction.AddIngredient(ingredient);
         ingredient.RemoveInstruction(instruction);
 
         Assert.That(ingredient.AssociatedInstructions, Has.Count.EqualTo(instruction.AssociatedIngredients.Count));
@@ -836,11 +830,9 @@ public class TestAssociations {
 
     [Test]
     public void TestIngredientEditInstructions() {
-        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
-        Instruction oldInstruction = new("Stir");
-        Instruction newInstruction = new("Combine");
-
-        ingredient.AddInstruction(oldInstruction);
+        Instruction oldInstruction = new("Stir for 10 minutes.");
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid, oldInstruction);
+        Instruction newInstruction = new("Combine.");
 
         Assert.That(ingredient.AssociatedInstructions.Contains(oldInstruction), Is.True);
 
@@ -854,20 +846,17 @@ public class TestAssociations {
 
     [Test]
     public void TestInstructionAddIngredient() {
-        Instruction instruction = new("Stir");
         Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
-
-        instruction.AddIngredient(ingredient);
+        Instruction instruction = new("Stir for 10 minutes.", ingredient);
 
         Assert.That(instruction.AssociatedIngredients, Has.Count.EqualTo(ingredient.AssociatedInstructions.Count));
     }
 
     [Test]
     public void TestInstructionRemoveIngredient() {
-        Instruction instruction = new("Stir");
-        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
+        Instruction instruction = new("Stir for 10 minutes.");
+        Ingredient ingredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid, instruction);
 
-        ingredient.AddInstruction(instruction);
         instruction.RemoveIngredient(ingredient);
 
         Assert.That(instruction.AssociatedIngredients, Has.Count.EqualTo(ingredient.AssociatedInstructions.Count));
@@ -875,11 +864,9 @@ public class TestAssociations {
 
     [Test]
     public void TestInstructionEditIngredient() {
-        Instruction instruction = new("Stir");
-        Ingredient newIngredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
         Ingredient oldIngredient = new("Crystal", 201, "C₁₀H₁₅N", StateAttribute.Solid);
-
-        instruction.AddIngredient(oldIngredient);
+        Instruction instruction = new("Stir for 10 minutes.", oldIngredient);
+        Ingredient newIngredient = new("Crystal", 200, "C₁₀H₁₅N", StateAttribute.Solid);
 
         Assert.That(instruction.AssociatedIngredients.Contains(oldIngredient), Is.True);
 
@@ -943,7 +930,7 @@ public class TestAssociations {
     [Test]
     public void TestRecipeAddInstruction() {
         Recipe recipe = new("Blue Methamphetamine");
-        Instruction instruction = new("Stir");
+        Instruction instruction = new("Stir for 10 minutes.");
 
         recipe.AddCompositionAssociation(instruction);
 
@@ -954,7 +941,7 @@ public class TestAssociations {
     [Test]
     public void TestRecipeRemoveInstruction() {
         Recipe recipe = new("Blue Methamphetamine");
-        Instruction instruction = new("Stir");
+        Instruction instruction = new("Stir for 10 minutes.");
 
         recipe.AddCompositionAssociation(instruction);
         recipe.RemoveCompositionAssociation(instruction);
@@ -968,8 +955,8 @@ public class TestAssociations {
     [Test]
     public void TestRecipeEditInstruction() {
         Recipe recipe = new("Blue Methamphetamine");
-        Instruction oldInstruction = new("Stir");
-        Instruction newInstruction = new("Combine");
+        Instruction oldInstruction = new("Stir for 10 minutes.");
+        Instruction newInstruction = new("Combine.");
 
         recipe.AddCompositionAssociation(oldInstruction);
 
@@ -985,7 +972,7 @@ public class TestAssociations {
 
     [Test]
     public void TestInstructionAddRecipe() {
-        Instruction instruction = new("Stir");
+        Instruction instruction = new("Stir for 10 minutes.");
         Recipe recipe = new("Blue Methamphetamine");
 
         instruction.AddRecipe(recipe);
@@ -998,7 +985,7 @@ public class TestAssociations {
 
     [Test]
     public void TestInstructionRemoveRecipe() {
-        Instruction instruction = new("Stir");
+        Instruction instruction = new("Stir for 10 minutes.");
         Recipe recipe = new("Blue Methamphetamine");
 
         instruction.AddRecipe(recipe);
@@ -1012,7 +999,7 @@ public class TestAssociations {
 
     [Test]
     public void TestInstructionEditRecipe() {
-        Instruction instruction = new("Stir");
+        Instruction instruction = new("Stir for 10 minutes.");
         Recipe newRecipe = new("Blue Methamphetamine");
         Recipe oldRecipe = new("Blue Methamphetamine");
 

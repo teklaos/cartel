@@ -86,6 +86,36 @@ public class Product {
         _products.Add(this);
     }
 
+    public Product(
+        string name, double weight, int pricePerPound, AddLevelAttribute addictivenessLevel,
+        Chemist? chemist1, Chemist? chemist2
+    ) {
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Name cannot be null or whitespace.");
+        if (weight < 0)
+            throw new ArgumentException("Weight cannot be negative.");
+        if (pricePerPound < 0)
+            throw new ArgumentException("Price per pound cannot be negative.");
+
+        Name = name;
+        Weight = weight;
+        PricePerPound = pricePerPound;
+        AddictivenessLevel = addictivenessLevel;
+        _products.Add(this);
+
+        if (chemist1 != null && chemist2 != null)
+            AddChemists(chemist1, chemist2);
+        else if (chemist1 != null)
+            AddChemists(chemist1, new Chemist("Dummy", 10, ["Listen to your boss."], 200, "Chemist", 0));
+        else if (chemist2 != null)
+            AddChemists(new Chemist("Dummy", 10, ["Listen to your boss."], 200, "Chemist", 0), chemist2);
+        else
+            AddChemists(
+                new Chemist("Dummy", 10, ["Listen to your boss."], 200, "Chemist", 0),
+                new Chemist("Dummy", 10, ["Listen to your boss."], 200, "Chemist", 0)
+            );
+    }
+
     public static Product StartBatch(
         string name, double weight, int pricePerPound, AddLevelAttribute addictivenessLevel,
         string recipeName, string laboratoryLocation, params string[] chemistNames
