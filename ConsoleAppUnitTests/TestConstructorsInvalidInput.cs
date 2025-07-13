@@ -179,7 +179,7 @@ public class TestConstructorsInvalidInput {
     [Test]
     public void DealConstructorInvalidDealEndDate() {
         DateTime startDate = new DateTime(2024, 5, 20);
-        DateTime invalidEndDate = new DateTime(2025, 5, 21);
+        DateTime invalidEndDate = new DateTime(9999, 5, 21);
 
         int poundsOfProduct = 10;
 
